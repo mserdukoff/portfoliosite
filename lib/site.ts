@@ -30,7 +30,7 @@ export const nav = [
 
 export const languages = [
   { name: "English", level: "Native", score: 100 },
-  { name: "Russian", level: "Fluent", score: 88 },
+  { name: "Russian", level: "Native", score: 88 },
   { name: "Italian", level: "Proficient", score: 68 },
   { name: "Turkish", level: "Proficient", score: 68 },
   { name: "German", level: "Basic", score: 32 },
