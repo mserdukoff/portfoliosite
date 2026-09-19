@@ -1,6 +1,7 @@
 export const site = {
   name: "Matt Serdukoff",
   shortName: "Matt Serdukoff",
+  cyrillicName: "Матвей Сердюков",
   role: "Software engineer",
   location: "Boston, MA",
   status: "Available",

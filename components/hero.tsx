@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { LocalClock } from "@/components/local-clock";
+import { NameDecode } from "@/components/name-decode";
 import { fadeUp, stagger } from "@/lib/motion";
 import { projects, site } from "@/lib/site";
 
@@ -10,8 +11,20 @@ export function Hero() {
   const wheelbase = projects.find((project) => project.slug === "wheelbase");
 
   return (
-    <section id="hero" className="scroll-mt-10 pb-10 pt-16 sm:pb-12 sm:pt-20">
-      <motion.div initial={false} animate="show" variants={stagger}>
+    <section
+      id="hero"
+      className="relative scroll-mt-10 overflow-hidden pb-10 pt-16 sm:pb-12 sm:pt-20"
+    >
+      <span
+        aria-hidden="true"
+        lang="cu"
+        className="pointer-events-none absolute -right-10 -top-20 -z-10 select-none text-[clamp(16rem,34vw,28rem)] leading-none text-foreground/[0.045] sm:-right-16 sm:-top-28"
+        style={{ fontFamily: "var(--font-pochaevsk)" }}
+      >
+        М
+      </span>
+
+      <motion.div initial={false} animate="show" variants={stagger} className="relative">
         <motion.p
           variants={fadeUp}
           className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
@@ -25,11 +38,20 @@ export function Hero() {
           <LocalClock />
         </motion.p>
 
-        <motion.div variants={fadeUp} className="mt-6 max-w-lg space-y-4">
-          <h1 className="text-lg leading-8 text-muted-foreground">
-            Matt here — I write software meant to hold up under real use,
-            not just look good in a demo.
+        <motion.div variants={fadeUp} className="mt-5">
+          <h1 className="font-heading text-[clamp(2.75rem,8vw,5.25rem)] leading-[0.98] tracking-[-0.02em] text-foreground">
+            <NameDecode />
           </h1>
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+            {site.role}
+          </p>
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="mt-8 max-w-lg space-y-4">
+          <p className="text-lg leading-8 text-muted-foreground">
+            I write software meant to hold up under real use, not just look
+            good in a demo.
+          </p>
           <p className="text-lg leading-8 text-muted-foreground">
             Building{" "}
             {wheelbase?.href ? (
