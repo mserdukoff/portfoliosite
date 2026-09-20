@@ -38,17 +38,16 @@ export function NameDecode() {
 
     function tick() {
       if (cancelled) return;
-      let allDone = true;
       setCells((prev) =>
         prev.map((cell, i) => {
           const { start, end, target } = plan[i];
           if (frame >= end) return { char: target, settled: true };
-          allDone = false;
           if (frame >= start) return { char: randomChar(), settled: false };
           return cell;
         })
       );
       frame += 1;
+      const allDone = plan.every((p) => frame >= p.end);
       if (!allDone) raf = requestAnimationFrame(tick);
     }
 
