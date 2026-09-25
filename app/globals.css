@@ -99,6 +99,7 @@
   --chart-4: oklch(0.74 0.07 270);
   --chart-5: oklch(0.84 0.04 272);
   --radius: 0.125rem;
+  --rail-w: clamp(19rem, 25vw, 23rem);
   --sidebar: var(--paper);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--cobalt);
@@ -169,7 +170,45 @@
   }
 
   .eyebrow {
-    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
+    @apply font-mono text-[12px] text-muted-foreground;
+  }
+
+  .index-chip {
+    @apply inline-flex h-6 min-w-7 items-center justify-center rounded-sm border border-border bg-muted/60 px-1.5 font-mono text-[10px] tracking-[0.08em] text-muted-foreground;
+  }
+
+  /* Ruled cells: dividers only between columns, flush with the outer edges. */
+  .cell-grid > * {
+    @apply border-b border-border py-6;
+  }
+
+  @media (width >= 40rem) {
+    .cell-grid > * {
+      @apply pr-5;
+    }
+    .cell-grid > :nth-child(even) {
+      @apply border-l pl-5 pr-0;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .cell-grid-3 > :nth-child(n) {
+      @apply border-l pl-5 pr-5;
+    }
+    .cell-grid-3 > :nth-child(3n + 1) {
+      @apply border-l-0 pl-0;
+    }
+    .cell-grid-3 > :nth-child(3n) {
+      @apply pr-0;
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
   .animate-page-fade {

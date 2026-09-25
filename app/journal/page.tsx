@@ -12,7 +12,7 @@ export default function JournalPage() {
 
   return (
     <article className="py-16 sm:py-20">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+      <p className="font-mono text-[12px] text-muted-foreground">
         Journal
       </p>
       <h1 className="mt-4 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
@@ -48,7 +48,7 @@ export default function JournalPage() {
 
         <aside className="space-y-10 lg:sticky lg:top-24">
           <div className="rail-panel">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[12px] text-muted-foreground">
               Archive
             </p>
             <p className="mt-4 font-heading text-4xl tracking-tight text-primary">
@@ -60,7 +60,7 @@ export default function JournalPage() {
           </div>
 
           <div className="rail-panel">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[12px] text-muted-foreground">
               Latest
             </p>
             <Link

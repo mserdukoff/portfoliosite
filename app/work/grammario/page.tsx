@@ -74,7 +74,7 @@ export default function GrammarioPage() {
             </p>
             <ol className="mt-8 divide-y divide-border border-y border-border [&>li]:py-5">
               <li>
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="font-mono text-[12px] text-muted-foreground">
                   01 · Analyst
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -85,7 +85,7 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="font-mono text-[12px] text-muted-foreground">
                   02 · Strategist
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -95,7 +95,7 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="font-mono text-[12px] text-muted-foreground">
                   03 · Tutor
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -168,7 +168,7 @@ export default function GrammarioPage() {
 
         <aside className="space-y-10 lg:sticky lg:top-24">
           <div className="rail-panel">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[12px] text-muted-foreground">
               Quick facts
             </p>
             <dl className="mt-4 space-y-3 text-sm">
@@ -206,7 +206,7 @@ export default function GrammarioPage() {
           </div>
 
           <div className="rail-panel">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[12px] text-muted-foreground">
               Stack
             </p>
             <p className="mt-3 text-[13px] leading-6 text-muted-foreground">

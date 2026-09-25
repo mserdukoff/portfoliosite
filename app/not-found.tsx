@@ -30,7 +30,7 @@ export default function NotFound() {
           ???
         </text>
       </svg>
-      <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+      <p className="mt-4 font-mono text-[12px] text-muted-foreground">
         404 · unparsed
       </p>
       <h1 className="mt-4 font-heading text-4xl tracking-tight">

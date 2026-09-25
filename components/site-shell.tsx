@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { SideNav } from "@/components/side-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { site } from "@/lib/site";
+import { SiteSidebar } from "@/components/site-sidebar";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
@@ -12,21 +10,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       >
         Skip to content
       </a>
-      <Link
-        href="/"
-        aria-label={site.shortName}
-        lang="cu"
-        className="fixed left-5 top-5 z-40 text-3xl leading-none text-foreground/85 transition-colors hover:text-foreground sm:left-8 sm:top-6"
-        style={{ fontFamily: "var(--font-pochaevsk)" }}
-      >
-        М
-      </Link>
-      <SideNav />
-      <div id="content" className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        {children}
+      <SiteSidebar />
+      <div className="lg:pl-[var(--rail-w)]">
+        <div
+          id="content"
+          className="mx-auto w-full max-w-[76rem] px-5 sm:px-8 xl:px-12"
+        >
+          {children}
+        </div>
+        <SiteFooter />
       </div>
-      <SiteFooter />
-
     </div>
   );
 }

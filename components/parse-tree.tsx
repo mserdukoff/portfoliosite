@@ -58,7 +58,7 @@ export function ParseTree({ className }: { className?: string }) {
 
   return (
     <div className={cn("select-none", className)}>
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+      <p className="font-mono text-[11px] text-muted-foreground">
         Click a word
       </p>
       <svg
@@ -128,7 +128,7 @@ export function ParseTree({ className }: { className?: string }) {
         ))}
       </div>
       <div className="mt-3 min-h-[4.5rem] border-t border-border pt-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+        <p className="font-mono text-[12px] text-muted-foreground">
           {token.pos}
         </p>
         <p className="mt-1 text-sm leading-6 text-foreground/80">{token.note}</p>

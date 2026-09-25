@@ -6,31 +6,10 @@ import { useRef } from "react";
 import { DitherField, ink } from "@/components/dither-plate";
 import { site } from "@/lib/site";
 
-const columns = [
-  {
-    title: "Site",
-    links: [
-      { label: "Work", href: "/#work" },
-      { label: "Experience", href: "/#experience" },
-      { label: "About", href: "/#about" },
-      { label: "Journal", href: "/journal" },
-    ],
-  },
-  {
-    title: "Elsewhere",
-    links: [
-      { label: "Email", href: `mailto:${site.email}` },
-      { label: "GitHub ↗", href: site.github },
-      { label: "LinkedIn ↗", href: site.linkedin },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
-    ],
-  },
+const links = [
+  { label: "Journal", href: "/journal" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
 ];
 
 export function SiteFooter() {
@@ -43,38 +22,25 @@ export function SiteFooter() {
   const bandY = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : 80, 0]);
 
   return (
-    <footer ref={ref} className="relative mt-24 overflow-hidden">
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <div className="grid gap-12 border-t border-foreground/80 pt-10 md:grid-cols-[minmax(0,1fr)_auto]">
-          <div className="max-w-sm">
-            <p className="font-heading text-2xl tracking-tight">{site.name}</p>
-            <p className="mt-3 text-[14px] leading-6 text-muted-foreground">
-              {site.role} in {site.location}. Building Wheelbase and Lociros,
-              creator of Grammario.
-            </p>
-          </div>
-          <nav aria-label="Footer" className="grid grid-cols-3 gap-10 sm:gap-16">
-            {columns.map((column) => (
-              <div key={column.title}>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground">
-                  {column.title}
-                </p>
-                <ul className="mt-4 space-y-2 text-[14px] text-muted-foreground">
-                  {column.links.map((item) => (
-                    <li key={item.label}>
-                      <Link href={item.href} className="hover:text-foreground">
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+    <footer ref={ref} className="relative mt-16 overflow-hidden">
+      <div className="mx-auto w-full max-w-[76rem] px-5 sm:px-8 xl:px-12">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-foreground/80 pt-6 font-mono text-[11px] text-muted-foreground">
+          <span className="lg:hidden">
+            © {new Date().getFullYear()} {site.name}
+          </span>
+          <nav aria-label="Footer" className="flex gap-5">
+            {links.map((item) => (
+              <Link key={item.label} href={item.href} className="hover:text-foreground">
+                {item.label}
+              </Link>
             ))}
+            <a href={site.github} className="hover:text-foreground lg:hidden">
+              GitHub ↗
+            </a>
+            <a href={site.linkedin} className="hover:text-foreground lg:hidden">
+              LinkedIn ↗
+            </a>
           </nav>
-        </div>
-
-        <div className="mt-14 flex flex-wrap justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-          <span>© {new Date().getFullYear()} {site.name}</span>
           <span>42.3601° N, 71.0589° W</span>
         </div>
       </div>
@@ -82,7 +48,7 @@ export function SiteFooter() {
       <motion.div
         aria-hidden
         style={{ y: bandY }}
-        className="relative mt-8 h-56 sm:h-72 [mask-image:linear-gradient(to_bottom,transparent,black_45%)]"
+        className="relative mt-8 h-44 sm:h-56 [mask-image:linear-gradient(to_bottom,transparent,black_45%)]"
       >
         <DitherField
           shape="warp"

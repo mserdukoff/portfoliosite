@@ -33,7 +33,7 @@ export default async function JournalEntryPage({
 
   return (
     <article className="py-16 sm:py-20">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+      <p className="font-mono text-[12px] text-muted-foreground">
         Journal · {formatDate(post.date)}
       </p>
       <h1 className="mt-4 max-w-3xl font-heading text-[clamp(1.85rem,4vw,2.6rem)] leading-[1.1] tracking-[-0.03em]">

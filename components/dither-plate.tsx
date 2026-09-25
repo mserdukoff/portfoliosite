@@ -47,32 +47,28 @@ export function DitherField({
   );
 }
 
-export function DitherPortrait({ className }: { className?: string }) {
+export function DitherBust({ className }: { className?: string }) {
   return (
-    <figure className={cn("relative", className)}>
-      <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-foreground/15 bg-background">
+    <div className={cn("relative", className)}>
+      <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_50%_60%,black_30%,transparent_72%)]">
         <DitherField shape="warp" scale={0.7} />
-        <ImageDithering
-          role="img"
-          aria-label="Portrait of Matt Serdukoff"
-          className="absolute inset-0"
-          image="/portrait-soft.png"
-          fit="contain"
-          scale={1.1}
-          colorFront={ink.deep}
-          colorBack="#00000000"
-          colorHighlight={ink.paper}
-          type="4x4"
-          size={2}
-          colorSteps={2}
-          inverted
-          speed={0}
-        />
       </div>
-      <figcaption className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-        <span>Pl. I</span>
-        <span>Boston, 2026</span>
-      </figcaption>
-    </figure>
+      <ImageDithering
+        role="img"
+        aria-label="Portrait of Matt Serdukoff"
+        className="absolute inset-0"
+        image="/portrait-soft.png"
+        fit="contain"
+        scale={1}
+        colorFront={ink.deep}
+        colorBack="#00000000"
+        colorHighlight={ink.paper}
+        type="4x4"
+        size={2}
+        colorSteps={2}
+        inverted
+        speed={0}
+      />
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { nav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export function SideNav() {
+export function SideNav({ className }: { className?: string }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [activeId, setActiveId] = useState<string>("hero");
@@ -30,8 +30,12 @@ export function SideNav() {
         setActiveId(sections[sections.length - 1].id);
         return;
       }
+      if (window.scrollY < window.innerHeight * 0.25) {
+        setActiveId(nav[0].id);
+        return;
+      }
       for (const section of sections) {
-        if (section.el.offsetTop <= trigger) {
+        if (section.el.getBoundingClientRect().top + window.scrollY <= trigger) {
           current = section.id;
         } else {
           break;
@@ -50,13 +54,9 @@ export function SideNav() {
   }, [isHome]);
 
   return (
-    <nav
-      aria-label="Sections"
-      className="pointer-events-none fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1440px]:block"
-      style={{ left: "max(1.5rem, calc(50% - 36rem - 7.5rem))" }}
-    >
-      <ul className="pointer-events-auto flex flex-col gap-1.5">
-        {nav.map((item) => {
+    <nav aria-label="Sections" className={className}>
+      <ol className="flex flex-col gap-1">
+        {nav.map((item, i) => {
           const active = isHome && activeId === item.id;
           const href = isHome ? `#${item.id}` : `/#${item.id}`;
 
@@ -64,17 +64,21 @@ export function SideNav() {
             <li key={item.id}>
               <Link
                 href={href}
+                aria-current={active ? "location" : undefined}
                 className={cn(
-                  "group flex items-center gap-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors duration-300",
+                  "group flex items-center gap-3 py-0.5 font-mono text-[12px] transition-colors duration-300",
                   active
                     ? "text-foreground"
-                    : "text-muted-foreground/50 hover:text-muted-foreground"
+                    : "text-muted-foreground/55 hover:text-muted-foreground"
                 )}
               >
+                <span className="w-5 tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <span
                   className={cn(
                     "h-px bg-current transition-all duration-300",
-                    active ? "w-4" : "w-2 group-hover:w-3"
+                    active ? "w-10" : "w-6 group-hover:w-8"
                   )}
                 />
                 {item.label}
@@ -82,7 +86,7 @@ export function SideNav() {
             </li>
           );
         })}
-      </ul>
+      </ol>
     </nav>
   );
 }

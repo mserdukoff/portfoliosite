@@ -13,6 +13,7 @@ export const site = {
     "Software engineer building systems that think. Building Wheelbase and Lociros, creator of Grammario. Based in Boston.",
   homepageLead:
     "Building Wheelbase, a dealership operations platform, and Lociros, graded readers checked against their level. Creator of Grammario, a grammar analyzer for six languages.",
+  quote: "I refuse to ship something that kind of works.",
   homepageClose:
     "I like hard problems and am drawn to domains where getting it wrong has real consequences.",
   aboutClose:

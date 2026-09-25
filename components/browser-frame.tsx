@@ -32,7 +32,7 @@ export function BrowserFrame({
         )}
       >
         <span className="truncate">{label}</span>
-        <span className="shrink-0 uppercase tracking-[0.14em]">Live</span>
+        <span className="shrink-0">Live</span>
       </figcaption>
       <div className={contentClassName}>{children}</div>
     </figure>
