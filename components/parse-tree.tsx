@@ -87,7 +87,7 @@ export function ParseTree({ className }: { className?: string }) {
                 textAnchor="middle"
                 className={related ? "fill-primary" : "fill-muted-foreground"}
                 fontSize="9"
-                fontFamily="var(--font-geist-mono)"
+                fontFamily="var(--font-plex-mono)"
               >
                 {arc.label}
               </text>
@@ -116,7 +116,7 @@ export function ParseTree({ className }: { className?: string }) {
             type="button"
             onClick={() => setActive(index)}
             className={cn(
-              "min-w-0 flex-1 rounded-md px-1 py-2 text-center font-heading text-sm transition-colors",
+              "min-w-0 flex-1 rounded-sm px-1 py-2 text-center font-heading text-sm transition-colors",
               index === active
                 ? "text-primary"
                 : "text-foreground/70 hover:text-foreground"

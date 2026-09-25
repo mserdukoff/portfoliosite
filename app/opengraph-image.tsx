@@ -7,7 +7,7 @@ export const contentType = "image/png";
 
 async function loadFont(family: string, text: string, weight = 400) {
   const cssRes = await fetch(
-    `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&text=${encodeURIComponent(
+    `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:wght@${weight}&text=${encodeURIComponent(
       text
     )}`
   );
@@ -23,18 +23,18 @@ export default async function OpengraphImage() {
     loadFont("Pochaevsk", "М"),
     loadFont("Newsreader", site.name, 600),
     loadFont(
-      "Geist",
-      `${site.role} — ${site.location} — ${site.status}`,
+      "Schibsted Grotesk",
+      `${site.role} · ${site.location} · ${site.status}`,
       500
     ),
-    loadFont("Geist", site.homepageLead, 400),
+    loadFont("Schibsted Grotesk", site.homepageLead, 400),
   ]);
 
   const fonts = [
     markData && { name: "Pochaevsk", data: markData, style: "normal" as const, weight: 400 as const },
     nameData && { name: "Newsreader", data: nameData, style: "normal" as const, weight: 600 as const },
-    roleData && { name: "Geist", data: roleData, style: "normal" as const, weight: 500 as const },
-    leadData && { name: "Geist", data: leadData, style: "normal" as const, weight: 400 as const },
+    roleData && { name: "Schibsted Grotesk", data: roleData, style: "normal" as const, weight: 500 as const },
+    leadData && { name: "Schibsted Grotesk", data: leadData, style: "normal" as const, weight: 400 as const },
   ].filter((f): f is NonNullable<typeof f> => Boolean(f));
 
   return new ImageResponse(
@@ -46,7 +46,7 @@ export default async function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#020201",
+          background: "#edeef6",
           padding: "64px 72px",
         }}
       >
@@ -55,7 +55,7 @@ export default async function OpengraphImage() {
             display: "flex",
             fontSize: 56,
             lineHeight: 1,
-            color: "#c96736",
+            color: "#2a44b8",
             fontFamily: markData ? "Pochaevsk" : "serif",
           }}
         >
@@ -68,7 +68,7 @@ export default async function OpengraphImage() {
               display: "flex",
               fontSize: 76,
               lineHeight: 1.05,
-              color: "#efebe2",
+              color: "#13205e",
               fontFamily: nameData ? "Newsreader" : "serif",
               fontWeight: 600,
             }}
@@ -79,8 +79,8 @@ export default async function OpengraphImage() {
             style={{
               display: "flex",
               fontSize: 26,
-              color: "#c96736",
-              fontFamily: roleData ? "Geist" : "sans-serif",
+              color: "#2a44b8",
+              fontFamily: roleData ? "Schibsted Grotesk" : "sans-serif",
               fontWeight: 500,
               letterSpacing: 0.5,
             }}
@@ -93,8 +93,8 @@ export default async function OpengraphImage() {
               maxWidth: 880,
               fontSize: 28,
               lineHeight: 1.5,
-              color: "#8d8980",
-              fontFamily: leadData ? "Geist" : "sans-serif",
+              color: "#4a5590",
+              fontFamily: leadData ? "Schibsted Grotesk" : "sans-serif",
               fontWeight: 400,
             }}
           >

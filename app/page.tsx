@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FeaturedWork } from "@/components/featured-work";
 import { GithubActivity } from "@/components/github-activity";
 import { Hero } from "@/components/hero";
 import { LanguageRadar } from "@/components/language-radar";
+import { Reveal } from "@/components/reveal";
 import { buttonVariants } from "@/components/ui/button";
 import {
   certifications,
@@ -18,6 +18,38 @@ import {
 } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+const sectionClass =
+  "scroll-mt-10 border-t border-foreground/80 pt-10 pb-16 sm:pt-12 sm:pb-24";
+
+function SectionHead({
+  index,
+  label,
+  title,
+  children,
+}: {
+  index: string;
+  label: string;
+  title: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <Reveal>
+      <p className="eyebrow flex justify-between">
+        <span>{label}</span>
+        <span>{index}</span>
+      </p>
+      <h2 className="mt-8 max-w-2xl font-heading text-[clamp(2rem,4vw,3.25rem)] leading-[1.02] tracking-[-0.03em]">
+        {title}
+      </h2>
+      {children ? (
+        <div className="mt-5 max-w-xl text-[16px] leading-7 text-muted-foreground">
+          {children}
+        </div>
+      ) : null}
+    </Reveal>
+  );
+}
+
 export default function HomePage() {
   const rest = projects.filter((project) => !project.featured);
   const latestPosts = journal.slice(0, 4);
@@ -26,197 +58,171 @@ export default function HomePage() {
     <>
       <Hero />
 
-      <section
-        id="work"
-        className="scroll-mt-10 border-t border-border pt-16 pb-16 sm:pt-20 sm:pb-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Work
-        </p>
-        <h2 className="mt-4 max-w-xl font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Things that had to ship.
-        </h2>
-        <p className="mt-5 max-w-xl text-[16px] leading-7 text-muted-foreground">
-          Two live products. Six completed builds. GitHub is the profile, not
-          a set of invented repo names.
-        </p>
+      <section id="work" className={sectionClass}>
+        <SectionHead index="01" label="Work" title="Things that had to ship.">
+          <p>
+            Three live products and five completed builds. Source for most of it
+            is on GitHub.
+          </p>
+        </SectionHead>
 
         <div className="mt-14">
           <FeaturedWork />
         </div>
 
-        <div className="mt-16">
-          <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Completed
-          </h3>
-          <ul className="mt-4 divide-y divide-border border-y border-border">
-            {rest.map((project) => (
-              <li key={project.slug} id={project.slug} className="py-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                  {project.subtitle}
-                </p>
-                <h4 className="mt-2 font-heading text-2xl tracking-tight">
-                  {project.title}
-                </h4>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                  {project.summary}
-                </p>
-                <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-                  {project.stack.join(" · ")}
-                </p>
+        <div className="mt-20">
+          <h3 className="eyebrow">Completed</h3>
+          <ul className="mt-4 border-t border-border">
+            {rest.map((project, i) => (
+              <li
+                key={project.slug}
+                id={project.slug}
+                className="grid gap-2 border-b border-border py-7 sm:grid-cols-[3rem_minmax(0,1fr)_minmax(0,16rem)] sm:gap-8"
+              >
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h4 className="font-heading text-2xl tracking-tight">
+                    {project.title}
+                  </h4>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                    {project.summary}
+                  </p>
+                </div>
+                <div className="font-mono text-[11px] leading-5 text-muted-foreground sm:text-right">
+                  <p className="uppercase tracking-[0.14em] text-foreground/80">
+                    {project.subtitle}
+                  </p>
+                  <p className="mt-2">{project.stack.join(" / ")}</p>
+                </div>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="mt-10 flex flex-wrap gap-1.5">
-          {stack.map((item) => (
-            <span
-              key={item}
-              className="rounded-md border border-border/70 px-2 py-1 font-mono text-[10.5px] text-foreground/75"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
+        <p className="mt-10 max-w-3xl font-mono text-[12px] leading-6 text-muted-foreground">
+          <span className="mr-3 uppercase tracking-[0.14em] text-foreground/80">
+            Stack
+          </span>
+          {stack.join(" / ")}
+        </p>
 
         <div className="mt-16 max-w-3xl">
           <GithubActivity />
         </div>
       </section>
 
-      <section
-        id="experience"
-        className="scroll-mt-10 border-t border-border pt-16 pb-16 sm:pt-20 sm:pb-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Experience
-        </p>
-        <h2 className="mt-4 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Where the work happened.
-        </h2>
+      <section id="experience" className={sectionClass}>
+        <SectionHead
+          index="02"
+          label="Experience"
+          title="Where the work happened."
+        />
 
-        <ol className="mt-10 max-w-2xl space-y-8 border-l border-border pl-6">
+        <ol className="mt-12 border-t border-border">
           {experience.map((item) => (
-            <li key={item.org} className="relative">
-              <span className="absolute -left-[1.6rem] top-1.5 size-2 rounded-full bg-primary" />
-              <p className="font-mono text-[11px] text-muted-foreground">
+            <li
+              key={item.org}
+              className="grid gap-3 border-b border-border py-8 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-8"
+            >
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                 {item.period}
               </p>
-              <p className="mt-2 font-heading text-xl tracking-tight">
-                {item.role}{" "}
-                <span className="text-muted-foreground">
-                  ·{" "}
+              <div>
+                <p className="font-heading text-2xl tracking-tight">
+                  {item.role}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
                   {item.href ? (
                     <a href={item.href} className="hover:text-primary">
-                      {item.org}
+                      {item.org} ↗
                     </a>
                   ) : (
                     item.org
                   )}
-                </span>
-              </p>
-              <p className="mt-3 max-w-xl text-[15px] leading-7 text-foreground/80">
-                {item.summary}
-              </p>
+                </p>
+                <p className="mt-4 max-w-2xl text-[15px] leading-7 text-foreground/80">
+                  {item.summary}
+                </p>
+              </div>
             </li>
           ))}
         </ol>
 
-        <div className="mt-14 max-w-2xl space-y-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Education
-          </p>
-          {education.map((item) => (
-            <div key={item.school}>
-              <p className="font-heading text-2xl tracking-tight">
-                {item.school}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {item.degree}
-                <br />
-                {item.period}
-              </p>
+        <div className="mt-16 grid gap-12 sm:grid-cols-2">
+          <div>
+            <p className="eyebrow">Education</p>
+            <div className="mt-5 space-y-6">
+              {education.map((item) => (
+                <div key={item.school}>
+                  <p className="font-heading text-2xl tracking-tight">
+                    {item.school}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {item.degree}
+                    <br />
+                    {item.period}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        <div className="mt-14 max-w-2xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Certifications
-          </p>
-          <ul className="mt-4 space-y-2 text-[15px] leading-7 text-muted-foreground">
-            {certifications.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section
-        id="about"
-        className="scroll-mt-10 border-t border-border pt-16 pb-16 sm:pt-20 sm:pb-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          About
-        </p>
-        <h2 className="mt-4 max-w-[16ch] font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Engineer, not a generic AI founder.
-        </h2>
-
-        <div className="mt-8 grid gap-12 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-16">
-          <div className="min-w-0 max-w-2xl space-y-5 text-[16.5px] leading-8 text-foreground/88">
-            <p>
-              {site.role} in {site.location}. {site.homepageLead} Applied
-              machine learning to state government data pipelines at the MA
-              Executive Office of Administration &amp; Finance.
-            </p>
-            <p>{site.homepageClose}</p>
-            <p>{site.aboutClose}</p>
           </div>
-
-          <aside className="lg:sticky lg:top-10">
-            <Image
-              src="/portrait.png"
-              alt="Portrait of Matt Serdukoff"
-              width={640}
-              height={640}
-              className="mx-auto h-auto w-full max-w-[12rem] select-none lg:mx-0 lg:max-w-none"
-            />
-          </aside>
+          <div>
+            <p className="eyebrow">Certifications</p>
+            <ul className="mt-5 space-y-3 text-[15px] leading-6">
+              {certifications.map((item) => (
+                <li key={item.name}>
+                  {item.name}
+                  <span className="block text-sm text-muted-foreground">
+                    {item.issuer}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
-      <section
-        id="languages"
-        className="scroll-mt-10 border-t border-border pt-16 pb-16 sm:pt-20 sm:pb-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Languages
-        </p>
-        <h2 className="mt-4 max-w-xl font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Seven languages, seven different grammars.
-        </h2>
-        <p className="mt-5 max-w-xl text-[16px] leading-7 text-muted-foreground">
-          Grammario exists because I wanted to see structure, not memorize
-          it. These are the languages that shaped how it works — read the{" "}
-          <Link
-            href="/work/grammario"
-            className="text-foreground underline-offset-4 hover:underline"
-          >
-            case study
-          </Link>
-          .
-        </p>
+      <section id="about" className={sectionClass}>
+        <SectionHead index="03" label="About" title="Engineer first." />
+
+        <Reveal className="mt-8 max-w-2xl space-y-5 text-[17px] leading-8 text-foreground/88">
+          <p>
+            {site.role} in {site.location}. {site.homepageLead} Applied
+            machine learning to state government data pipelines at the MA
+            Executive Office of Administration &amp; Finance.
+          </p>
+          <p>{site.homepageClose}</p>
+          <p>{site.aboutClose}</p>
+        </Reveal>
+      </section>
+
+      <section id="languages" className={sectionClass}>
+        <SectionHead
+          index="04"
+          label="Languages"
+          title="Seven languages, seven different grammars."
+        >
+          <p>
+            Grammario exists because I wanted to see structure instead of
+            memorizing it. These are the languages that shaped how it works.
+            The{" "}
+            <Link
+              href="/work/grammario"
+              className="text-foreground underline decoration-foreground/25 underline-offset-4 hover:decoration-primary"
+            >
+              case study
+            </Link>{" "}
+            has the details.
+          </p>
+        </SectionHead>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[22rem_1fr] lg:items-center lg:gap-16">
-          <LanguageRadar
-            className="mx-auto w-full max-w-sm"
-            fontSize={13}
-          />
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-3">
+          <LanguageRadar className="mx-auto w-full max-w-sm" fontSize={13} />
+          <ul className="grid grid-cols-2 border-t border-border sm:grid-cols-3">
             {languages.map((language) => (
-              <li key={language.name}>
+              <li key={language.name} className="border-b border-border py-4">
                 <p className="font-heading text-xl tracking-tight">
                   {language.name}
                 </p>
@@ -229,27 +235,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section
-        id="journal"
-        className="scroll-mt-10 border-t border-border pt-16 pb-16 sm:pt-20 sm:pb-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Journal
-        </p>
-        <h2 className="mt-4 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Public writing.
-        </h2>
-        <p className="mt-5 max-w-xl text-[16px] leading-7 text-muted-foreground">
-          Build notes. Mostly Grammario, plus the Go work that came out of a
-          slow Wheelbase pipeline.
-        </p>
+      <section id="journal" className={sectionClass}>
+        <SectionHead index="05" label="Journal" title="Public writing.">
+          <p>
+            Build notes. Mostly Grammario, plus the Go work that came out of a
+            slow Wheelbase pipeline.
+          </p>
+        </SectionHead>
 
-        <div className="mt-10 divide-y divide-border border-t border-border">
+        <div className="mt-10 border-t border-border">
           {latestPosts.map((post) => (
             <Link
               key={post.slug}
               href={`/journal/${post.slug}`}
-              className="group grid gap-2 py-7 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-8"
+              className="group grid gap-2 border-b border-border py-7 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-8"
             >
               <time className="font-mono text-[11px] text-muted-foreground">
                 {formatDate(post.date)}
@@ -268,42 +267,35 @@ export default function HomePage() {
 
         <Link
           href="/journal"
-          className="mt-8 inline-block text-sm text-foreground underline-offset-4 hover:underline"
+          className="mt-8 inline-block text-sm text-foreground underline decoration-foreground/25 underline-offset-4 hover:decoration-primary"
         >
-          See all {journal.length} entries →
+          All {journal.length} entries
         </Link>
       </section>
 
-      <section
-        id="contact"
-        className="scroll-mt-10 border-t border-border pt-16 pb-4 sm:pt-20"
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Contact
-        </p>
-        <h2 className="mt-4 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
-          Want to get in touch?
-        </h2>
-        <p className="mt-5 max-w-xl text-[16px] leading-7 text-muted-foreground">
-          {site.status} in {site.location}. Reach out if you&apos;re hiring,
-          or just want to talk shop.
-        </p>
+      <section id="contact" className={cn(sectionClass, "pb-8 sm:pb-10")}>
+        <SectionHead index="06" label="Contact" title="Want to get in touch?">
+          <p>
+            {site.status} in {site.location}. Reach out if you&apos;re hiring,
+            or just want to talk shop.
+          </p>
+        </SectionHead>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
             href={`mailto:${site.email}`}
-            className={cn(buttonVariants({ size: "lg" }))}
+            className={cn(buttonVariants({ size: "lg" }), "px-4")}
           >
-            Email me
+            {site.email}
           </a>
           <a
             href={site.github}
-            className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-4")}
           >
             GitHub ↗
           </a>
           <a
             href={site.linkedin}
-            className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-4")}
           >
             LinkedIn ↗
           </a>

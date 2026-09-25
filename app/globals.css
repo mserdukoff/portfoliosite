@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
   --font-heading: var(--font-newsreader), ui-serif, Georgia, serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -70,60 +70,64 @@
 }
 
 :root {
-  /* Near-black editorial base, warm cream ink, terracotta highlight */
-  --background: oklch(0.085 0.004 95);
-  --foreground: oklch(0.94 0.012 85);
-  --card: oklch(0.14 0.007 95);
-  --card-foreground: oklch(0.94 0.012 85);
-  --popover: oklch(0.14 0.007 95);
-  --popover-foreground: oklch(0.94 0.012 85);
-  --primary: oklch(0.62 0.14 45);
-  --primary-foreground: oklch(0.15 0.02 40);
-  --secondary: oklch(0.19 0.008 95);
-  --secondary-foreground: oklch(0.94 0.012 85);
-  --muted: oklch(0.16 0.007 95);
-  --muted-foreground: oklch(0.63 0.014 85);
-  --accent: oklch(0.19 0.008 95);
-  --accent-foreground: oklch(0.94 0.012 85);
-  --destructive: oklch(0.58 0.19 25);
-  --border: oklch(0.24 0.01 90);
-  --input: oklch(0.24 0.01 90);
-  --ring: oklch(0.62 0.14 45);
-  --chart-1: oklch(0.62 0.14 45);
-  --chart-2: oklch(0.75 0.02 85);
-  --chart-3: oklch(0.5 0.03 230);
-  --chart-4: oklch(0.55 0.02 85);
-  --chart-5: oklch(0.35 0.015 90);
-  --radius: 0.45rem;
-  --sidebar: oklch(0.085 0.004 95);
-  --sidebar-foreground: oklch(0.94 0.012 85);
-  --sidebar-primary: oklch(0.62 0.14 45);
-  --sidebar-primary-foreground: oklch(0.15 0.02 40);
-  --sidebar-accent: oklch(0.19 0.008 95);
-  --sidebar-accent-foreground: oklch(0.94 0.012 85);
-  --sidebar-border: oklch(0.24 0.01 90);
-  --sidebar-ring: oklch(0.62 0.14 45);
-  --chart-background: oklch(0.14 0.007 95);
-  --chart-foreground: oklch(0.94 0.012 85);
-  --chart-foreground-muted: oklch(0.63 0.014 85);
+  /* Cobalt ink on cool paper. One hue; tone does the rest. */
+  --paper: oklch(0.957 0.011 278);
+  --ink: oklch(0.26 0.11 266);
+  --cobalt: oklch(0.46 0.19 266);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: oklch(0.972 0.008 278);
+  --card-foreground: var(--ink);
+  --popover: oklch(0.972 0.008 278);
+  --popover-foreground: var(--ink);
+  --primary: var(--cobalt);
+  --primary-foreground: var(--paper);
+  --secondary: oklch(0.915 0.022 274);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.925 0.018 275);
+  --muted-foreground: oklch(0.47 0.07 268);
+  --accent: oklch(0.915 0.022 274);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.19 25);
+  --border: oklch(0.855 0.032 272);
+  --input: oklch(0.855 0.032 272);
+  --ring: var(--cobalt);
+  --chart-1: var(--cobalt);
+  --chart-2: oklch(0.62 0.12 268);
+  --chart-3: oklch(0.36 0.12 266);
+  --chart-4: oklch(0.74 0.07 270);
+  --chart-5: oklch(0.84 0.04 272);
+  --radius: 0.125rem;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--cobalt);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: oklch(0.915 0.022 274);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: oklch(0.855 0.032 272);
+  --sidebar-ring: var(--cobalt);
+  --chart-background: oklch(0.972 0.008 278);
+  --chart-foreground: var(--ink);
+  --chart-foreground-muted: oklch(0.47 0.07 268);
   --chart-line-primary: var(--chart-1);
   --chart-line-secondary: var(--chart-2);
-  --chart-crosshair: oklch(0.62 0.14 45);
-  --chart-grid: oklch(0.24 0.01 90);
+  --chart-crosshair: var(--cobalt);
+  --chart-grid: oklch(0.855 0.032 272);
   --chart-brush-border: var(--chart-grid);
-  --chart-tooltip-background: oklch(0.06 0.004 95 / 0.94);
-  --chart-tooltip-foreground: oklch(0.94 0.012 85);
-  --chart-tooltip-muted: oklch(0.6 0.012 85);
-  --chart-marker-background: oklch(0.16 0.007 95);
-  --chart-marker-border: oklch(0.24 0.01 90);
-  --chart-marker-foreground: oklch(0.85 0.012 85);
-  --chart-label: oklch(0.63 0.014 85);
-  --chart-scale-01: oklch(0.16 0.007 95);
-  --chart-scale-02: oklch(0.32 0.05 60);
-  --chart-scale-03: oklch(0.46 0.09 52);
-  --chart-scale-04: oklch(0.56 0.12 48);
-  --chart-scale-05: oklch(0.62 0.14 45);
-  --chart-scale-pattern-color: oklch(0.2 0.01 95);
+  --chart-tooltip-background: oklch(0.26 0.11 266 / 0.96);
+  --chart-tooltip-foreground: var(--paper);
+  --chart-tooltip-muted: oklch(0.8 0.04 272);
+  --chart-marker-background: var(--paper);
+  --chart-marker-border: oklch(0.855 0.032 272);
+  --chart-marker-foreground: var(--ink);
+  --chart-label: oklch(0.47 0.07 268);
+  --chart-scale-01: oklch(0.925 0.018 275);
+  --chart-scale-02: oklch(0.8 0.06 270);
+  --chart-scale-03: oklch(0.66 0.11 268);
+  --chart-scale-04: oklch(0.54 0.16 266);
+  --chart-scale-05: var(--cobalt);
+  --chart-scale-pattern-color: oklch(0.89 0.025 274);
 }
 
 @layer base {
@@ -141,33 +145,31 @@
     position: relative;
   }
 
+  /* Print grain. Multiply keeps it reading as ink on paper, not a filter. */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 40;
     pointer-events: none;
-    opacity: 0.05;
-    mix-blend-mode: soft-light;
+    opacity: 0.09;
+    mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   ::selection {
-    background: oklch(0.62 0.14 45);
-    color: oklch(0.1 0.006 95);
+    background: var(--cobalt);
+    color: var(--paper);
   }
 }
 
 @layer components {
-  .card-elevated {
-    box-shadow:
-      0 1px 2px oklch(0.02 0.002 95 / 0.5),
-      0 20px 45px -20px oklch(0.01 0.001 95 / 0.75);
+  .rail-panel {
+    @apply border-t border-foreground/80 pt-4;
   }
 
-  .rail-panel {
-    @apply rounded-2xl border border-border/70 bg-card/60 p-6;
-    box-shadow: 0 1px 2px oklch(0.02 0.002 95 / 0.4);
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
   }
 
   .animate-page-fade {
@@ -195,3 +197,4 @@
     animation: none;
   }
 }
+

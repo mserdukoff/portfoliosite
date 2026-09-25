@@ -46,7 +46,7 @@ export default function JournalPage() {
           ))}
         </div>
 
-        <aside className="space-y-6 lg:sticky lg:top-24">
+        <aside className="space-y-10 lg:sticky lg:top-24">
           <div className="rail-panel">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
               Archive

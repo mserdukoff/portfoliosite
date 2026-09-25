@@ -23,6 +23,13 @@ export function SideNav() {
     function updateActive() {
       const trigger = window.scrollY + window.innerHeight * 0.2;
       let current: (typeof nav)[number]["id"] = nav[0].id;
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4;
+      if (atBottom) {
+        setActiveId(sections[sections.length - 1].id);
+        return;
+      }
       for (const section of sections) {
         if (section.el.offsetTop <= trigger) {
           current = section.id;

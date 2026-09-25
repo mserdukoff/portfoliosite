@@ -16,29 +16,25 @@ export function BrowserFrame({
   const dark = tone === "dark";
 
   return (
-    <div
+    <figure
       className={cn(
-        "overflow-hidden rounded-xl border card-elevated",
+        "overflow-hidden rounded-sm border",
         dark
-          ? "border-background/10 bg-background text-foreground"
-          : "border-border/70 bg-background",
+          ? "border-background/25 bg-background text-foreground"
+          : "border-border bg-background",
         className
       )}
     >
-      <div
+      <figcaption
         className={cn(
-          "flex items-center gap-1.5 border-b px-3 py-2",
-          dark ? "border-border/60 bg-muted/40" : "border-border/60 bg-muted/50"
+          "flex items-center justify-between gap-3 border-b px-3 py-1.5 font-mono text-[10px] text-muted-foreground",
+          dark ? "border-border bg-muted" : "border-border bg-muted/60"
         )}
       >
-        <span className="size-2 rounded-full bg-foreground/15" />
-        <span className="size-2 rounded-full bg-foreground/15" />
-        <span className="size-2 rounded-full bg-foreground/15" />
-        <span className="ml-2 truncate font-mono text-[10px] text-muted-foreground">
-          {label}
-        </span>
-      </div>
+        <span className="truncate">{label}</span>
+        <span className="shrink-0 uppercase tracking-[0.14em]">Live</span>
+      </figcaption>
       <div className={contentClassName}>{children}</div>
-    </div>
+    </figure>
   );
 }

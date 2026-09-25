@@ -24,7 +24,7 @@ export default function NotFound() {
           y={30}
           textAnchor="middle"
           fontSize="9"
-          fontFamily="var(--font-geist-mono)"
+          fontFamily="var(--font-plex-mono)"
           className="fill-primary"
         >
           ???

@@ -10,13 +10,13 @@ export const site = {
   github: "https://github.com/mserdukoff",
   linkedin: "https://www.linkedin.com/in/matt-serdukoff-775030190/",
   metadata:
-    "Software engineer building systems that think. Building Wheelbase, creator of Grammario. Based in Boston.",
+    "Software engineer building systems that think. Building Wheelbase and Lociros, creator of Grammario. Based in Boston.",
   homepageLead:
-    "Building Wheelbase, a dealership operations platform. Creator of Grammario, a grammar analyzer for six languages.",
+    "Building Wheelbase, a dealership operations platform, and Lociros, graded readers checked against their level. Creator of Grammario, a grammar analyzer for six languages.",
   homepageClose:
     "I like hard problems and am drawn to domains where getting it wrong has real consequences.",
   aboutClose:
-    "I am interested in systems that have to work under pressure — embedded, constrained, or otherwise consequential. On the language side, Grammario came from a frustration with how grammar is usually taught: I wanted to see the structure, not memorize rules. That turned into a real NLP pipeline covering morphological analysis, dependency parsing, and the structural differences between agglutinative and fusional languages. The seven languages I study inform the engineering as much as the other way around.",
+    "I am interested in systems that have to work under pressure: embedded, constrained, or otherwise consequential. On the language side, Grammario came from a frustration with how grammar is usually taught. I wanted to see the structure of a sentence. That turned into a real NLP pipeline covering morphological analysis, dependency parsing, and the structural differences between agglutinative and fusional languages. The seven languages I study inform the engineering as much as the other way around.",
 } as const;
 
 export const nav = [
@@ -62,7 +62,7 @@ export const experience = [
   {
     org: "Wheelbase",
     role: "Full-Stack Engineer",
-    period: "2024 — Present",
+    period: "2024–Present",
     href: "https://wheelbase.io",
     summary:
       "Multi-tenant dealership operations platform built from scratch as a Turborepo monorepo: web app, Electron desktop, and an Expo mobile field app sharing one Go backend. Re-engineered the backend from Python to Go for sub-second response times, and built an AI operations assistant with tenant-scoped natural-language SQL.",
@@ -70,7 +70,7 @@ export const experience = [
   {
     org: "MA Executive Office of Administration & Finance",
     role: "AI / Data Science Intern",
-    period: "Mar – Sep 2025",
+    period: "Mar–Sep 2025",
     href: null,
     summary:
       "Applied machine learning and NLP to state government data pipelines, and delivered briefings on AI procurement risk to senior staff.",
@@ -81,19 +81,19 @@ export const education = [
   {
     school: "Boston University",
     degree: "M.S. Applied Data Analytics",
-    period: "2026 — 2028 (expected)",
+    period: "2026–2028 (expected)",
   },
   {
     school: "University of Massachusetts Lowell",
-    degree: "B.S. Computer Science — Data Science Concentration",
-    period: "2020 — 2024",
+    degree: "B.S. Computer Science, Data Science concentration",
+    period: "2020–2024",
   },
 ] as const;
 
 export const certifications = [
-  "Neural Networks and Deep Learning — DeepLearning.AI",
-  "NLP Specialization — DeepLearning.AI",
-  "Google Go Programming Specialization — Google / Coursera",
+  { name: "Neural Networks and Deep Learning", issuer: "DeepLearning.AI" },
+  { name: "NLP Specialization", issuer: "DeepLearning.AI" },
+  { name: "Google Go Programming Specialization", issuer: "Google / Coursera" },
 ] as const;
 
 export type Project = {
@@ -104,6 +104,7 @@ export type Project = {
   status: "Active" | "Completed";
   featured: boolean;
   href?: string;
+  repo?: string;
   caseStudy?: string;
   blurb?: string;
   summary: string;
@@ -115,12 +116,12 @@ export const projects: Project[] = [
     slug: "wheelbase",
     title: "Wheelbase",
     subtitle: "Dealership operations platform",
-    period: "2024 — Present",
+    period: "2024–Present",
     status: "Active",
     featured: true,
     href: "https://wheelbase.io",
     blurb:
-      "Auction intelligence, inventory, and recon — one Go backend, shipped to web, desktop, and mobile.",
+      "Auction intelligence, inventory, and recon on one Go backend, shipped to web, desktop, and mobile.",
     summary:
       "Built a multi-tenant dealership platform from zero: auction runlist scoring, VIN decoding, a configurable recon pipeline, and an AI operations assistant, spanning a web app, Electron desktop shell, and Expo mobile field app in one Turborepo monorepo. Re-engineered the backend from Python to Go for sub-second response times.",
     stack: [
@@ -137,10 +138,34 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "lociros",
+    title: "Lociros",
+    subtitle: "Graded readers, checked",
+    period: "2026",
+    status: "Active",
+    featured: true,
+    href: "https://lociros.com",
+    repo: "https://github.com/mserdukoff/lociros",
+    blurb:
+      "Graded readers where A2 is actually A2. Every passage is checked by a morphological analyzer before you read it.",
+    summary:
+      "Graded readers in Japanese, Arabic, Italian, and Russian, A1–B2. An LLM drafts each passage under per-level grammar rules, then a real analyzer (Sudachi, CAMeL Tools, spaCy, pymorphy3) checks every word and construction and forces a rewrite when something is over level. Tap any word for reading, grammar, gloss, kanji with stroke order, or the Arabic root. Rating each text moves your placement and picks the next passage from the words you have already seen.",
+    stack: [
+      "Next.js",
+      "FastAPI",
+      "Sudachi",
+      "CAMeL Tools",
+      "spaCy",
+      "pymorphy3",
+      "Supabase",
+      "OpenRouter",
+    ],
+  },
+  {
     slug: "grammario",
     title: "Grammario",
     subtitle: "Grammar you can see",
-    period: "2024 — Present",
+    period: "2024–Present",
     status: "Active",
     featured: true,
     href: "https://grammario.ai",
@@ -148,7 +173,7 @@ export const projects: Project[] = [
     blurb:
       "Click a sentence. See the structure. Universal Dependencies first, AI explanation second.",
     summary:
-      "A syntactic grammar analyzer for six languages, with dual NLP engines, sentence embeddings for similarity search, CEFR difficulty scoring, and a full teacher/student class platform behind a gamified learning experience. Built entirely solo — the tool I wanted when every language app treated grammar as streak-maintenance.",
+      "A syntactic grammar analyzer for six languages, with dual NLP engines, sentence embeddings for similarity search, CEFR difficulty scoring, and a full teacher/student class platform behind a gamified learning experience. Built entirely solo. It is the tool I wanted when every language app treated grammar as streak maintenance.",
     stack: [
       "spaCy",
       "Stanza",
@@ -158,24 +183,6 @@ export const projects: Project[] = [
       "pgvector",
       "Redis",
       "OpenAI API",
-    ],
-  },
-  {
-    slug: "levla",
-    title: "Levla",
-    subtitle: "CEFR graded readers",
-    period: "2026",
-    status: "Completed",
-    featured: false,
-    summary:
-      "Graded-reader app for Russian and Japanese, A1–B2. An LLM drafts each passage under CEFR-level grammar constraints, a morphological analyzer validates and rewrites it before it ships, and tapping any word surfaces lemma, grammar, gloss, and kanji readings. Feedback on each text adjusts placement and recommends what to read next.",
-    stack: [
-      "Next.js",
-      "FastAPI",
-      "SQLAlchemy",
-      "Sudachi",
-      "pymorphy3",
-      "OpenRouter",
     ],
   },
   {
@@ -292,7 +299,7 @@ export const journal: JournalPost[] = [
     gist: "v1.0 features, teacher suite, Japanese, Learn section. Honest about building solo.",
     body: [
       "I am working on Grammario more than ever. What started as a passion project is something I might actually market. That shift is real, and it is still not finished.",
-      "v1.0, as of this writing: an interactive SVG dependency tree. Click a word and you get POS, lemma, case, tense, and the dependency relation. Sentence similarity via embeddings, so after analysis you can see something from your own history that is structurally close — with a note explaining the link. A Learn section organized by CEFR, A1 through C2, that ties topics back to the analyzer. Japanese is in progress, being refined, not broadly shipped.",
+      "v1.0, as of this writing: an interactive SVG dependency tree. Click a word and you get POS, lemma, case, tense, and the dependency relation. Sentence similarity via embeddings, so after analysis you can see something from your own history that is structurally close, with a note explaining the link. A Learn section organized by CEFR, A1 through C2, that ties topics back to the analyzer. Japanese is in progress, being refined, not broadly shipped.",
       "The teacher suite is still in active development: classes, shareable join codes, quizzes, Kahoot-style live sessions, assigned reading, writing prompts with AI feedback, class-wide error pattern analytics.",
       "Features under consideration, not committed: Sentence Remix, a word-frequency overlay on the tree, paragraph mode, a personal grammar library, vocabulary-in-context flashcards that keep the structure the word came from.",
       "Building this entirely alone is freeing and overwhelming in equal measure. Wheelbase still takes precedence when the two conflict.",
@@ -307,9 +314,9 @@ export const journal: JournalPost[] = [
       "Earlier Grammario asked a language model to identify grammar. The output was fluent. It was also unreliable. I will not ship a tool that kind of works.",
       "The rebuild is Structural-First Analysis. Three layers, in order.",
       "Analyst: spaCy parses via Universal Dependencies. Lemmatization, POS tags, and dependency arcs come out deterministically. No model hallucination at this layer.",
-      "Strategist: language-specific post-processing. Turkish gets an X-Ray view — agglutinative, stacking meanings like LEGO, exploding a word such as evlerinizden into plural, possessive, and case. German and Russian get governance: which verb demands dative or accusative. Italian and Spanish get agreement clusters, visually grouping words that must match in gender and number.",
-      "Tutor: only after the structure is known does the AI explain it in natural language. It does not find the grammar. It teaches from the open book.",
-      "The design tension is linguistic rigor versus a uniform UX. Languages are not the same. Each one needed its own analysis strategy, not just a different model.",
+      "Strategist: language-specific post-processing. Turkish gets an X-Ray view. It is agglutinative, stacking meanings like LEGO, so the view explodes a word such as evlerinizden into plural, possessive, and case. German and Russian get governance: which verb demands dative or accusative. Italian and Spanish get agreement clusters, visually grouping words that must match in gender and number.",
+      "Tutor: only after the structure is known does the AI explain it in natural language. The grammar is already on the page, and the model teaches from that open book.",
+      "The design tension is linguistic rigor versus a uniform UX. Languages differ in how they build meaning, so each one needed its own analysis strategy.",
     ],
   },
   {
@@ -330,7 +337,7 @@ export const journal: JournalPost[] = [
     body: [
       "I started learning Go after a Wheelbase ingestion path in Python got too slow. The language itself is the part I keep thinking about.",
       "I like the method-receiver syntax. Pass-by-value versus a *Bank receiver makes the mutation story obvious in a way C++ sometimes buries. And Go's automatic struct pointer dereference is a small, precise detail that feels like the language is paying attention.",
-      "It is not a religion. It is a better tool for a class of backend work I am already doing.",
+      "For a class of backend work I am already doing, it is simply the better tool.",
     ],
   },
   {
@@ -378,8 +385,8 @@ export const journal: JournalPost[] = [
     title: "Grammario Project Update 12/29/24",
     gist: "Prompt engineering breakthrough. Structured JSON for sentences.",
     body: [
-      "A prompt-engineering breakthrough: structured JSON output for sentences — lemma, POS, tense, relationship matrix. Design drawings exist. This is still the LLM-first era of the project, before I rebuilt around deterministic parse.",
-      "The instinct was already right: grammar as structure you can inspect, not a paragraph of vibes.",
+      "A prompt-engineering breakthrough: structured JSON output for sentences, covering lemma, POS, tense, and a relationship matrix. Design drawings exist. This is still the LLM-first era of the project, before I rebuilt around deterministic parse.",
+      "The instinct was already right: grammar as structure you can inspect.",
     ],
   },
   {
@@ -395,10 +402,10 @@ export const journal: JournalPost[] = [
   {
     slug: "grammario-september-experiments",
     date: "2024-09-19",
-    title: "Grammario Update — September 19, 2024",
+    title: "Grammario Update, September 19, 2024",
     gist: "OpenAI versus Stanza plus custom suffix tests for Italian and Turkish.",
     body: [
-      "Experiments: OpenAI API for Italian and Turkish, and Stanza plus custom suffix extraction for Turkish. The Stanza path was more flexible for Turkish suffixes. The goal is a robust web app, not a demo notebook.",
+      "Experiments: OpenAI API for Italian and Turkish, and Stanza plus custom suffix extraction for Turkish. The Stanza path was more flexible for Turkish suffixes. The goal is a robust web app people can actually use.",
     ],
   },
   {

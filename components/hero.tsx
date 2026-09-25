@@ -1,106 +1,118 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
+import { useRef } from "react";
+import { DitherPortrait } from "@/components/dither-plate";
 import { LocalClock } from "@/components/local-clock";
 import { NameDecode } from "@/components/name-decode";
 import { fadeUp, stagger } from "@/lib/motion";
 import { projects, site } from "@/lib/site";
 
+const link = "text-foreground underline decoration-foreground/25 underline-offset-4 hover:decoration-primary";
+
 export function Hero() {
   const wheelbase = projects.find((project) => project.slug === "wheelbase");
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const plateY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 90]);
+  const markY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -60]);
 
   return (
     <section
+      ref={ref}
       id="hero"
-      className="relative scroll-mt-10 overflow-hidden pb-10 pt-16 sm:pb-12 sm:pt-20"
+      className="relative scroll-mt-10 pb-14 pt-20 sm:pb-20 sm:pt-24"
     >
-      <span
+      <motion.span
         aria-hidden="true"
         lang="cu"
-        className="pointer-events-none absolute -right-10 -top-20 -z-10 select-none text-[clamp(16rem,34vw,28rem)] leading-none text-foreground/[0.045] sm:-right-16 sm:-top-28"
-        style={{ fontFamily: "var(--font-pochaevsk)" }}
+        style={{ y: markY, fontFamily: "var(--font-pochaevsk)" }}
+        className="pointer-events-none absolute -left-4 -top-16 -z-10 select-none text-[clamp(16rem,34vw,28rem)] leading-none text-primary/[0.07]"
       >
         М
-      </span>
+      </motion.span>
 
-      <motion.div initial={false} animate="show" variants={stagger} className="relative">
-        <motion.p
-          variants={fadeUp}
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
-        >
-          <span className="relative inline-flex size-1.5">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
-          </span>
-          {site.status} · {site.location}
-          <span className="text-muted-foreground/50">·</span>
-          <LocalClock />
-        </motion.p>
+      <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end lg:gap-20">
+        <motion.div initial={false} animate="show" variants={stagger}>
+          <motion.p
+            variants={fadeUp}
+            className="eyebrow flex flex-wrap items-center gap-x-2 gap-y-1"
+          >
+            <span aria-hidden className="size-1.5 bg-primary" />
+            {site.status} · {site.location}
+            <span className="text-muted-foreground/50">·</span>
+            <LocalClock />
+          </motion.p>
 
-        <motion.div variants={fadeUp} className="mt-5">
-          <h1 className="font-heading text-[clamp(2.75rem,8vw,5.25rem)] leading-[0.98] tracking-[-0.02em] text-foreground">
-            <NameDecode />
-          </h1>
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
-            {site.role}
-          </p>
-        </motion.div>
+          <motion.div variants={fadeUp} className="mt-6">
+            <h1 className="font-heading text-[clamp(3rem,8.5vw,6rem)] leading-[0.95] tracking-[-0.025em] text-foreground">
+              <NameDecode />
+            </h1>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+              {site.role}
+            </p>
+          </motion.div>
 
-        <motion.div variants={fadeUp} className="mt-8 max-w-lg space-y-4">
-          <p className="text-lg leading-8 text-muted-foreground">
-            I write software meant to hold up under real use, not just look
-            good in a demo.
-          </p>
-          <p className="text-lg leading-8 text-muted-foreground">
-            Building{" "}
-            {wheelbase?.href ? (
-              <a
-                href={wheelbase.href}
-                className="text-foreground underline-offset-4 hover:underline"
-              >
-                Wheelbase
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 max-w-lg space-y-4 text-lg leading-8 text-muted-foreground"
+          >
+            <p>
+              I write software that holds up under real use, for problems
+              where getting it wrong has consequences.
+            </p>
+            <p>
+              Building{" "}
+              {wheelbase?.href ? (
+                <a href={wheelbase.href} className={link}>
+                  Wheelbase
+                </a>
+              ) : (
+                "Wheelbase"
+              )}
+              , a dealership operations platform, and{" "}
+              <a href="https://lociros.com" className={link}>
+                Lociros
               </a>
-            ) : (
-              "Wheelbase"
-            )}
-            , a dealership operations platform. Creator of{" "}
-            <Link
-              href="/work/grammario"
-              className="text-foreground underline-offset-4 hover:underline"
-            >
-              Grammario
-            </Link>
-            , a grammar analyzer for six languages.
-          </p>
-          <p className="text-lg leading-8 text-muted-foreground">
-            Available for new opportunities — reach out any time.
-          </p>
-          <p className="text-lg leading-8 text-muted-foreground">
-            <a
-              href={site.github}
-              className="text-foreground underline-offset-4 hover:underline"
-            >
-              GitHub
-            </a>{" "}
-            has the code, the{" "}
-            <Link
-              href="/journal"
-              className="text-foreground underline-offset-4 hover:underline"
-            >
-              journal
-            </Link>{" "}
-            has the write-ups, and my inbox is always open —{" "}
-            <a
-              href={`mailto:${site.email}`}
-              className="text-foreground underline-offset-4 hover:underline"
-            >
-              say hello
-            </a>
-            .
-          </p>
+              , graded readers checked against their level. Creator of{" "}
+              <Link href="/work/grammario" className={link}>
+                Grammario
+              </Link>
+              , a grammar analyzer for six languages.
+            </p>
+            <p>
+              Open to new roles. The code is on{" "}
+              <a href={site.github} className={link}>
+                GitHub
+              </a>
+              , the write-ups are in the{" "}
+              <Link href="/journal" className={link}>
+                journal
+              </Link>
+              , and{" "}
+              <a href={`mailto:${site.email}`} className={link}>
+                my inbox
+              </a>{" "}
+              is open.
+            </p>
+          </motion.div>
         </motion.div>
-      </motion.div>
+
+        <motion.div
+          style={{ y: plateY }}
+          initial={reduced ? false : { opacity: 0, clipPath: "inset(100% 0 0 0)" }}
+          animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
+          transition={{ duration: 1.1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto w-full max-w-[18rem] lg:mx-0 lg:max-w-none"
+        >
+          <DitherPortrait />
+        </motion.div>
+      </div>
     </section>
   );
 }

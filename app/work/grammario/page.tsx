@@ -14,9 +14,7 @@ export const metadata: Metadata = {
 export default function GrammarioPage() {
   return (
     <article className="py-16 sm:py-20">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-        Case study · 2024 — Present · Sole developer
-      </p>
+      <p className="eyebrow">Case study · 2024–Present · Sole developer</p>
       <h1 className="mt-4 font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
         Grammario
       </h1>
@@ -39,12 +37,8 @@ export default function GrammarioPage() {
         </Link>
       </div>
 
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-primary opacity-[0.1] blur-3xl"
-        />
-        <div className="mt-12 rounded-2xl border border-border bg-card px-4 py-6 sm:px-8 sm:py-8">
+      <div>
+        <div className="mt-12 rounded-sm border border-border bg-card px-4 py-6 sm:px-8 sm:py-8">
           <p className="font-heading text-xl italic sm:text-2xl">
             L&apos;ho fatta parlare in italiano.
           </p>
@@ -78,7 +72,7 @@ export default function GrammarioPage() {
               Earlier versions asked an LLM to identify grammar. Output was
               fluent and hallucinatory. I rebuilt the engine in December 2025.
             </p>
-            <ol className="mt-8 space-y-6 border-l border-border pl-6">
+            <ol className="mt-8 divide-y divide-border border-y border-border [&>li]:py-5">
               <li>
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
                   01 · Analyst
@@ -95,8 +89,9 @@ export default function GrammarioPage() {
                   02 · Strategist
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
-                  Language-specific post-processing. Languages are not the
-                  same. A one-size-fits-all engine is a mistake.
+                  Language-specific post-processing. Turkish, German, Russian,
+                  Italian, and Spanish each get rules for how they actually
+                  build meaning. A one-size-fits-all engine is a mistake.
                 </p>
               </li>
               <li>
@@ -105,8 +100,8 @@ export default function GrammarioPage() {
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
                   Only after structure is known does the AI explain it in
-                  natural language. It does not find the grammar. It teaches
-                  from the open book.
+                  natural language, teaching from a structure that is already
+                  on the page.
                 </p>
               </li>
             </ol>
@@ -117,9 +112,9 @@ export default function GrammarioPage() {
               Six languages shipped
             </h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-              Each language gets its own Strategist pass, not a shared
-              template — agglutinative and fusional languages don&apos;t
-              break down the same way.
+              Each language gets its own Strategist pass, because
+              agglutinative and fusional languages don&apos;t break down the
+              same way.
             </p>
             <ul className="mt-8 divide-y divide-border border-y border-border">
               {grammarioLanguages.map((language) => (
@@ -152,8 +147,7 @@ export default function GrammarioPage() {
               </li>
               <li>
                 Rule-based grammar error detection and CEFR difficulty scoring
-                (A1–C2), both computed from the parsed structure, not guessed
-                by a model.
+                (A1–C2), both computed from the parsed structure.
               </li>
               <li>
                 Sentence similarity via pgvector and sentence-transformers
@@ -172,7 +166,7 @@ export default function GrammarioPage() {
           </div>
         </div>
 
-        <aside className="space-y-6 lg:sticky lg:top-24">
+        <aside className="space-y-10 lg:sticky lg:top-24">
           <div className="rail-panel">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
               Quick facts
@@ -187,7 +181,7 @@ export default function GrammarioPage() {
               <div className="flex items-baseline justify-between gap-4">
                 <dt className="text-muted-foreground">Timeline</dt>
                 <dd className="text-right text-foreground/85">
-                  2024 — Present
+                  2024–Present
                 </dd>
               </div>
               <div className="flex items-baseline justify-between gap-4">

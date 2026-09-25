@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Newsreader, Pochaevsk } from "next/font/google";
+import {
+  IBM_Plex_Mono,
+  Newsreader,
+  Pochaevsk,
+  Schibsted_Grotesk,
+} from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 const newsreader = Newsreader({
@@ -29,7 +35,7 @@ const pochaevsk = Pochaevsk({
 export const metadata: Metadata = {
   title: {
     default: site.name,
-    template: `%s — ${site.name}`,
+    template: `%s · ${site.name}`,
   },
   description: site.metadata,
   authors: [{ name: site.name }],
@@ -45,7 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${pochaevsk.variable} h-full scroll-smooth antialiased`}
+      className={`${schibsted.variable} ${plexMono.variable} ${newsreader.variable} ${pochaevsk.variable} h-full scroll-smooth antialiased`}
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full font-sans">
