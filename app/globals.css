@@ -131,6 +131,41 @@
   --chart-scale-pattern-color: oklch(0.89 0.025 274);
 }
 
+/* Per-project palettes for the featured cards. Scoping the tokens lets the
+   shared components (Badge, BrowserFrame, ParseTree) recolor themselves. */
+.theme-lociros {
+  /* Washi paper, sumi ink, vermilion seal. */
+  --background: oklch(0.975 0.012 85);
+  --foreground: oklch(0.22 0.018 55);
+  --card: oklch(0.945 0.028 84);
+  --card-foreground: oklch(0.22 0.018 55);
+  --muted: oklch(0.915 0.036 80);
+  --muted-foreground: oklch(0.46 0.04 60);
+  --border: oklch(0.84 0.045 76);
+  --primary: oklch(0.56 0.19 30);
+  --primary-foreground: oklch(0.975 0.012 85);
+  --ring: oklch(0.56 0.19 30);
+}
+
+.theme-grammario-card {
+  /* Plum slab, used inverted like the Wheelbase card. */
+  --foreground: oklch(0.34 0.15 300);
+  --background: oklch(0.97 0.012 300);
+}
+
+.theme-grammario {
+  /* Grammario's own tokens: warm neutrals, violet primary. */
+  --background: oklch(0.985 0.004 80);
+  --foreground: oklch(0.18 0.02 55);
+  --card: oklch(0.995 0.002 80);
+  --muted: oklch(0.94 0.008 80);
+  --muted-foreground: oklch(0.5 0.02 60);
+  --border: oklch(0.9 0.008 80);
+  --primary: oklch(0.48 0.175 280);
+  --primary-foreground: oklch(0.985 0.004 80);
+  --ring: oklch(0.48 0.175 280);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -227,9 +262,119 @@
   }
 }
 
+/* Glitch for the "kind of works" easter egg. Offsets are relative to the
+   element's sag (--sag-x / --sag-y) so a stutter never snaps it upright. */
+@keyframes stutter {
+  0% {
+    translate: calc(var(--sag-x, 0px) - 7px) var(--sag-y, 0px);
+    clip-path: inset(12% 0 46% 0);
+    text-shadow:
+      2px 0 rgb(255 45 95 / 0.7),
+      -2px 0 rgb(42 68 184 / 0.8);
+  }
+  18% {
+    translate: calc(var(--sag-x, 0px) + 6px) calc(var(--sag-y, 0px) - 2px);
+    clip-path: inset(60% 0 6% 0);
+  }
+  36% {
+    translate: calc(var(--sag-x, 0px) - 2px) var(--sag-y, 0px);
+    clip-path: inset(0 0 0 0);
+    opacity: 0.55;
+  }
+  54% {
+    translate: calc(var(--sag-x, 0px) + 9px) calc(var(--sag-y, 0px) + 1px);
+    clip-path: inset(28% 0 34% 0);
+    opacity: 1;
+  }
+  72% {
+    translate: calc(var(--sag-x, 0px) - 4px) var(--sag-y, 0px);
+    clip-path: inset(0 0 70% 0);
+  }
+  90%,
+  100% {
+    translate: var(--sag-x, 0px) var(--sag-y, 0px);
+    clip-path: none;
+    text-shadow: none;
+  }
+}
+
+@keyframes flicker-text {
+  0%,
+  88%,
+  100% {
+    translate: 0 0;
+    clip-path: none;
+    text-shadow: none;
+    opacity: 1;
+  }
+  90% {
+    translate: -4px 0;
+    text-shadow:
+      3px 0 rgb(255 45 95 / 0.8),
+      -3px 0 rgb(120 150 255 / 0.9);
+  }
+  93% {
+    translate: 3px 0;
+    clip-path: inset(38% 0 18% 0);
+  }
+  96% {
+    translate: 0 0;
+    clip-path: none;
+    opacity: 0.4;
+  }
+}
+
+@keyframes scan-flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  15%,
+  55% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.3;
+  }
+}
+
+.glitching {
+  animation: stutter 0.28s steps(1, end);
+}
+
+.glitch-text {
+  animation: flicker-text 2.6s steps(1, end) infinite;
+}
+
+.glitch-scan {
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgb(19 32 94 / 0.07) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(
+      to bottom,
+      transparent var(--scan-at, 40%),
+      rgb(42 68 184 / 0.12) var(--scan-at, 40%) calc(var(--scan-at, 40%) + 3%),
+      transparent calc(var(--scan-at, 40%) + 3%)
+    );
+  opacity: 0;
+}
+
+.glitch-scan.is-flashing {
+  animation: scan-flash 0.24s steps(1, end);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .glitching,
+  .glitch-text,
+  .glitch-scan.is-flashing {
+    animation: none;
   }
 
   .animate-page-fade {

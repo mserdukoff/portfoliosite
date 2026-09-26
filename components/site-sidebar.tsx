@@ -4,12 +4,16 @@ import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DitherBust } from "@/components/dither-plate";
+import { BREAK_EVENT } from "@/components/easter-egg";
 import { LocalClock } from "@/components/local-clock";
 import { NameDecode } from "@/components/name-decode";
 import { SideNav } from "@/components/side-nav";
 import { fadeUp, stagger } from "@/lib/motion";
 import { projects, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+const BREAK_PHRASE = "kind of works";
+const [quoteLead, quoteTail] = site.quote.split(BREAK_PHRASE);
 
 const link =
   "text-foreground underline decoration-foreground/25 underline-offset-4 hover:decoration-primary";
@@ -19,7 +23,6 @@ export function SiteSidebar() {
   const reduced = useReducedMotion();
   const wheelbase = projects.find((project) => project.slug === "wheelbase");
   const Name = isHome ? motion.h1 : motion.p;
-
   return (
     <motion.header
       initial={false}
@@ -63,6 +66,7 @@ export function SiteSidebar() {
       </motion.p>
       <Name
         variants={fadeUp}
+        data-breakable
         className="mt-3 font-heading text-[clamp(2.6rem,4vw,3.4rem)] leading-[0.95] tracking-[-0.025em] text-foreground"
       >
         <NameDecode />
@@ -108,15 +112,29 @@ export function SiteSidebar() {
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="-mx-8 mt-6 hidden min-h-44 flex-1 lg:block"
+        className="-mx-8 mt-6 hidden min-h-44 flex-1 lg:flex"
       >
-        <DitherBust className="h-full min-h-44" />
+        <div data-breakable className="flex flex-1">
+          <DitherBust className="h-full min-h-44 flex-1" />
+        </div>
       </motion.div>
 
-      <figure className="mt-6 hidden lg:block">
+      <figure
+        data-breakable
+        className={cn("mt-8 lg:mt-6", !isHome && "hidden lg:block")}
+      >
         <span aria-hidden className="block h-px w-8 bg-foreground/60" />
         <blockquote className="mt-4 font-heading text-xl leading-snug tracking-tight text-foreground/90">
-          &ldquo;{site.quote}&rdquo;
+          &ldquo;{quoteLead}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(BREAK_EVENT))}
+            title="Does it?"
+            className="inline cursor-pointer text-left underline decoration-primary/40 decoration-dotted underline-offset-4 transition-[color,rotate] duration-300 hover:rotate-[-1.5deg] hover:text-primary hover:decoration-primary focus-visible:text-primary"
+          >
+            {BREAK_PHRASE}
+          </button>
+          {quoteTail}&rdquo;
         </blockquote>
       </figure>
 

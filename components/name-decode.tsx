@@ -32,12 +32,9 @@ export function NameDecode() {
       return { start, end, target: to[i] ?? "" };
     });
 
-    let frame = 0;
     let raf = 0;
-    let cancelled = false;
-
+    let frame = 0;
     function tick() {
-      if (cancelled) return;
       setCells((prev) =>
         prev.map((cell, i) => {
           const { start, end, target } = plan[i];
@@ -47,16 +44,11 @@ export function NameDecode() {
         })
       );
       frame += 1;
-      const allDone = plan.every((p) => frame >= p.end);
-      if (!allDone) raf = requestAnimationFrame(tick);
+      if (!plan.every((p) => frame >= p.end)) raf = requestAnimationFrame(tick);
     }
-
     raf = requestAnimationFrame(tick);
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [from, to, length]);
+    return () => cancelAnimationFrame(raf);
+  }, [to, length]);
 
   return (
     <span className="inline-block">

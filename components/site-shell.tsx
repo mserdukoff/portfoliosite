@@ -1,3 +1,4 @@
+import { EasterEgg } from "@/components/easter-egg";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteSidebar } from "@/components/site-sidebar";
 
@@ -20,6 +21,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
         <SiteFooter />
       </div>
+      <EasterEgg />
     </div>
   );
 }
