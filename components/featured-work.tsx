@@ -204,7 +204,7 @@ export function FeaturedWork() {
 
       <motion.article
         {...reveal}
-        className="theme-grammario-card relative grid overflow-hidden rounded-sm bg-foreground text-background lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
+        className="theme-grammario-card relative grid overflow-hidden rounded-sm bg-foreground text-background lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
       >
         <DitherField
           colorBack="#3f1571"
@@ -214,7 +214,7 @@ export function FeaturedWork() {
           speed={0.1}
           scale={0.7}
         />
-        <div className="relative px-6 pb-8 pt-6 sm:px-8 lg:order-2">
+        <div className="relative px-6 pb-8 pt-6 sm:px-8">
           <span className="index-chip border-background/25 bg-background/10 text-background/75">
             03
           </span>
@@ -255,7 +255,7 @@ export function FeaturedWork() {
             className="mt-10 border-t border-background/15 pt-5 text-background/75"
           />
         </div>
-        <div className="relative flex items-center p-6 sm:p-8 lg:order-1">
+        <div className="relative flex items-center p-6 sm:p-8">
           <ScrollReveal>
             <BrowserFrame
               label="grammario.ai"
