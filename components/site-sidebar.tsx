@@ -80,27 +80,32 @@ export function SiteSidebar() {
         )}
       >
         <p className="text-foreground/85">
-          I write software that holds up under real use, for problems where
-          getting it wrong has consequences.
+          I build production AI systems that hold up under real use: retrieval
+          pipelines, LLM features with guardrails, and the full-stack products
+          around them.
         </p>
         <p>
-          Building{" "}
+          AI Engineer / Full-Stack Developer at Hime, building{" "}
           {wheelbase?.href ? (
-            <a href={wheelbase.href} className={link}>
+            <Link href="/work/wheelbase" className={link}>
               Wheelbase
-            </a>
+            </Link>
           ) : (
             "Wheelbase"
           )}
-          , a dealership operations platform, and{" "}
+          . Creator of{" "}
+          <Link href="/work/grammario" className={link}>
+            Grammario
+          </Link>{" "}
+          and{" "}
           <a href="https://lociros.com" className={link}>
             Lociros
           </a>
-          , graded readers checked against their level. Creator of{" "}
-          <Link href="/work/grammario" className={link}>
-            Grammario
+          , NLP products for language learners. Contributor to{" "}
+          <Link href="/#open-source" className={link}>
+            pandas
           </Link>
-          , a grammar analyzer for six languages.
+          .
         </p>
       </motion.div>
 

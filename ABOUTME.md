@@ -18,7 +18,7 @@ Extracted from his personal site (website 6.0) as of August 2026.
 
 **Site metadata line:** "Software engineer building systems that think. Building Wheelbase, creator of Grammario. Based in Boston."
 
-**Note (September 2026):** He is actively job-hunting in the industry. Per his explicit instruction, site copy de-emphasizes "co-founder"/founder framing in favor of hands-on engineer framing — do not lead with "founder" or "co-founder" when describing him or Wheelbase; "Full-Stack Engineer" is the role to use. The public study-notes repo link was also removed from the site at his request — do not re-add it.
+**Note (September 2026):** He is actively job-hunting in the industry. Per his explicit instruction, site copy de-emphasizes "co-founder"/founder framing in favor of hands-on engineer framing — do not lead with "founder" or "co-founder" when describing him or Wheelbase. **Updated 2026-09-30:** his title is now **AI Engineer / Full-Stack Developer at Hime** (Hime is the company, Wheelbase is the product), replacing "Full-Stack Engineer". Site role line: "AI & software engineer". Job-search scope: Boston metro or US-remote; US citizen. The authoritative, detailed source is `~/Desktop/Matt Serdukoff - Complete Profile.md`; all site data lives in `lib/site.ts`. The public study-notes repo link was also removed from the site at his request — do not re-add it.
 
 ---
 
@@ -66,9 +66,9 @@ Do not make him sound like a generic "AI founder." He is an engineer who happens
 
 
 
-### Wheelbase — Full-Stack Engineer
+### Hime (product: Wheelbase) — AI Engineer / Full-Stack Developer
 
-- **Period:** 2024 — Present
+- **Period:** Jan 2024 — Present (Remote). Engineering case study on site: `/work/wheelbase`.
 - **URL:** [https://wheelbase.io](https://wheelbase.io)
 - Built SaaS for pre-owned auto dealerships from zero / entirely from scratch.
 - Features: live auction data ingestion, inventory management across the full deal lifecycle, real-time collaboration / deal pipeline, embedded AI assistant for pricing and market analysis.

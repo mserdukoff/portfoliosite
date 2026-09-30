@@ -20,6 +20,12 @@ const rise = {
   show: { y: 0, transition: { duration: 0.8, delay: 0.12, ease: easeOut } },
 };
 
+const wheelbaseStats = [
+  { value: "80%+", label: "less DB load after the Go rewrite" },
+  { value: "66", label: "tables under Row Level Security" },
+  { value: "3", label: "surfaces: web, desktop, mobile" },
+];
+
 function ScrollReveal({ children }: { children: React.ReactNode }) {
   return (
     <motion.div variants={rise} className="w-full">
@@ -103,10 +109,22 @@ export function FeaturedWork() {
               >
                 Open wheelbase.io ↗
               </a>
-              <Link href="#experience" className={cn(textLink, "text-background/85")}>
-                View details <span aria-hidden>→</span>
+              <Link href="/work/wheelbase" className={cn(textLink, "text-background/85")}>
+                Case study <span aria-hidden>→</span>
               </Link>
             </div>
+            <ul className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-background/15 pt-5">
+              {wheelbaseStats.map((stat) => (
+                <li key={stat.label}>
+                  <p className="font-heading text-3xl leading-none tracking-tight">
+                    {stat.value}
+                  </p>
+                  <p className="mt-2 font-mono text-[10px] leading-4 text-background/60">
+                    {stat.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="lg:pt-6">
             <ScrollReveal>

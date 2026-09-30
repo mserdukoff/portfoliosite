@@ -2,32 +2,77 @@ export const site = {
   name: "Matt Serdukoff",
   shortName: "Matt Serdukoff",
   cyrillicName: "Матвей Сердюков",
-  role: "Software engineer",
+  role: "AI & software engineer",
   location: "Boston, MA",
-  status: "Available",
+  scope: "Boston metro or US-remote",
+  status: "Open to roles",
   timezone: "America/New_York",
   email: "m.serdukoff@gmail.com",
   github: "https://github.com/mserdukoff",
   linkedin: "https://www.linkedin.com/in/matt-serdukoff-775030190/",
   metadata:
-    "Software engineer building systems that think. Building Wheelbase and Lociros, creator of Grammario. Based in Boston.",
+    "AI and software engineer shipping production LLM systems, retrieval pipelines, and full-stack products. AI Engineer / Full-Stack Developer at Hime building Wheelbase; creator of Grammario and Lociros. Pandas contributor. Based in Boston.",
   homepageLead:
-    "Building Wheelbase, a dealership operations platform, and Lociros, graded readers checked against their level. Creator of Grammario, a grammar analyzer for six languages.",
+    "AI Engineer / Full-Stack Developer at Hime, building Wheelbase: a multi-tenant dealership platform with hybrid vector search, a governed AI operations assistant, and a Go backend. Creator of Grammario and Lociros, two NLP products for language learners.",
   quote: "I refuse to ship something that kind of works.",
   homepageClose:
-    "I like hard problems and am drawn to domains where getting it wrong has real consequences.",
+    "I build the whole path a feature travels: the schema and its security policies, the retrieval and ranking layer, the model call and its guardrails, the API, and the interface someone actually touches. Then I measure it. The Go rewrite of Wheelbase's backend cut database load by more than 80%; parallelizing Grammario's analysis pipeline took a nine-second wait down to four.",
   aboutClose:
-    "I am interested in systems that have to work under pressure: embedded, constrained, or otherwise consequential. On the language side, Grammario came from a frustration with how grammar is usually taught. I wanted to see the structure of a sentence. That turned into a real NLP pipeline covering morphological analysis, dependency parsing, and the structural differences between agglutinative and fusional languages. The seven languages I study inform the engineering as much as the other way around.",
+    "My rule for AI work is structure first, model second. Grammario only lets the LLM explain grammar after a deterministic parser has already found it. Lociros never trusts a model's claim that a passage is A2; a morphological analyzer checks every word. Wheelbase's assistant can write SQL, but only inside a hardened Postgres function it cannot escape, and destructive writes wait for an approval token. Language models are powerful and unreliable, so I put them where their fluency helps and put hard checks where their mistakes would cost something.",
+  aboutLanguages:
+    "The languages are not a side note. I speak Russian, study Italian, Turkish, German, Hebrew, and Japanese, and that is where the NLP work comes from. Knowing firsthand that Turkish stacks suffixes while Italian inflects is why Grammario runs a different analysis strategy per language family instead of one generic pipeline.",
 } as const;
 
 export const nav = [
   { id: "hero", label: "Home" },
   { id: "work", label: "Work" },
+  { id: "impact", label: "Impact" },
   { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "open-source", label: "Open source" },
   { id: "about", label: "About" },
   { id: "languages", label: "Languages" },
   { id: "journal", label: "Journal" },
   { id: "contact", label: "Contact" },
+] as const;
+
+export const impact = [
+  {
+    value: "80%+",
+    label: "less database load",
+    detail:
+      "Re-engineered Wheelbase's backend from Python/FastAPI to Go/Gin with zero breaking changes. Responses went sub-second.",
+  },
+  {
+    value: "~217",
+    label: "tRPC procedures",
+    detail:
+      "Across 35 domain routers, over a 66-table Postgres schema with Row Level Security on every table.",
+  },
+  {
+    value: "0",
+    label: "external API calls per VIN decode",
+    detail:
+      "Replaced a paid VIN API with an offline Go service over a ~2GB NHTSA database, with check-digit validation and auto-correction.",
+  },
+  {
+    value: "60%",
+    label: "faster translation turnaround",
+    detail:
+      "AWS Bedrock document pipelines for Massachusetts A&F, processing 200+ financial documents a month with layout-preserving PDF reconstruction.",
+  },
+  {
+    value: "9s → 4s",
+    label: "Grammario analysis latency",
+    detail:
+      "Parse, LLM explanation, and embedding run concurrently with asyncio.gather. The dependency tree itself renders in 300–500ms.",
+  },
+  {
+    value: "Merged",
+    label: "into pandas core",
+    detail:
+      "PR #64567 replaced a misleading plotting error with an accurate diagnostic, merged by a core maintainer without revisions.",
+  },
 ] as const;
 
 export const languages = [
@@ -44,37 +89,59 @@ export const stack = [
   "Python",
   "Go",
   "TypeScript",
+  "SQL",
   "C++",
   "React",
   "Next.js",
   "FastAPI",
-  "Node.js",
-  "TensorFlow",
+  "Gin",
   "PyTorch",
   "scikit-learn",
   "spaCy",
-  "Supabase",
+  "pgvector",
   "PostgreSQL",
   "Docker",
-  "Linux",
+  "AWS",
 ] as const;
 
 export const experience = [
   {
-    org: "Wheelbase",
-    role: "Full-Stack Engineer",
-    period: "2024–Present",
+    org: "Hime",
+    product: "Wheelbase",
+    role: "AI Engineer / Full-Stack Developer",
+    period: "Jan 2024–Present",
+    place: "Remote",
     href: "https://wheelbase.io",
+    caseStudy: "/work/wheelbase",
     summary:
-      "Multi-tenant dealership operations platform built from scratch as a Turborepo monorepo: web app, Electron desktop, and an Expo mobile field app sharing one Go backend. Re-engineered the backend from Python to Go for sub-second response times, and built an AI operations assistant with tenant-scoped natural-language SQL.",
+      "Own full-stack delivery of Wheelbase, a multi-tenant dealership operations platform, across a React/TypeScript front end, Go and Python APIs, and Supabase Postgres, shipped to web, Electron desktop, and an Expo mobile field app from one Turborepo monorepo.",
+    highlights: [
+      "Built production AI features: a natural-language-to-SQL operations assistant with risk-tiered write approval, vector-powered demand matching, and operational recommendations.",
+      "Built hybrid inventory search fusing 768-dim pgvector embeddings with Postgres full-text ranking via Reciprocal Rank Fusion, powering the IMX auction scoring system.",
+      "Re-engineered backend services from Python/FastAPI to Go/Gin, cutting database load by 80%+ and bringing latency under a second with zero breaking changes.",
+      "Designed tenant-scoped schemas and Row Level Security across 66 tables so isolation is enforced by Postgres, not application code.",
+      "Replaced a paid VIN-decoding API with an offline Go service over a ~2GB NHTSA SQLite database: multi-pass pattern matching, check-digit validation, auto-correction.",
+      "Built streaming CSV ETL for auction runlists with per-auction column mapping and 500-row batch writes, and set up GitHub Actions CI/CD with Docker and Nginx.",
+      "Onboarded and mentored a new engineer through the monorepo, and turned requirements from finance and operations stakeholders into shipped features.",
+    ],
+    stack: ["Go", "TypeScript", "React 19", "tRPC", "Supabase", "pgvector", "Electron", "Expo", "Docker"],
   },
   {
-    org: "MA Executive Office of Administration & Finance",
-    role: "AI / Data Science Intern",
+    org: "Massachusetts Executive Office for Administration and Finance",
+    product: null,
+    role: "AI Engineering & Data Science Intern",
     period: "Mar–Sep 2025",
+    place: "Boston, MA",
     href: null,
+    caseStudy: null,
     summary:
-      "Applied machine learning and NLP to state government data pipelines, and delivered briefings on AI procurement risk to senior staff.",
+      "Built AI-assisted document workflows for state government, where output had to be accurate, traceable, and usable by non-technical staff.",
+    highlights: [
+      "Automated multilingual translation of 200+ financial documents a month with AWS Bedrock and AWS Translate.",
+      "Cut translation turnaround by 60% while preserving layout, deconstructing and rebuilding PDF structure with borb and PyMuPDF.",
+      "Worked directly with cross-functional government stakeholders to deliver production-grade workflows with high accuracy requirements.",
+    ],
+    stack: ["Python", "AWS Bedrock", "AWS Translate", "PyMuPDF", "borb"],
   },
 ] as const;
 
@@ -83,19 +150,152 @@ export const education = [
     school: "Boston University",
     degree: "M.S. Applied Data Analytics",
     period: "2026–2028 (expected)",
+    note: "Part-time. Statistics, data analytics, and machine learning.",
   },
   {
     school: "University of Massachusetts Lowell",
     degree: "B.S. Computer Science, Data Science concentration",
-    period: "2020–2024",
+    period: "2019–2024",
+    note: "Operating Systems, Databases, Computer Architecture, Artificial Intelligence, Natural Language Processing, Analysis of Algorithms, Data Structures.",
   },
 ] as const;
 
 export const certifications = [
   { name: "Neural Networks and Deep Learning", issuer: "DeepLearning.AI" },
-  { name: "NLP Specialization", issuer: "DeepLearning.AI" },
-  { name: "Google Go Programming Specialization", issuer: "Google / Coursera" },
+  { name: "Natural Language Processing", issuer: "DeepLearning.AI" },
+  { name: "Programming with Google Go", issuer: "University of California, Irvine" },
 ] as const;
+
+export const skills = [
+  {
+    area: "AI & LLM systems",
+    proof:
+      "Production RAG ranking at Wheelbase, eight structured-output LLM services in Grammario, governed natural-language SQL, AWS Bedrock pipelines in government.",
+    tools: [
+      "RAG",
+      "Hybrid retrieval (RRF)",
+      "Embedding pipelines",
+      "Prompt engineering",
+      "Structured JSON outputs",
+      "OpenRouter",
+      "OpenAI",
+      "Anthropic Claude",
+      "AWS Bedrock",
+    ],
+  },
+  {
+    area: "NLP",
+    proof:
+      "Dependency parsing and morphology across six languages, CEFR scoring from engineered features, analyzer-validated LLM generation.",
+    tools: [
+      "spaCy",
+      "Stanza",
+      "sentence-transformers",
+      "Sudachi",
+      "pymorphy3",
+      "CAMeL Tools",
+      "NLTK",
+      "Universal Dependencies",
+    ],
+  },
+  {
+    area: "Machine learning & data",
+    proof:
+      "MLflow-tracked models served behind FastAPI, CNNs exported to Core ML, pipelines over 177K+ records and streaming ETL.",
+    tools: [
+      "PyTorch",
+      "TensorFlow",
+      "scikit-learn",
+      "MLflow",
+      "pandas",
+      "NumPy",
+      "Core ML",
+      "ETL / streaming ingestion",
+    ],
+  },
+  {
+    area: "Backend & databases",
+    proof:
+      "A Go service that cut DB load 80%+, a 66-table RLS schema, pgvector with HNSW and IVFFlat indexes, Redis caching layers.",
+    tools: [
+      "Go / Gin",
+      "Python / FastAPI",
+      "PostgreSQL",
+      "Supabase",
+      "pgvector",
+      "Redis",
+      "SQLite",
+      "tRPC",
+      "REST",
+    ],
+  },
+  {
+    area: "Frontend & apps",
+    proof:
+      "A 68-route React 19 app, an Electron desktop shell running tRPC over IPC, an Expo field app with a custom native VIN scanner.",
+    tools: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "TanStack",
+      "Tailwind CSS",
+      "Electron",
+      "Expo / React Native",
+      "Yjs",
+      "ReactFlow",
+    ],
+  },
+  {
+    area: "Infrastructure",
+    proof:
+      "Per-service Docker images behind Nginx, path-filtered GitHub Actions deploys, serverless background jobs on Vercel.",
+    tools: [
+      "Docker",
+      "Nginx",
+      "GitHub Actions",
+      "AWS",
+      "Vercel",
+      "DigitalOcean",
+      "Dokploy",
+      "MinIO",
+      "Stripe",
+    ],
+  },
+] as const;
+
+export const programmingLanguages = [
+  { name: "Python", level: "Primary" },
+  { name: "Go", level: "Production" },
+  { name: "SQL", level: "Expert" },
+  { name: "TypeScript", level: "Proficient" },
+  { name: "C / C++", level: "Intermediate" },
+  { name: "Bash", level: "Proficient" },
+  { name: "R", level: "Familiar" },
+] as const;
+
+export const openSource = {
+  repo: "pandas-dev/pandas",
+  title: "BUG: clear error for hist/box with duplicate column names",
+  pr: 64567,
+  href: "https://github.com/pandas-dev/pandas/pull/64567",
+  issue: 64546,
+  issueHref: "https://github.com/pandas-dev/pandas/issues/64546",
+  merged: "2026-03-22",
+  mergedBy: "jbrockmendel",
+  diff: "+11 / −0",
+  before: `df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+df.columns = ["a", "a"]
+
+df.plot.hist()
+# TypeError: no numeric data to plot`,
+  fix: `if isinstance(data, ABCDataFrame):
+    if self._kind in ("hist", "box") and not data.columns.is_unique:
+        raise ValueError("plotting requires unique column names")`,
+  story: [
+    "Plotting a frame with duplicate column names told you there was no numeric data, even when every column was numeric. The real cause was in MPLPlot.__init__: with non-unique labels, data[col] returns a DataFrame instead of a Series, is_numeric_dtype says False, and every column is silently filtered out.",
+    "Real duplicate-column support would mean reworking label-based indexing across the plotting pipeline, which the issue itself flagged as a much larger job. So I scoped it: a guard clause before any filtering, and a parametrized regression test for both plot kinds. It merged as submitted.",
+  ],
+} as const;
 
 export type Project = {
   slug: string;
@@ -109,6 +309,7 @@ export type Project = {
   caseStudy?: string;
   blurb?: string;
   summary: string;
+  highlights?: string[];
   stack: string[];
 };
 
@@ -121,10 +322,16 @@ export const projects: Project[] = [
     status: "Active",
     featured: true,
     href: "https://wheelbase.io",
+    caseStudy: "/work/wheelbase",
     blurb:
-      "Auction intelligence, inventory, and recon on one Go backend, shipped to web, desktop, and mobile.",
+      "Auction intelligence, inventory, and recon for used-car dealers. Hybrid vector search ranks every auction car against real inventory gaps; a governed AI assistant runs the rest.",
     summary:
-      "Built a multi-tenant dealership platform from zero: auction runlist scoring, VIN decoding, a configurable recon pipeline, and an AI operations assistant, spanning a web app, Electron desktop shell, and Expo mobile field app in one Turborepo monorepo. Re-engineered the backend from Python to Go for sub-second response times.",
+      "A multi-tenant dealership platform built from zero: auction runlist scoring, offline VIN decoding, a configurable recon pipeline, real-time collaborative documents, and an AI operations assistant, spanning a web app, Electron desktop shell, and Expo mobile field app in one Turborepo monorepo.",
+    highlights: [
+      "IMX scoring: pgvector + full-text search fused with RRF, weighted by inventory gaps",
+      "Natural-language SQL inside a hardened, tenant-scoped Postgres function",
+      "Python → Go rewrite: 80%+ less DB load, sub-second responses",
+    ],
     stack: [
       "TypeScript",
       "React",
@@ -151,6 +358,11 @@ export const projects: Project[] = [
       "Graded readers where A2 is actually A2. Every passage is checked by a morphological analyzer before you read it.",
     summary:
       "Graded readers in Japanese, Arabic, Italian, and Russian, A1–B2. An LLM drafts each passage under per-level grammar rules, then a real analyzer (Sudachi, CAMeL Tools, spaCy, pymorphy3) checks every word and construction and forces a rewrite when something is over level. Tap any word for reading, grammar, gloss, kanji with stroke order, or the Arabic root. Rating each text moves your placement and picks the next passage from the words you have already seen.",
+    highlights: [
+      "CEFR rules live in JSON, enforced by validators",
+      "Kanji engine over ~13,100 KANJIDIC2 characters",
+      "pytest suites that never call the LLM",
+    ],
     stack: [
       "Next.js",
       "FastAPI",
@@ -174,7 +386,12 @@ export const projects: Project[] = [
     blurb:
       "Click a sentence. See the structure. Universal Dependencies first, AI explanation second.",
     summary:
-      "A syntactic grammar analyzer for six languages, with dual NLP engines, sentence embeddings for similarity search, CEFR difficulty scoring, and a full teacher/student class platform behind a gamified learning experience. Built entirely solo. It is the tool I wanted when every language app treated grammar as streak maintenance.",
+      "A syntactic grammar analyzer for six languages, with dual NLP engines, sentence embeddings for similarity search, CEFR difficulty scoring, and a full teacher/student class platform behind a gamified learning experience. Built entirely solo, with Stripe subscriptions live in production. It is the tool I wanted when every language app treated grammar as streak maintenance.",
+    highlights: [
+      "Deterministic parse first, LLM explanation second",
+      "Parallel NLP, LLM, and embedding inference: 9s → 4s",
+      "Live teacher quizzes over Supabase Realtime",
+    ],
     stack: [
       "spaCy",
       "Stanza",
@@ -194,7 +411,12 @@ export const projects: Project[] = [
     status: "Completed",
     featured: false,
     summary:
-      "A read-only GitHub App that turns each merged pull request into a reviewed changelog draft: dependency bumps and CI-only diffs are filtered out before any model call, then Claude writes a customer-facing note and a technical note per PR. Approved entries push to Slack and an in-app launcher widget, with Stripe-metered plans and Upstash QStash jobs so it runs serverless on Vercel.",
+      "A read-only GitHub App that turns each merged pull request into a reviewed changelog draft: dependency bumps and CI-only diffs are filtered out before any model call, then one Claude call writes a customer-facing note, a technical note, a category, and a confidence score. Approved entries push to Slack and an in-app launcher widget, with Stripe plans and Upstash QStash jobs so it runs serverless on Vercel.",
+    highlights: [
+      "Never stores diffs; installation tokens minted per request",
+      "Breaking changes always wait for a human",
+      "One job path: QStash in production, after() locally",
+    ],
     stack: [
       "Next.js",
       "Supabase",
@@ -213,8 +435,13 @@ export const projects: Project[] = [
     status: "Completed",
     featured: false,
     summary:
-      "Interactive WebGL globe over 177,000+ records from the Global Terrorism Database, plus a seven-view analytics dashboard covering trends, regions, attack types, targets, weapons, and hotspots.",
-    stack: ["React", "Globe.gl", "FastAPI", "Pandas", "Vite"],
+      "Interactive WebGL globe over 177,000+ records from the Global Terrorism Database (1970–2017), plus a seven-view analytics dashboard covering trends, regions, attack types, targets, weapons, and hotspots.",
+    highlights: [
+      "Pandas cleaning pipeline: coordinates, NaN imputation, type coercion",
+      "8-endpoint FastAPI with analytical aggregations",
+      "Sampled to 5,000 points to keep the globe smooth",
+    ],
+    stack: ["React", "Globe.gl", "FastAPI", "Pandas", "Vite", "Docker"],
   },
   {
     slug: "teen-phone-addiction",
@@ -225,6 +452,11 @@ export const projects: Project[] = [
     featured: false,
     summary:
       "Random forest regressor predicting adolescent phone-addiction risk from behavioral survey data, tracked with MLflow and served through a FastAPI endpoint that always loads the latest registered model, with a Streamlit dashboard for exploration and live prediction.",
+    highlights: [
+      "Every run logs params, seven metrics, and the model artifact",
+      "API auto-serves the newest registered model",
+      "Streamlit EDA and feature-importance playground",
+    ],
     stack: ["Python", "scikit-learn", "MLflow", "FastAPI", "Streamlit"],
   },
   {
@@ -235,7 +467,12 @@ export const projects: Project[] = [
     status: "Completed",
     featured: false,
     summary:
-      "Binary skin-lesion classifier (benign vs. malignant) trained on HAM10000, with four training pipelines across TensorFlow and PyTorch and export to Apple Core ML for on-device iOS/macOS inference.",
+      "Binary skin-lesion classifier (benign vs. malignant) trained on 10,015 HAM10000 dermatoscopic images, with four training pipelines across TensorFlow and PyTorch and export to Apple Core ML for on-device iOS/macOS inference.",
+    highlights: [
+      "Custom CNNs, class-balanced 224×224 pipeline",
+      "MLflow tracking of per-epoch loss and accuracy",
+      "Core ML .mlpackage export via coremltools",
+    ],
     stack: ["TensorFlow", "PyTorch", "coremltools", "MLflow", "scikit-learn"],
   },
   {
@@ -245,9 +482,15 @@ export const projects: Project[] = [
     period: "Completed",
     status: "Completed",
     featured: false,
+    repo: "https://github.com/mserdukoff/procmon",
     summary:
-      "Terminal process monitor in C++ with ncurses. Real-time procfs reads for CPU, memory, and threads, plus sorting, filtering, and signal dispatch.",
-    stack: ["C++", "ncurses", "Linux", "procfs"],
+      "A minimal, htop-inspired process monitor in C++17 with an ncurses UI, reading live process data straight from the Linux /proc filesystem and refreshing every second.",
+    highlights: [
+      "Process / System / UI layers composed by dependency injection",
+      "POSIX directory traversal to enumerate PIDs",
+      "cmdline → comm → [unknown] fallback for kernel threads",
+    ],
+    stack: ["C++17", "ncurses", "POSIX", "procfs"],
   },
 ];
 
