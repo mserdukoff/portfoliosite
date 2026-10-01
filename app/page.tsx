@@ -267,7 +267,8 @@ export default function HomePage() {
               <p className="mt-6 text-[15px] leading-7 text-foreground/85">
                 {site.status} in AI engineering, ML, backend, and full-stack
                 work, {site.scope}. US citizen. Building Wheelbase at Hime and
-                studying for an M.S. at Boston University.
+                studying for an M.S. in Applied Data Analytics, concentrating
+                in AI and machine learning, at Boston University.
               </p>
               <Link
                 href="#contact"

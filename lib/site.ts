@@ -148,9 +148,9 @@ export const experience = [
 export const education = [
   {
     school: "Boston University",
-    degree: "M.S. Applied Data Analytics",
+    degree: "M.S. Applied Data Analytics, AI & Machine Learning concentration",
     period: "2026–2028 (expected)",
-    note: "Part-time. Statistics, data analytics, and machine learning.",
+    note: "Part-time. Concentration in artificial intelligence and machine learning, alongside statistics and data analytics.",
   },
   {
     school: "University of Massachusetts Lowell",
