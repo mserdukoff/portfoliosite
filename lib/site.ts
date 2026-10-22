@@ -53,7 +53,7 @@ export const impact = [
     value: "0",
     label: "external API calls per VIN decode",
     detail:
-      "Replaced a paid VIN API with an offline Go service over a ~2GB NHTSA database, with check-digit validation and auto-correction.",
+      "Replaced a paid VIN API with an offline Go service over a ~2GB NHTSA database, with validation and auto-correction.",
   },
   {
     value: "60%",
@@ -85,25 +85,6 @@ export const languages = [
   { name: "Japanese", level: "Basic", score: 32 },
 ] as const;
 
-export const stack = [
-  "Python",
-  "Go",
-  "TypeScript",
-  "SQL",
-  "C++",
-  "React",
-  "Next.js",
-  "FastAPI",
-  "Gin",
-  "PyTorch",
-  "scikit-learn",
-  "spaCy",
-  "pgvector",
-  "PostgreSQL",
-  "Docker",
-  "AWS",
-] as const;
-
 export const experience = [
   {
     org: "Hime",
@@ -117,10 +98,10 @@ export const experience = [
       "Own full-stack delivery of Wheelbase, a multi-tenant dealership operations platform, across a React/TypeScript front end, Go and Python APIs, and Supabase Postgres, shipped to web, Electron desktop, and an Expo mobile field app from one Turborepo monorepo.",
     highlights: [
       "Built production AI features: a natural-language-to-SQL operations assistant with risk-tiered write approval, vector-powered demand matching, and operational recommendations.",
-      "Built hybrid inventory search fusing 768-dim pgvector embeddings with Postgres full-text ranking via Reciprocal Rank Fusion, powering the IMX auction scoring system.",
+      "Built hybrid inventory search over pgvector embeddings and Postgres full-text ranking, powering the IMX auction scoring system.",
       "Re-engineered backend services from Python/FastAPI to Go/Gin, cutting database load by 80%+ and bringing latency under a second with zero breaking changes.",
       "Designed tenant-scoped schemas and Row Level Security across 66 tables so isolation is enforced by Postgres, not application code.",
-      "Replaced a paid VIN-decoding API with an offline Go service over a ~2GB NHTSA SQLite database: multi-pass pattern matching, check-digit validation, auto-correction.",
+      "Replaced a paid VIN-decoding API with an offline Go service over a ~2GB NHTSA database, with validation and auto-correction.",
       "Built streaming CSV ETL for auction runlists with per-auction column mapping and 500-row batch writes, and set up GitHub Actions CI/CD with Docker and Nginx.",
       "Onboarded and mentored a new engineer through the monorepo, and turned requirements from finance and operations stakeholders into shipped features.",
     ],
@@ -150,7 +131,7 @@ export const education = [
     school: "Boston University",
     degree: "M.S. Applied Data Analytics, AI & Machine Learning concentration",
     period: "2026–2028 (expected)",
-    note: "Part-time. Concentration in artificial intelligence and machine learning, alongside statistics and data analytics.",
+    note: "Part-time, alongside statistics and data analytics.",
   },
   {
     school: "University of Massachusetts Lowell",
@@ -173,7 +154,7 @@ export const skills = [
       "Production RAG ranking at Wheelbase, eight structured-output LLM services in Grammario, governed natural-language SQL, AWS Bedrock pipelines in government.",
     tools: [
       "RAG",
-      "Hybrid retrieval (RRF)",
+      "Hybrid retrieval",
       "Embedding pipelines",
       "Prompt engineering",
       "Structured JSON outputs",
@@ -216,7 +197,7 @@ export const skills = [
   {
     area: "Backend & databases",
     proof:
-      "A Go service that cut DB load 80%+, a 66-table RLS schema, pgvector with HNSW and IVFFlat indexes, Redis caching layers.",
+      "A Go service that cut DB load 80%+, a 66-table RLS schema, pgvector search, Redis caching layers.",
     tools: [
       "Go / Gin",
       "Python / FastAPI",
@@ -264,13 +245,13 @@ export const skills = [
 ] as const;
 
 export const programmingLanguages = [
-  { name: "Python", level: "Primary" },
-  { name: "Go", level: "Production" },
-  { name: "SQL", level: "Expert" },
-  { name: "TypeScript", level: "Proficient" },
-  { name: "C / C++", level: "Intermediate" },
-  { name: "Bash", level: "Proficient" },
-  { name: "R", level: "Familiar" },
+  "Python",
+  "Go",
+  "SQL",
+  "TypeScript",
+  "C / C++",
+  "Bash",
+  "R",
 ] as const;
 
 export const openSource = {
@@ -291,6 +272,8 @@ df.plot.hist()
   fix: `if isinstance(data, ABCDataFrame):
     if self._kind in ("hist", "box") and not data.columns.is_unique:
         raise ValueError("plotting requires unique column names")`,
+  after: `df.plot.hist()
+# ValueError: plotting requires unique column names`,
   story: [
     "Plotting a frame with duplicate column names told you there was no numeric data, even when every column was numeric. The real cause was in MPLPlot.__init__: with non-unique labels, data[col] returns a DataFrame instead of a Series, is_numeric_dtype says False, and every column is silently filtered out.",
     "Real duplicate-column support would mean reworking label-based indexing across the plotting pipeline, which the issue itself flagged as a much larger job. So I scoped it: a guard clause before any filtering, and a parametrized regression test for both plot kinds. It merged as submitted.",
@@ -300,9 +283,7 @@ df.plot.hist()
 export type Project = {
   slug: string;
   title: string;
-  subtitle: string;
   period: string;
-  status: "Active" | "Completed";
   featured: boolean;
   href?: string;
   repo?: string;
@@ -317,9 +298,7 @@ export const projects: Project[] = [
   {
     slug: "wheelbase",
     title: "Wheelbase",
-    subtitle: "Dealership operations platform",
     period: "2024–Present",
-    status: "Active",
     featured: true,
     href: "https://wheelbase.io",
     caseStudy: "/work/wheelbase",
@@ -328,7 +307,7 @@ export const projects: Project[] = [
     summary:
       "A multi-tenant dealership platform built from zero: auction runlist scoring, offline VIN decoding, a configurable recon pipeline, real-time collaborative documents, and an AI operations assistant, spanning a web app, Electron desktop shell, and Expo mobile field app in one Turborepo monorepo.",
     highlights: [
-      "IMX scoring: pgvector + full-text search fused with RRF, weighted by inventory gaps",
+      "IMX scoring: every auction car ranked against real inventory gaps",
       "Natural-language SQL inside a hardened, tenant-scoped Postgres function",
       "Python → Go rewrite: 80%+ less DB load, sub-second responses",
     ],
@@ -348,12 +327,11 @@ export const projects: Project[] = [
   {
     slug: "lociros",
     title: "Lociros",
-    subtitle: "Graded readers, checked",
     period: "2026",
-    status: "Active",
     featured: true,
     href: "https://lociros.com",
     repo: "https://github.com/mserdukoff/lociros",
+    caseStudy: "/work/lociros",
     blurb:
       "Graded readers where A2 is actually A2. Every passage is checked by a morphological analyzer before you read it.",
     summary:
@@ -377,9 +355,7 @@ export const projects: Project[] = [
   {
     slug: "grammario",
     title: "Grammario",
-    subtitle: "Grammar you can see",
     period: "2024–Present",
-    status: "Active",
     featured: true,
     href: "https://grammario.ai",
     caseStudy: "/work/grammario",
@@ -406,9 +382,7 @@ export const projects: Project[] = [
   {
     slug: "purser",
     title: "Purser",
-    subtitle: "Automated GitHub changelogs",
     period: "2026",
-    status: "Completed",
     featured: false,
     summary:
       "A read-only GitHub App that turns each merged pull request into a reviewed changelog draft: dependency bumps and CI-only diffs are filtered out before any model call, then one Claude call writes a customer-facing note, a technical note, a category, and a confidence score. Approved entries push to Slack and an in-app launcher widget, with Stripe plans and Upstash QStash jobs so it runs serverless on Vercel.",
@@ -430,9 +404,7 @@ export const projects: Project[] = [
   {
     slug: "global-terrorism-visualization",
     title: "Global Terrorism Visualization",
-    subtitle: "3D globe and dashboard",
     period: "Completed",
-    status: "Completed",
     featured: false,
     summary:
       "Interactive WebGL globe over 177,000+ records from the Global Terrorism Database (1970–2017), plus a seven-view analytics dashboard covering trends, regions, attack types, targets, weapons, and hotspots.",
@@ -446,9 +418,7 @@ export const projects: Project[] = [
   {
     slug: "teen-phone-addiction",
     title: "Teen Phone Addiction Prediction",
-    subtitle: "Behavioral ML pipeline",
     period: "Completed",
-    status: "Completed",
     featured: false,
     summary:
       "Random forest regressor predicting adolescent phone-addiction risk from behavioral survey data, tracked with MLflow and served through a FastAPI endpoint that always loads the latest registered model, with a Streamlit dashboard for exploration and live prediction.",
@@ -462,9 +432,7 @@ export const projects: Project[] = [
   {
     slug: "skin-cancer-cnn",
     title: "SkinGuard",
-    subtitle: "Lesion classification",
     period: "Completed",
-    status: "Completed",
     featured: false,
     summary:
       "Binary skin-lesion classifier (benign vs. malignant) trained on 10,015 HAM10000 dermatoscopic images, with four training pipelines across TensorFlow and PyTorch and export to Apple Core ML for on-device iOS/macOS inference.",
@@ -478,9 +446,7 @@ export const projects: Project[] = [
   {
     slug: "procmon",
     title: "Procmon",
-    subtitle: "Linux process monitor",
     period: "Completed",
-    status: "Completed",
     featured: false,
     repo: "https://github.com/mserdukoff/procmon",
     summary:

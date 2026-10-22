@@ -58,12 +58,9 @@ export function ParseTree({ className }: { className?: string }) {
 
   return (
     <div className={cn("select-none", className)}>
-      <p className="font-mono text-[11px] text-muted-foreground">
-        Click a word
-      </p>
       <svg
         viewBox="0 0 432 128"
-        className="mt-2 h-auto w-full"
+        className="h-auto w-full"
         role="img"
         aria-label="Dependency tree for the Italian sentence L'ho fatta parlare in italiano"
       >
@@ -116,14 +113,21 @@ export function ParseTree({ className }: { className?: string }) {
             type="button"
             onClick={() => setActive(index)}
             className={cn(
-              "min-w-0 flex-1 rounded-sm px-1 py-2 text-center font-heading text-sm transition-colors",
-              index === active
-                ? "text-primary"
-                : "text-foreground/70 hover:text-foreground"
+              "group min-w-0 flex-1 cursor-pointer py-2 text-center font-heading text-sm",
+              index === active ? "text-primary-foreground" : "text-foreground/75 hover:text-foreground"
             )}
             aria-pressed={index === active}
           >
-            {item.text}
+            <span
+              className={cn(
+                "inline-block rounded-sm px-1.5 py-0.5 transition-colors",
+                index === active
+                  ? "bg-primary"
+                  : "underline decoration-foreground/30 decoration-dotted underline-offset-4 group-hover:bg-muted"
+              )}
+            >
+              {item.text}
+            </span>
           </button>
         ))}
       </div>

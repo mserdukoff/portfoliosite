@@ -41,7 +41,6 @@ export function SiteFooter() {
               LinkedIn ↗
             </a>
           </nav>
-          <span>42.3601° N, 71.0589° W</span>
         </div>
       </div>
 

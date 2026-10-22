@@ -33,12 +33,12 @@ export default async function JournalEntryPage({
 
   return (
     <article className="py-16 sm:py-20">
-      <p className="font-mono text-[12px] text-muted-foreground">
-        Journal · {formatDate(post.date)}
-      </p>
-      <h1 className="mt-4 max-w-3xl font-heading text-[clamp(1.85rem,4vw,2.6rem)] leading-[1.1] tracking-[-0.03em]">
+      <h1 className="max-w-3xl font-heading text-[clamp(1.85rem,4vw,2.6rem)] leading-[1.1] tracking-[-0.03em]">
         {post.title}
       </h1>
+      <time dateTime={post.date} className="mt-4 block font-mono text-[12px] text-muted-foreground">
+        {formatDate(post.date)}
+      </time>
       <div className="mt-10 max-w-2xl space-y-5 text-[16.5px] leading-8 text-foreground/88">
         {post.body.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>

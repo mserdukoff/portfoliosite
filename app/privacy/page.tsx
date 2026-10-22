@@ -9,10 +9,12 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <article className="py-16 sm:py-20">
-      <p className="eyebrow">Legal · Effective September 25, 2026</p>
-      <h1 className="mt-4 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
+      <h1 className="font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
         Privacy
       </h1>
+      <p className="mt-4 font-mono text-[12px] text-muted-foreground">
+        Effective October 22, 2026
+      </p>
 
       <div className="mt-10 max-w-2xl space-y-8 text-[16px] leading-7 text-foreground/85">
         <section>
@@ -41,9 +43,9 @@ export default function PrivacyPage() {
             Third-party requests
           </h2>
           <p className="mt-2">
-            The GitHub activity graph on the home page is an image loaded from
-            ghchart.rshah.org, so your browser requests it directly from that
-            service. Fonts are bundled with the site and do not call out to
+            The GitHub activity graph on the home page is built on the server
+            from public contribution counts, so your browser never contacts a
+            third party to draw it. Fonts are bundled with the site and do not call out to
             Google. Links to GitHub, LinkedIn, Wheelbase, and Grammario take you
             to sites with their own privacy policies.
           </p>

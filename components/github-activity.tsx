@@ -1,64 +1,49 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { ActivityHeatmap, type ActivityDay } from "@/components/arc/activity-heatmap/activity-heatmap";
 import { site } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
-export function GithubActivity() {
-  const username = site.github.split("/").pop();
-  const [status, setStatus] = useState<"loading" | "ready" | "error">(
-    "loading"
+const username = site.github.split("/").pop();
+
+async function getContributions(): Promise<ActivityDay[] | null> {
+  try {
+    const res = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+      { next: { revalidate: 86400 }, signal: AbortSignal.timeout(5000) }
+    );
+    if (!res.ok) return null;
+    const data: { contributions: ActivityDay[] } = await res.json();
+    return data.contributions.map(({ date, count }) => ({ date, count }));
+  } catch {
+    return null;
+  }
+}
+
+export async function GithubActivity() {
+  const days = await getContributions();
+  const profile = (
+    <a
+      href={site.github}
+      className="font-mono text-[11px] text-muted-foreground hover:text-primary"
+    >
+      {username} on GitHub ↗
+    </a>
   );
-  const imgRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img?.complete) setStatus(img.naturalWidth > 0 ? "ready" : "error");
-  }, []);
+  if (!days) {
+    return (
+      <p className="flex flex-wrap items-baseline justify-between gap-4 text-sm text-muted-foreground">
+        Contribution graph unavailable right now.
+        {profile}
+      </p>
+    );
+  }
 
   return (
-    <div className="rail-panel">
-      <p className="eyebrow">GitHub activity</p>
-      <div className="relative mt-4 -mx-2 overflow-x-auto">
-        <div className="relative min-w-[640px] px-2">
-          {status !== "ready" ? (
-            <div
-              aria-hidden
-              className={cn(
-                "absolute inset-x-2 inset-y-0 rounded-sm bg-muted",
-                status === "loading" && "animate-pulse"
-              )}
-            />
-          ) : null}
-          {status === "error" ? (
-            <p className="relative flex aspect-[663/104] items-center justify-center font-mono text-[11px] text-muted-foreground">
-              Contribution graph unavailable right now.
-            </p>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              ref={imgRef}
-              src={`https://ghchart.rshah.org/2a44b8/${username}`}
-              alt={`${username}'s GitHub contribution graph`}
-              width={663}
-              height={104}
-              className={cn(
-                "relative block aspect-[663/104] w-full mix-blend-multiply transition-opacity duration-500",
-                status === "ready" ? "opacity-100" : "opacity-0"
-              )}
-              loading="lazy"
-              onLoad={() => setStatus("ready")}
-              onError={() => setStatus("error")}
-            />
-          )}
-        </div>
-      </div>
-      <a
-        href={site.github}
-        className="mt-3 inline-block font-mono text-[11px] text-muted-foreground hover:text-primary"
-      >
-        {username} on GitHub ↗
-      </a>
-    </div>
+    <ActivityHeatmap
+      className="arc"
+      days={days}
+      label="GitHub contributions in the last year"
+      period="the last year"
+      actions={profile}
+    />
   );
 }

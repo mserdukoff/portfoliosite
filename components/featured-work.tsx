@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { BrowserFrame } from "@/components/browser-frame";
 import { DitherField, ink } from "@/components/dither-plate";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { easeOut, fadeUp } from "@/lib/motion";
 import { grammarioLanguages, projects } from "@/lib/site";
@@ -35,19 +34,16 @@ function ScrollReveal({ children }: { children: React.ReactNode }) {
 }
 
 function MetaRow({
-  label,
   items,
   className,
 }: {
-  label: string;
   items: readonly string[];
   className?: string;
 }) {
   return (
-    <div className={cn("font-mono text-[11px] leading-5", className)}>
-      <p className="opacity-70">{label}</p>
-      <p className="mt-1.5">{items.join("  /  ")}</p>
-    </div>
+    <p className={cn("font-mono text-[11px] leading-5", className)}>
+      {items.join("  /  ")}
+    </p>
   );
 }
 
@@ -80,20 +76,9 @@ export function FeaturedWork() {
           speed={0.12}
           scale={0.6}
         />
-        <div className="relative grid items-center gap-10 px-6 pb-10 pt-6 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+        <div className="relative grid items-center gap-10 px-6 pb-10 pt-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <div>
-            <span className="index-chip border-background/25 bg-background/10 text-background/75">
-              01
-            </span>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Badge className="bg-background text-foreground">
-                {wheelbase.status}
-              </Badge>
-              <span className="font-mono text-[12px] text-background/60">
-                {wheelbase.subtitle}
-              </span>
-            </div>
-            <h3 className="mt-4 font-heading text-5xl tracking-tight sm:text-6xl">
+            <h3 className="font-heading text-5xl tracking-tight sm:text-6xl">
               {wheelbase.title}
             </h3>
             <p className="mt-4 max-w-sm text-[15px] leading-7 text-background/75">
@@ -110,7 +95,7 @@ export function FeaturedWork() {
                 Open wheelbase.io ↗
               </a>
               <Link href="/work/wheelbase" className={cn(textLink, "text-background/85")}>
-                Case study <span aria-hidden>→</span>
+                Read case study <span aria-hidden>→</span>
               </Link>
             </div>
             <ul className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-background/15 pt-5">
@@ -139,11 +124,8 @@ export function FeaturedWork() {
             </ScrollReveal>
           </div>
         </div>
-        <div className="relative flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-background/15 px-6 py-4 font-mono text-[11px] text-background/75 sm:px-8">
-          <span className="text-background/55">
-            Tech
-          </span>
-          <span>{wheelbase.stack.join("  /  ")}</span>
+        <div className="relative border-t border-background/15 px-6 py-4 font-mono text-[11px] text-background/75 sm:px-8">
+          {wheelbase.stack.join("  /  ")}
         </div>
       </motion.article>
 
@@ -166,17 +148,8 @@ export function FeaturedWork() {
         >
           読
         </span>
-        <div className="relative px-6 pb-8 pt-6 sm:px-8">
-          <span className="index-chip border-primary bg-primary text-primary-foreground">
-            02
-          </span>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Badge className="bg-foreground text-background">
-              {lociros.status}
-            </Badge>
-            <span className="eyebrow">{lociros.subtitle}</span>
-          </div>
-          <h3 className="mt-4 font-heading text-5xl tracking-tight">
+        <div className="relative px-6 pb-8 pt-10 sm:px-8">
+          <h3 className="font-heading text-5xl tracking-tight">
             {lociros.title}
           </h3>
           <p className="mt-4 max-w-sm text-[15px] leading-7 text-muted-foreground">
@@ -192,14 +165,14 @@ export function FeaturedWork() {
             >
               Open lociros.com ↗
             </a>
-            {lociros.repo ? (
-              <a href={lociros.repo} className={cn(textLink, "text-muted-foreground hover:text-primary")}>
-                Source <span aria-hidden>↗</span>
-              </a>
-            ) : null}
+            <Link
+              href="/work/lociros"
+              className={cn(textLink, "text-muted-foreground hover:text-primary")}
+            >
+              Read case study <span aria-hidden>→</span>
+            </Link>
           </div>
           <MetaRow
-            label="Languages · A1–B2"
             items={["Japanese", "Arabic", "Italian", "Russian"]}
             className="mt-10 border-t border-border pt-5 text-muted-foreground"
           />
@@ -232,19 +205,8 @@ export function FeaturedWork() {
           speed={0.1}
           scale={0.7}
         />
-        <div className="relative px-6 pb-8 pt-6 sm:px-8">
-          <span className="index-chip border-background/25 bg-background/10 text-background/75">
-            03
-          </span>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Badge className="bg-background text-foreground">
-              {grammario.status}
-            </Badge>
-            <span className="font-mono text-[12px] text-background/60">
-              {grammario.subtitle}
-            </span>
-          </div>
-          <h3 className="mt-4 font-heading text-5xl tracking-tight">
+        <div className="relative px-6 pb-8 pt-10 sm:px-8">
+          <h3 className="font-heading text-5xl tracking-tight">
             {grammario.title}
           </h3>
           <p className="mt-4 max-w-sm text-[15px] leading-7 text-background/75">
@@ -264,11 +226,10 @@ export function FeaturedWork() {
               href="/work/grammario"
               className={cn(textLink, "text-background/85")}
             >
-              Case study <span aria-hidden>→</span>
+              Read case study <span aria-hidden>→</span>
             </Link>
           </div>
           <MetaRow
-            label="Languages"
             items={grammarioLanguages.map((language) => language.name)}
             className="mt-10 border-t border-background/15 pt-5 text-background/75"
           />

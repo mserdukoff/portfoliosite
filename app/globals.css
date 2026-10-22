@@ -204,14 +204,6 @@
     @apply border-t border-foreground/80 pt-4;
   }
 
-  .eyebrow {
-    @apply font-mono text-[12px] text-muted-foreground;
-  }
-
-  .index-chip {
-    @apply inline-flex h-6 min-w-7 items-center justify-center rounded-sm border border-border bg-muted/60 px-1.5 font-mono text-[10px] tracking-[0.08em] text-muted-foreground;
-  }
-
   /* Ruled cells: dividers only between columns, flush with the outer edges. */
   .cell-grid > * {
     @apply border-b border-border py-6;
@@ -236,6 +228,30 @@
     .cell-grid-3 > :nth-child(3n) {
       @apply pr-0;
     }
+  }
+
+  /* Arc components (components/arc) read Arc token names. Wrap them in .arc
+     so these map onto this palette without overriding shadcn's --accent. */
+  .arc {
+    --surface: var(--background);
+    --surface-muted: var(--muted);
+    --text-secondary: var(--muted-foreground);
+    --text-muted: var(--muted-foreground);
+    --border-strong: var(--border);
+    --accent: var(--primary);
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --leading-body: 1.4;
+    --radius-control: calc(var(--radius) * 3);
+    --shadow-raised: 0 6px 18px oklch(0.26 0.11 266 / 0.12);
+    --duration-fast: 160ms;
+    --duration-spring: 580ms;
+    --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .no-scrollbar {
@@ -364,6 +380,34 @@
 
 .glitch-scan.is-flashing {
   animation: scan-flash 0.24s steps(1, end);
+}
+
+/* ObsidianUI discover button (components/block), squared to the site's
+   corners. Two classes so it outranks the component's own stylesheet. */
+.obsidian-discover-button.cta-sweep {
+  --obsidian-discover-surface: var(--card);
+  --obsidian-discover-text: var(--foreground);
+  --obsidian-discover-fill: var(--primary);
+  --obsidian-discover-active-text: var(--primary-foreground);
+  min-height: 3.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.cta-sweep .obsidian-discover-button__icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.cta-sweep .obsidian-discover-button__fill {
+  width: 2.75rem;
+}
+
+.cta-sweep:hover .obsidian-discover-button__fill,
+.cta-sweep:focus-visible .obsidian-discover-button__fill {
+  width: calc(100% - 4px);
 }
 
 @media (prefers-reduced-motion: reduce) {

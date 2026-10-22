@@ -56,7 +56,7 @@ export function SideNav({ className }: { className?: string }) {
   return (
     <nav aria-label="Sections" className={className}>
       <ol className="flex flex-col gap-1">
-        {nav.map((item, i) => {
+        {nav.map((item) => {
           const active = isHome && activeId === item.id;
           const href = isHome ? `#${item.id}` : `/#${item.id}`;
 
@@ -72,9 +72,6 @@ export function SideNav({ className }: { className?: string }) {
                     : "text-muted-foreground/55 hover:text-muted-foreground"
                 )}
               >
-                <span className="w-5 tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <span
                   className={cn(
                     "h-px bg-current transition-all duration-300",

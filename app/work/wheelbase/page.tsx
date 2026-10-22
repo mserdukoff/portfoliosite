@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Wheelbase",
   description:
-    "Engineering case study: a multi-tenant dealership platform with hybrid vector retrieval, a governed AI operations assistant, offline VIN decoding, and a Go backend shipped to web, desktop, and mobile.",
+    "Engineering case study: a multi-tenant dealership platform with retrieval-based auction ranking, a governed AI operations assistant, offline VIN decoding, and a Go backend shipped to web, desktop, and mobile.",
 };
 
 const topology = [
@@ -25,15 +25,6 @@ const scale = [
   { label: "Go source files", value: "112" },
   { label: "Mobile source files", value: "276" },
 ];
-
-const vinPipeline = [
-  ["Model year", "Position 10, resolved with 30-year cycle logic."],
-  ["Manufacturer", "WMI lookup for make and manufacturer."],
-  ["Schema discovery", "Find the VIN schemas that apply to this WMI and year."],
-  ["Multi-pass VDS match", "Positions 4–8 for body style, engine, drive type, and model."],
-  ["Trim refinement", "Vehicle spec pattern rules narrow to a trim."],
-  ["Correction", "Check-digit validation, single-character auto-correction, ranked candidates."],
-] as const;
 
 const decisions = [
   {
@@ -63,20 +54,17 @@ const decisions = [
 ];
 
 function Section({
-  index,
   title,
   lead,
   children,
 }: {
-  index: string;
   title: string;
   lead: string;
   children?: React.ReactNode;
 }) {
   return (
     <section className="mt-16">
-      <p className="font-mono text-[12px] text-muted-foreground">{index}</p>
-      <h2 className="mt-2 font-heading text-2xl tracking-tight">{title}</h2>
+      <h2 className="font-heading text-2xl tracking-tight">{title}</h2>
       <p className="mt-3 max-w-2xl text-[15px] leading-7 text-foreground/85">
         {lead}
       </p>
@@ -101,8 +89,7 @@ function Points({ items }: { items: string[] }) {
 export default function WheelbasePage() {
   return (
     <article className="py-16 sm:py-20">
-      <p className="eyebrow">Case study · 2024–Present · AI Engineer / Full-Stack Developer at Hime</p>
-      <h1 className="mt-4 font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
+      <h1 className="font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
         Wheelbase
       </h1>
       <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -152,34 +139,19 @@ export default function WheelbasePage() {
       <div className="mt-4 grid gap-16 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start">
         <div className="min-w-0">
           <Section
-            index="01 · Retrieval"
             title="Retrieval that makes decisions"
-            lead="The RAG layer here does not chat with documents. It embeds vehicles, retrieves the ones that fill a dealer's real inventory gaps, and feeds that signal into ranking that buyers use on the auction floor."
+            lead="The RAG layer here does not chat with documents. It ranks every car on an auction runlist against what a dealer's lot actually needs, and buyers use that ranking on the auction floor. The score is IMX, the Inventory Match Index."
           >
             <Points
               items={[
-                "Every car becomes canonical text (\"2020 Toyota Sienna LE Minivan\") with a 768-dim embedding under an HNSW index and a weighted tsvector under GIN.",
-                "Embeddings come from a provider chain: Gemini, then OpenAI at 768 dimensions, then a local sparse-feature fallback, so ranking degrades instead of failing.",
-                "Semantic and lexical results are fused with Reciprocal Rank Fusion, which handles conceptual queries (\"work truck\") and exact ones (\"F-150\") alike.",
-                "Retrieval runs over the whole demand matrix, not one query. Each underfilled category is embedded and searched, weighted by its gap ratio, and aggregated.",
-                "Vehicle archetypes are embedded once by year, make, model, and body style, then reused across every matching car to cut embedding cost.",
+                "Semantic and keyword search work together, so conceptual queries (\"work truck\") and exact ones (\"F-150\") both land.",
+                "Embeddings come from a chain of providers with a local fallback, so ranking degrades instead of failing.",
+                "Retrieval supplies relevance. Deterministic business rules align it with how a dealership actually operates.",
               ]}
             />
-            <pre className="mt-6 max-w-2xl overflow-x-auto rounded-sm border border-border bg-card px-4 py-3.5 font-mono text-[12px] leading-5 text-foreground/85">
-              <code>{`gap_weight = (target - current) / target
-fit        = Σ gap_weight × rrf(vector, full_text)
-raw_imx    = 0.7 × fit + 0.2 × mileage + 0.1 × age
-imx        = normalize(raw_imx) within the runlist`}</code>
-            </pre>
-            <p className="mt-3 max-w-2xl text-[13px] leading-6 text-muted-foreground">
-              IMX, the Inventory Match Index. Retrieval supplies relevance;
-              deterministic rules for pricing bands, recency, aging, and
-              wholesale risk align it with how a dealership actually operates.
-            </p>
           </Section>
 
           <Section
-            index="02 · Governance"
             title="An assistant that cannot leave its tenant"
             lead="Operators ask questions in plain English and get answers from their own data. Letting a model write SQL against a multi-tenant database only works if the model physically cannot see anyone else's rows."
           >
@@ -194,43 +166,17 @@ imx        = normalize(raw_imx) within the runlist`}</code>
           </Section>
 
           <Section
-            index="03 · Offline"
             title="VIN decoding without the network"
-            lead="A paid third-party API became a self-contained Go service over a ~2GB NHTSA SQLite database: about 1.6M pattern rows and 8.7M valid-character rows, zero external calls per decode."
-          >
-            <ol className="mt-6 max-w-2xl divide-y divide-border border-y border-border">
-              {vinPipeline.map(([step, detail], i) => (
-                <li key={step} className="grid gap-1 py-3 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-4">
-                  <span className="font-mono text-[12px]">
-                    <span className="mr-2 text-muted-foreground">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    {step}
-                  </span>
-                  <span className="text-sm leading-6 text-muted-foreground">
-                    {detail}
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-4 max-w-2xl text-[13px] leading-6 text-muted-foreground">
-              A custom pattern parser instead of regex, in-memory caches for
-              elements and error codes, and streaming row reads throughout. The
-              container pulls the database from MinIO at startup.
-            </p>
-          </Section>
+            lead="A paid third-party API became a self-contained Go service over a ~2GB NHTSA database. It decodes make, model, trim, and specs, and corrects mistyped VINs, with zero external calls per decode."
+          />
 
           <Section
-            index="04 · Performance"
             title="Python to Go, with nothing broken"
             lead="A core import that populated thousands of rows took up to two minutes. Fixing the FastAPI path got it to 5–25 seconds. Rewriting the services in Go with Gin, plus caching and data-model changes, cut database load by more than 80% and brought responses under a second, with zero breaking changes for the clients."
           />
 
           <section className="mt-16">
-            <p className="font-mono text-[12px] text-muted-foreground">
-              05 · Decisions
-            </p>
-            <h2 className="mt-2 font-heading text-2xl tracking-tight">
+            <h2 className="font-heading text-2xl tracking-tight">
               Other calls worth explaining
             </h2>
             <ul className="mt-6 divide-y divide-border border-y border-border">

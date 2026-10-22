@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { MorphemeBreakdown } from "@/components/morpheme-breakdown";
 import { ParseTree } from "@/components/parse-tree";
 import { grammarioLanguages } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -8,19 +9,19 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Grammario",
   description:
-    "Grammar visualization tool that renders syntactic dependency trees. Structure first, explanation second.",
+    "Why I built Grammario: textbooks skip how agglutinative words are built. In Turkish, bilmediysen is one word for “if you did not know.” Grammario breaks grammar into the pieces that make it understandable, across six languages.",
 };
 
 export default function GrammarioPage() {
   return (
     <article className="py-16 sm:py-20">
-      <p className="eyebrow">Case study · 2024–Present · Sole developer</p>
-      <h1 className="mt-4 font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
+      <h1 className="font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
         Grammario
       </h1>
       <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-        Grammar you can see, not just memorize. Universal Dependencies for the
-        hard truth. AI for the teaching.
+        Learning languages, I kept finding textbooks and online resources that
+        were lazy about explaining grammar, especially for agglutinative
+        languages, where one word can carry a whole sentence.
       </p>
       <div className="mt-6 flex flex-wrap gap-4 font-mono text-[12px]">
         <a
@@ -37,31 +38,63 @@ export default function GrammarioPage() {
         </Link>
       </div>
 
-      <div>
-        <div className="mt-12 rounded-sm border border-border bg-card px-4 py-6 sm:px-8 sm:py-8">
-          <p className="font-heading text-xl italic sm:text-2xl">
-            L&apos;ho fatta parlare in italiano.
-          </p>
-          <div className="mt-6">
-            <ParseTree />
-          </div>
-        </div>
+      <div className="mt-12 rounded-sm border border-border bg-card px-4 py-6 sm:px-8 sm:py-8">
+        <p className="max-w-xl font-heading text-xl sm:text-2xl">
+          In Turkish, <em>bilmediysen</em> means “if you did not know.” One
+          word. How do you make sense of it?
+        </p>
+        <MorphemeBreakdown className="mt-10" />
       </div>
 
       <div className="mt-16 grid gap-16 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start">
         <div className="min-w-0">
           <div className="max-w-2xl space-y-5 text-[16px] leading-8 text-foreground/85">
             <p>
-              Language learning is a core hobby. Across Duolingo, LingQ,
-              textbooks, and tutors, grammar was always explained as rules to
-              memorize, not structures to see. When I analyzed a sentence in
-              my head, I was drawing relationships. No tool reflected that.
+              Split into its pieces, the word stops being a wall of letters: a
+              root, then negation, past tense, a buffer letter, the conditional,
+              and the person. Each piece is small and learnable on its own.
+              Most resources hand you the finished word, or a table of endings
+              to memorize, and skip the part where it is built.
             </p>
             <p>
-              That Italian sentence is the drawing I wanted inspectable:
-              pronoun, auxiliary, agreeing past participle, infinitive,
-              preposition, noun.
+              I wanted an app that breaks grammar down like this, into small
+              pieces that make the whole understandable. After a successful
+              prototype, I expanded it to more languages.
             </p>
+          </div>
+
+          <div className="mt-16">
+            <h2 className="font-heading text-2xl tracking-tight">
+              Expanding to six languages
+            </h2>
+            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground">
+              Not every language stacks suffixes. Italian inflects and agrees,
+              so the same sentence-level idea shows up as a dependency tree:
+              who governs whom, and which words must match.
+            </p>
+            <div className="mt-8 rounded-sm border border-border bg-card px-4 py-6 sm:px-6">
+              <p className="font-heading text-xl italic">
+                L&apos;ho fatta parlare in italiano.
+              </p>
+              <div className="mt-6">
+                <ParseTree />
+              </div>
+            </div>
+            <ul className="mt-8 divide-y divide-border border-y border-border">
+              {grammarioLanguages.map((language) => (
+                <li
+                  key={language.code}
+                  className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between"
+                >
+                  <span className="font-heading text-xl">
+                    {language.name}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {language.note}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="mt-16">
@@ -74,8 +107,8 @@ export default function GrammarioPage() {
             </p>
             <ol className="mt-8 divide-y divide-border border-y border-border [&>li]:py-5">
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
-                  01 · Analyst
+                <p className="font-heading text-lg tracking-tight">
+                  Analyst
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
                   spaCy parses via Universal Dependencies, with Stanza as an
@@ -85,8 +118,8 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
-                  02 · Strategist
+                <p className="font-heading text-lg tracking-tight">
+                  Strategist
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
                   Language-specific post-processing. Turkish, German, Russian,
@@ -95,8 +128,8 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
-                  03 · Tutor
+                <p className="font-heading text-lg tracking-tight">
+                  Tutor
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
                   Only after structure is known does the AI explain it in
@@ -105,35 +138,6 @@ export default function GrammarioPage() {
                 </p>
               </li>
             </ol>
-          </div>
-
-          <div className="mt-16">
-            <h2 className="font-heading text-2xl tracking-tight">
-              Six languages shipped
-            </h2>
-            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-              Each language gets its own Strategist pass, because
-              agglutinative and fusional languages don&apos;t break down the
-              same way.
-            </p>
-            <ul className="mt-8 divide-y divide-border border-y border-border">
-              {grammarioLanguages.map((language) => (
-                <li
-                  key={language.code}
-                  className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between"
-                >
-                  <span className="font-heading text-xl">
-                    <span className="mr-3 font-mono text-[11px] text-muted-foreground">
-                      {language.code}
-                    </span>
-                    {language.name}
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    {language.note}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="mt-16 max-w-2xl">
@@ -202,7 +206,7 @@ export default function GrammarioPage() {
             </div>
             <ol className="mt-8 divide-y divide-border border-y border-border [&>li]:py-5">
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
+                <p className="font-heading text-lg tracking-tight">
                   Parallel inference
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -213,7 +217,7 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
+                <p className="font-heading text-lg tracking-tight">
                   Two-phase streaming
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -223,7 +227,7 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
+                <p className="font-heading text-lg tracking-tight">
                   Cache before you call
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">
@@ -234,7 +238,7 @@ export default function GrammarioPage() {
                 </p>
               </li>
               <li>
-                <p className="font-mono text-[12px] text-muted-foreground">
+                <p className="font-heading text-lg tracking-tight">
                   Rules where rules win
                 </p>
                 <p className="mt-2 max-w-xl text-[15px] leading-7">

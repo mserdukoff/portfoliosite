@@ -30,19 +30,17 @@ export default function NotFound() {
           ???
         </text>
       </svg>
-      <p className="mt-4 font-mono text-[12px] text-muted-foreground">
-        404 · unparsed
-      </p>
-      <h1 className="mt-4 font-heading text-4xl tracking-tight">
-        This page is not here.
+      <h1 className="mt-6 font-heading text-4xl tracking-tight">
+        This page is not here
       </h1>
-      <p className="mt-4 max-w-md text-muted-foreground">
-        It may have moved. The work lives on the home page, the writing under
-        /journal.
-      </p>
-      <Link href="/" className="mt-8 inline-block text-sm hover:text-primary">
-        Back to home →
-      </Link>
+      <div className="mt-8 flex gap-6 text-sm">
+        <Link href="/" className="hover:text-primary">
+          Go to the home page →
+        </Link>
+        <Link href="/journal" className="text-muted-foreground hover:text-primary">
+          Read the journal
+        </Link>
+      </div>
     </article>
   );
 }

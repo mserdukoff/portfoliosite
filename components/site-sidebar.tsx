@@ -58,16 +58,10 @@ export function SiteSidebar() {
         </div>
       </div>
 
-      <motion.p
-        variants={fadeUp}
-        className="mt-10 font-mono text-[12px] text-primary lg:mt-14"
-      >
-        {site.role}
-      </motion.p>
       <Name
         variants={fadeUp}
         data-breakable
-        className="mt-3 font-heading text-[clamp(2.6rem,4vw,3.4rem)] leading-[0.95] tracking-[-0.025em] text-foreground"
+        className="mt-10 font-heading lg:mt-14 text-[clamp(2.6rem,4vw,3.4rem)] leading-[0.95] tracking-[-0.025em] text-foreground"
       >
         <NameDecode />
       </Name>
@@ -98,9 +92,9 @@ export function SiteSidebar() {
             Grammario
           </Link>{" "}
           and{" "}
-          <a href="https://lociros.com" className={link}>
+          <Link href="/work/lociros" className={link}>
             Lociros
-          </a>
+          </Link>
           , NLP products for language learners. Contributor to{" "}
           <Link href="/#open-source" className={link}>
             pandas

@@ -27,12 +27,16 @@ export function BrowserFrame({
     >
       <figcaption
         className={cn(
-          "flex items-center justify-between gap-3 border-b px-3 py-1.5 font-mono text-[10px] text-muted-foreground",
+          "flex items-center gap-3 border-b px-3 py-1.5 font-mono text-[10px] text-muted-foreground",
           dark ? "border-border bg-muted" : "border-border bg-muted/60"
         )}
       >
+        <span aria-hidden className="flex shrink-0 gap-1">
+          <span className="size-1.5 rounded-full bg-current opacity-40" />
+          <span className="size-1.5 rounded-full bg-current opacity-40" />
+          <span className="size-1.5 rounded-full bg-current opacity-40" />
+        </span>
         <span className="truncate">{label}</span>
-        <span className="shrink-0">Live</span>
       </figcaption>
       <div className={contentClassName}>{children}</div>
     </figure>
