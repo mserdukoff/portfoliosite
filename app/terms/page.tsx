@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <article className="py-16 sm:py-20">
+    <article className="page pb-8 pt-6 sm:pt-10">
       <h1 className="font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
         Terms of use
       </h1>

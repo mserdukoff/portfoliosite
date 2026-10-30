@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <article className="pt-16">
+    <article className="page pt-10">
       <svg
         aria-hidden
         viewBox="0 0 200 60"
@@ -37,8 +37,8 @@ export default function NotFound() {
         <Link href="/" className="hover:text-primary">
           Go to the home page →
         </Link>
-        <Link href="/journal" className="text-muted-foreground hover:text-primary">
-          Read the journal
+        <Link href="/writings" className="text-muted-foreground hover:text-primary">
+          Read the writings
         </Link>
       </div>
     </article>
