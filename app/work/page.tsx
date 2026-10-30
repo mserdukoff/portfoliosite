@@ -23,8 +23,8 @@ export default function WorkPage() {
         art={<MapPlate className="aspect-[4/3] text-[13px]" sizes="(min-width: 1024px) 45vw, 100vw" />}
       />
 
-      <section className="mt-16">
-        <SectionHead index="I — Experience" title="Where I have shipped" />
+      <section className="mt-10">
+        <SectionHead index="I — Experience" title="Where I have shipped" className="border-t-0 pt-0" />
         <ol className="mt-4">
           {experience.map((item) => (
             <li

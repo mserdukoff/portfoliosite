@@ -46,8 +46,8 @@ export default function ProjectsPage() {
         }
       />
 
-      <section className="mt-16">
-        <SectionHead index="I — In production" title="Products" />
+      <section className="mt-10">
+        <SectionHead index="I — In production" title="Products" className="border-t-0 pt-0" />
         <div className="mt-10 grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((project, index) => (
             <Reveal key={project.slug} className="flex">
