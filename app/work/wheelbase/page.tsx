@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CaseCrumb } from "@/components/case-crumb";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -89,9 +88,8 @@ function Points({ items }: { items: string[] }) {
 
 export default function WheelbasePage() {
   return (
-    <article className="page pb-8 pt-6 sm:pt-10">
-      <CaseCrumb />
-      <h1 className="font-heading text-[clamp(3rem,7.5vw,6rem)] font-normal leading-[0.92] tracking-[-0.025em]">
+    <article className="py-16 sm:py-20">
+      <h1 className="font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
         Wheelbase
       </h1>
       <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -107,7 +105,7 @@ export default function WheelbasePage() {
           wheelbase.io
         </a>
         <Link
-          href="/writings/new-challenges-new-languages"
+          href="/journal/new-challenges-new-languages"
           className="text-muted-foreground underline-offset-4 hover:underline"
         >
           Why I learned Go

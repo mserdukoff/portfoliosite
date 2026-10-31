@@ -242,7 +242,7 @@ export function EasterEgg() {
     if (announced) return;
     announced = true;
     console.log(
-      "%cМ%c  Try ↑ ↑ ↓ ↓ ← → ← → B A",
+      "%cМ%c  Something on this page only kind of works. Or try ↑ ↑ ↓ ↓ ← → ← → B A",
       "font: 28px serif; color: #2a44b8;",
       "font: 12px ui-monospace, monospace; color: #13205e;",
     );

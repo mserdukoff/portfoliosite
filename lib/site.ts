@@ -14,41 +14,26 @@ export const site = {
     "AI and software engineer shipping production LLM systems, retrieval pipelines, and full-stack products. AI Engineer / Full-Stack Developer at Hime building Wheelbase; creator of Grammario and Lociros. Pandas contributor. Based in Boston.",
   homepageLead:
     "AI Engineer / Full-Stack Developer at Hime, building Wheelbase: a multi-tenant dealership platform with hybrid vector search, a governed AI operations assistant, and a Go backend. Creator of Grammario and Lociros, two NLP products for language learners.",
+  quote: "I refuse to ship something that kind of works.",
   homepageClose:
-    "Most of my work spans the stack: database schemas and their security policies, search and retrieval, model calls, APIs, and the interface on top. Two changes I was happy with: rewriting Wheelbase's backend in Go cut database load by more than 80%, and running Grammario's analysis steps in parallel brought a nine-second wait down to about four.",
+    "I build the whole path a feature travels: the schema and its security policies, the retrieval and ranking layer, the model call and its guardrails, the API, and the interface someone actually touches. Then I measure it. The Go rewrite of Wheelbase's backend cut database load by more than 80%; parallelizing Grammario's analysis pipeline took a nine-second wait down to four.",
   aboutClose:
-    "With AI features I try to get the structure right before involving a model. In Grammario a parser finds the grammar and the LLM only explains it. In Lociros a morphological analyzer checks each generated passage against its level. In Wheelbase the assistant can write SQL, but only inside a restricted Postgres function, and destructive changes need approval. Models are useful but make mistakes, so I add checks where a mistake would matter.",
+    "My rule for AI work is structure first, model second. Grammario only lets the LLM explain grammar after a deterministic parser has already found it. Lociros never trusts a model's claim that a passage is A2; a morphological analyzer checks every word. Wheelbase's assistant can write SQL, but only inside a hardened Postgres function it cannot escape, and destructive writes wait for an approval token. Language models are powerful and unreliable, so I put them where their fluency helps and put hard checks where their mistakes would cost something.",
   aboutLanguages:
-    "I speak Russian and I'm learning Italian, Turkish, German, Hebrew, and Japanese, which is a big part of why I got into NLP. Turkish builds words by stacking suffixes while Italian inflects them, so Grammario uses a different analysis approach for each language family.",
-} as const;
-
-export const place = {
-  name: "Marblehead, MA",
-  lat: "42.5006° N",
-  lon: "70.8659° W",
-} as const;
-
-export const hero = {
-  disciplines: [
-    ["Software", "AI", "Languages"],
-    ["Defense", "History", "Philosophy"],
-  ],
-  intro:
-    "I’m a software engineer in Boston. I work on Wheelbase at Hime, and outside of that I build Grammario and Lociros, two tools for language learners.",
-  focus: [
-    "LLM systems",
-    "Multi-tenant platforms",
-    "Vector search",
-    "Data pipelines",
-    "NLP",
-  ],
+    "The languages are not a side note. I speak Russian, study Italian, Turkish, German, Hebrew, and Japanese, and that is where the NLP work comes from. Knowing firsthand that Turkish stacks suffixes while Italian inflects is why Grammario runs a different analysis strategy per language family instead of one generic pipeline.",
 } as const;
 
 export const nav = [
-  { href: "/work", label: "Work" },
-  { href: "/projects", label: "Projects" },
-  { href: "/writings", label: "Writings" },
-  { href: "/about", label: "About" },
+  { id: "hero", label: "Home" },
+  { id: "work", label: "Work" },
+  { id: "impact", label: "Impact" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "open-source", label: "Open source" },
+  { id: "about", label: "About" },
+  { id: "languages", label: "Languages" },
+  { id: "journal", label: "Journal" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
 export const impact = [
@@ -91,13 +76,13 @@ export const impact = [
 ] as const;
 
 export const languages = [
-  { name: "English", native: "English", lang: "en", level: "Native", score: 100 },
-  { name: "Russian", native: "Русский", lang: "ru", level: "Native", score: 88 },
-  { name: "Italian", native: "Italiano", lang: "it", level: "Proficient", score: 68 },
-  { name: "Turkish", native: "Türkçe", lang: "tr", level: "Proficient", score: 68 },
-  { name: "German", native: "Deutsch", lang: "de", level: "Basic", score: 32 },
-  { name: "Hebrew", native: "עברית", lang: "he", level: "Basic", score: 32 },
-  { name: "Japanese", native: "日本語", lang: "ja", level: "Basic", score: 32 },
+  { name: "English", level: "Native", score: 100 },
+  { name: "Russian", level: "Native", score: 88 },
+  { name: "Italian", level: "Proficient", score: 68 },
+  { name: "Turkish", level: "Proficient", score: 68 },
+  { name: "German", level: "Basic", score: 32 },
+  { name: "Hebrew", level: "Basic", score: 32 },
+  { name: "Japanese", level: "Basic", score: 32 },
 ] as const;
 
 export const experience = [
