@@ -121,7 +121,7 @@ export function Hero() {
   const featured = projects.filter((project) => project.featured);
 
   return (
-    <section id="top" className="relative overflow-hidden bg-background">
+    <section id="top" className="relative flex flex-1 flex-col overflow-hidden bg-background">
       <FlowField preset="neon" />
 
       <div
@@ -139,7 +139,7 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="wrap relative flex min-h-[min(100dvh,60rem)] flex-col pb-5 pt-[calc(var(--bar-h)+1.5rem)]">
+      <div className="wrap relative flex min-h-[min(100dvh,60rem)] flex-1 flex-col pb-5 pt-[calc(var(--bar-h)+1.5rem)]">
         <div className="grid flex-1 items-center gap-10 py-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
           <div>
             <p className="font-mono text-[12px] text-muted-foreground">

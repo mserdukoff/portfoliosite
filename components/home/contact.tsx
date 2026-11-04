@@ -11,7 +11,7 @@ const [quoteLead, quoteTail] = site.quote.split(BREAK_PHRASE);
 
 export function Contact() {
   return (
-    <section className="relative overflow-hidden bg-background">
+    <section className="relative flex flex-1 flex-col overflow-hidden bg-background">
       <FlowField preset="neon" />
       <div aria-hidden className="field-scrim pointer-events-none absolute inset-0" />
       <img
@@ -21,7 +21,7 @@ export function Contact() {
         height={900}
         className="pointer-events-none absolute -right-[2%] top-1/2 h-auto w-[min(50vw,29rem)] -translate-y-1/2 opacity-30 sm:opacity-60 lg:opacity-90"
       />
-      <div className="wrap relative flex min-h-[min(88dvh,54rem)] flex-col justify-center pb-16 pt-[calc(var(--bar-h)+3rem)]">
+      <div className="wrap relative flex min-h-[min(88dvh,54rem)] flex-1 flex-col justify-center pb-16 pt-[calc(var(--bar-h)+3rem)]">
         <h1 className="font-mono text-[12px] font-normal text-muted-foreground">
           {"// 05 · Contact"}
         </h1>
