@@ -4,14 +4,18 @@ export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
 async function loadPochaevsk() {
-  const cssRes = await fetch(
-    "https://fonts.googleapis.com/css2?family=Pochaevsk&text=%D0%9C"
-  );
-  const css = await cssRes.text();
-  const fontUrl = css.match(/src: url\(([^)]+)\)/)?.[1];
-  if (!fontUrl) return null;
-  const fontRes = await fetch(fontUrl);
-  return fontRes.arrayBuffer();
+  try {
+    const cssRes = await fetch(
+      "https://fonts.googleapis.com/css2?family=Pochaevsk&text=%D0%9C"
+    );
+    const css = await cssRes.text();
+    const fontUrl = css.match(/src: url\(([^)]+)\)/)?.[1];
+    if (!fontUrl) return null;
+    const fontRes = await fetch(fontUrl);
+    return await fontRes.arrayBuffer();
+  } catch {
+    return null;
+  }
 }
 
 export default async function Icon() {
@@ -26,9 +30,9 @@ export default async function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#13205e",
-          color: "#edeef6",
-          fontSize: 24,
+          background: "#03060a",
+          color: "#e8eef2",
+          fontSize: 28,
           fontFamily: fontData ? "Pochaevsk" : "serif",
         }}
       >

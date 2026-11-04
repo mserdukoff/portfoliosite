@@ -12,29 +12,40 @@ function randomChar() {
 
 type Cell = { char: string; settled: boolean };
 
-export function NameDecode() {
-  const from = site.cyrillicName;
-  const to = site.name;
-  const length = Math.max(from.length, to.length);
+// Decodes word by word, so each word holds its own line while it scrambles.
+const fromWords = site.cyrillicName.split(" ");
+const toWords = site.name.split(" ");
+const widths = toWords.map((word, i) =>
+  Math.max(word.length, fromWords[i]?.length ?? 0)
+);
+const offsets = widths.map((_, i) =>
+  widths.slice(0, i).reduce((sum, width) => sum + width, 0)
+);
+const from = fromWords.map((word, i) => word.padEnd(widths[i])).join("");
+const to = toWords.map((word, i) => word.padEnd(widths[i])).join("");
 
+export function NameDecode() {
   const [cells, setCells] = useState<Cell[]>(() =>
-    Array.from({ length }, (_, i) => ({ char: from[i] ?? "", settled: false }))
+    Array.from(from, (char) => ({ char, settled: false }))
   );
+
   useEffect(() => {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const plan = Array.from({ length }, (_, i) => {
-      if (reduceMotion) return { start: 0, end: 0, target: to[i] ?? "" };
+    const plan = Array.from(to, (target, i) => {
+      if (reduceMotion) return { start: 0, end: 0, target };
       const start = i * 2 + 14 + Math.floor(Math.random() * 6);
       const end = start + 8 + Math.floor(Math.random() * 12);
-      return { start, end, target: to[i] ?? "" };
+      return { start, end, target };
     });
 
+    // Clocked in elapsed time, so a busy main thread can't stretch the decode.
+    const began = performance.now();
     let raf = 0;
-    let frame = 0;
-    function tick() {
+    function tick(now: number) {
+      const frame = Math.floor((now - began) / 16);
       setCells((prev) =>
         prev.map((cell, i) => {
           const { start, end, target } = plan[i];
@@ -43,23 +54,27 @@ export function NameDecode() {
           return cell;
         })
       );
-      frame += 1;
       if (!plan.every((p) => frame >= p.end)) raf = requestAnimationFrame(tick);
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [to, length]);
+  }, []);
 
   return (
-    <span className="inline-block">
+    <>
       <span aria-hidden="true">
-        {cells.map((cell, i) => (
-          <span key={i} className={cell.settled ? undefined : "text-primary"}>
-            {cell.char}
+        {widths.map((width, word) => (
+          <span key={word} className="block whitespace-pre">
+            {cells.slice(offsets[word], offsets[word] + width).map((cell, i) => (
+              <span key={i} className={cell.settled ? undefined : "text-primary"}>
+                {cell.char}
+              </span>
+            ))}
+            {word === widths.length - 1 ? <span className="cursor" /> : null}
           </span>
         ))}
       </span>
-      <span className="sr-only">{to}</span>
-    </span>
+      <span className="sr-only">{site.name}</span>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PageHero } from "@/components/page-hero";
 import { formatDate, getJournal, journal } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -32,32 +33,38 @@ export default async function JournalEntryPage({
   const older = index < journal.length - 1 ? journal[index + 1] : null;
 
   return (
-    <article className="py-16 sm:py-20">
-      <h1 className="max-w-3xl font-heading text-[clamp(1.85rem,4vw,2.6rem)] leading-[1.1] tracking-[-0.03em]">
-        {post.title}
-      </h1>
-      <time dateTime={post.date} className="mt-4 block font-mono text-[12px] text-muted-foreground">
-        {formatDate(post.date)}
-      </time>
-      <div className="mt-10 max-w-2xl space-y-5 text-[16.5px] leading-8 text-foreground/88">
-        {post.body.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+    <article>
+      <PageHero
+        eyebrow={`Entry ${String(journal.length - index).padStart(2, "0")} · ${formatDate(post.date)}`}
+        title={post.title}
+      />
+      <div className="wrap py-12 sm:py-16">
+        <div className="max-w-[72ch] space-y-5 text-[15px] leading-8 text-[#c7d2d9]">
+          {post.body.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+        <nav aria-label="Entries" className="mt-14 grid gap-3 sm:grid-cols-2">
+          {older ? (
+            <Link href={`/journal/${older.slug}`} className="panel">
+              <span className="panel-head text-muted-foreground">← Older</span>
+              <span className="block border-t border-border p-3 font-heading text-[15px] leading-snug">
+                {older.title}
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {newer ? (
+            <Link href={`/journal/${newer.slug}`} className="panel sm:text-right">
+              <span className="panel-head justify-end text-muted-foreground">Newer →</span>
+              <span className="block border-t border-border p-3 font-heading text-[15px] leading-snug">
+                {newer.title}
+              </span>
+            </Link>
+          ) : null}
+        </nav>
       </div>
-      <nav className="mt-16 flex flex-col gap-4 border-t border-border pt-6 text-sm sm:flex-row sm:justify-between">
-        {older ? (
-          <Link href={`/journal/${older.slug}`} className="text-muted-foreground hover:text-foreground">
-            ← {older.title}
-          </Link>
-        ) : (
-          <span />
-        )}
-        {newer ? (
-          <Link href={`/journal/${newer.slug}`} className="text-muted-foreground hover:text-foreground sm:text-right">
-            {newer.title} →
-          </Link>
-        ) : null}
-      </nav>
     </article>
   );
 }

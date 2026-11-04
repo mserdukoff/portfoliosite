@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  CaseLayout,
+  CaseSection,
+  FactsPanel,
+  Panel,
+  Points,
+  Rows,
+  StackPanel,
+} from "@/components/case-study";
+import { PageHero } from "@/components/page-hero";
 
 export const metadata: Metadata = {
   title: "Wheelbase",
@@ -53,199 +61,130 @@ const decisions = [
   },
 ];
 
-function Section({
-  title,
-  lead,
-  children,
-}: {
-  title: string;
-  lead: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <section className="mt-16">
-      <h2 className="font-heading text-2xl tracking-tight">{title}</h2>
-      <p className="mt-3 max-w-2xl text-[15px] leading-7 text-foreground/85">
-        {lead}
-      </p>
-      {children}
-    </section>
-  );
-}
-
-function Points({ items }: { items: string[] }) {
-  return (
-    <ul className="mt-5 max-w-2xl space-y-2.5 text-[15px] leading-7 text-foreground/80">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span aria-hidden className="mt-[0.8rem] h-px w-3 shrink-0 bg-primary" />
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export default function WheelbasePage() {
   return (
-    <article className="py-16 sm:py-20">
-      <h1 className="font-heading text-[clamp(2.1rem,4.5vw,3rem)] leading-[0.98] tracking-[-0.04em]">
-        Wheelbase
-      </h1>
-      <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-        Dealership software built at the pace of a live auction floor. One
-        Turborepo monorepo ships a web app, an Electron desktop app, an Expo
-        field app, a Go backend, and an AI agent runtime.
-      </p>
-      <div className="mt-6 flex flex-wrap gap-4 font-mono text-[12px]">
-        <a
-          href="https://wheelbase.io"
-          className="text-foreground underline-offset-4 hover:underline"
-        >
-          wheelbase.io
-        </a>
-        <Link
-          href="/journal/new-challenges-new-languages"
-          className="text-muted-foreground underline-offset-4 hover:underline"
-        >
-          Why I learned Go
-        </Link>
-      </div>
-
-      <div className="mt-12 overflow-hidden rounded-sm bg-foreground text-background">
-        <div className="flex items-center justify-between border-b border-background/15 px-5 py-3 font-mono text-[11px] text-background/60 sm:px-8">
-          <span>Deployment topology</span>
-          <span>Nginx edge · Docker · Dokploy</span>
-        </div>
-        <ul className="divide-y divide-background/10 px-5 font-mono text-[12px] sm:px-8">
-          {topology.map((row) => (
-            <li
-              key={row.route}
-              className="grid gap-1 py-3.5 sm:grid-cols-[10rem_8rem_minmax(0,1fr)] sm:gap-4"
-            >
-              <span className="text-background">{row.route}</span>
-              <span className="text-background/85">→ {row.target}</span>
-              <span className="text-background/55">{row.detail}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="border-t border-background/15 px-5 py-3.5 font-mono text-[11px] leading-5 text-background/60 sm:px-8">
-          Supabase Postgres underneath everything: RLS, pgvector, Realtime,
-          Vault, Edge Functions. GitHub Actions deploys only the services whose
-          paths changed.
-        </p>
-      </div>
-
-      <div className="mt-4 grid gap-16 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start">
-        <div className="min-w-0">
-          <Section
-            title="Retrieval that makes decisions"
-            lead="The RAG layer here does not chat with documents. It ranks every car on an auction runlist against what a dealer's lot actually needs, and buyers use that ranking on the auction floor. The score is IMX, the Inventory Match Index."
-          >
-            <Points
-              items={[
-                "Semantic and keyword search work together, so conceptual queries (\"work truck\") and exact ones (\"F-150\") both land.",
-                "Embeddings come from a chain of providers with a local fallback, so ranking degrades instead of failing.",
-                "Retrieval supplies relevance. Deterministic business rules align it with how a dealership actually operates.",
-              ]}
-            />
-          </Section>
-
-          <Section
-            title="An assistant that cannot leave its tenant"
-            lead="Operators ask questions in plain English and get answers from their own data. Letting a model write SQL against a multi-tenant database only works if the model physically cannot see anyone else's rows."
-          >
-            <Points
-              items={[
-                "Prompts become a tenant-scoped, SELECT-only query DSL executed through ai_execute_query, a hardened security-definer Postgres function tightened over several migrations.",
-                "Writes are risk-classified. Destructive operations require an approval token from a human before they run.",
-                "Every query and write lands in telemetry tables, so any agent action can be audited after the fact.",
-                "Context documents for the user, dealership, and team go through a draft and publish step before they can change agent behavior.",
-              ]}
-            />
-          </Section>
-
-          <Section
-            title="VIN decoding without the network"
-            lead="A paid third-party API became a self-contained Go service over a ~2GB NHTSA database. It decodes make, model, trim, and specs, and corrects mistyped VINs, with zero external calls per decode."
-          />
-
-          <Section
-            title="Python to Go, with nothing broken"
-            lead="A core import that populated thousands of rows took up to two minutes. Fixing the FastAPI path got it to 5–25 seconds. Rewriting the services in Go with Gin, plus caching and data-model changes, cut database load by more than 80% and brought responses under a second, with zero breaking changes for the clients."
-          />
-
-          <section className="mt-16">
-            <h2 className="font-heading text-2xl tracking-tight">
-              Other calls worth explaining
-            </h2>
-            <ul className="mt-6 divide-y divide-border border-y border-border">
-              {decisions.map((item) => (
-                <li key={item.title} className="py-5">
-                  <p className="font-heading text-lg tracking-tight">
-                    {item.title}
-                  </p>
-                  <p className="mt-2 max-w-2xl text-[15px] leading-7 text-foreground/80">
-                    {item.body}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <aside className="space-y-10 lg:sticky lg:top-24 lg:mt-16">
-          <div className="rail-panel">
-            <p className="font-mono text-[12px] text-muted-foreground">
-              Quick facts
-            </p>
-            <dl className="mt-4 space-y-3 text-sm">
-              {[
-                ["Role", "AI Engineer / Full-Stack Developer"],
-                ["Company", "Hime"],
-                ["Timeline", "Jan 2024–Present"],
-                ["Stage", "Closed beta"],
-                ["Surfaces", "Web, desktop, mobile"],
-              ].map(([term, value]) => (
-                <div key={term} className="flex items-baseline justify-between gap-4">
-                  <dt className="text-muted-foreground">{term}</dt>
-                  <dd className="text-right text-foreground/85">{value}</dd>
-                </div>
-              ))}
-            </dl>
-            <a
-              href="https://wheelbase.io"
-              className={cn(buttonVariants({ size: "lg" }), "mt-5 w-full")}
-            >
-              Open wheelbase.io
+    <article>
+      <PageHero
+        eyebrow="Case study · W-01"
+        title="Wheelbase"
+        lead="Dealership software built at the pace of a live auction floor. One Turborepo monorepo ships a web app, an Electron desktop app, an Expo field app, a Go backend, and an AI agent runtime."
+        links={
+          <>
+            <a href="https://wheelbase.io" className="hud-btn">
+              wheelbase.io <span aria-hidden>↗</span>
             </a>
-          </div>
+            <Link href="/journal/new-challenges-new-languages" className="hud-btn border-border">
+              Why I learned Go
+            </Link>
+          </>
+        }
+        aside={
+          <FactsPanel
+            href="https://wheelbase.io"
+            site="wheelbase.io"
+            items={[
+              ["Role", "AI Engineer / Full-Stack Developer"],
+              ["Company", "Hime"],
+              ["Timeline", "Jan 2024–Present"],
+              ["Stage", "Closed beta"],
+              ["Surfaces", "Web, desktop, mobile"],
+            ]}
+          />
+        }
+      />
 
-          <div className="rail-panel">
-            <p className="font-mono text-[12px] text-muted-foreground">Scale</p>
-            <dl className="mt-4 space-y-2 text-sm">
-              {scale.map((item) => (
-                <div key={item.label} className="flex items-baseline justify-between gap-4">
-                  <dt className="text-muted-foreground">{item.label}</dt>
-                  <dd className="font-mono text-[13px] text-foreground">
-                    {item.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+      <div className="wrap pb-20 pt-10">
+        <Panel code="B" title="Deployment topology" meta="Nginx edge · Docker · Dokploy">
+          <ul className="divide-y divide-border px-3 font-mono text-[12px]">
+            {topology.map((row) => (
+              <li
+                key={row.route}
+                className="grid gap-1 py-3 sm:grid-cols-[10rem_8rem_minmax(0,1fr)] sm:gap-4"
+              >
+                <span>{row.route}</span>
+                <span className="text-primary">→ {row.target}</span>
+                <span className="text-muted-foreground">{row.detail}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="border-t border-border px-3 py-3 font-mono text-[11px] leading-5 text-muted-foreground">
+            Supabase Postgres underneath everything: RLS, pgvector, Realtime,
+            Vault, Edge Functions. GitHub Actions deploys only the services whose
+            paths changed.
+          </p>
+        </Panel>
 
-          <div className="rail-panel">
-            <p className="font-mono text-[12px] text-muted-foreground">Stack</p>
-            <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
-              React 19, TanStack Start, tRPC 11, TanStack Query, Zustand,
-              Tailwind CSS 4, Go 1.25, Gin, Supabase, PostgreSQL, pgvector,
-              SQLite, Electron 41, Expo SDK 55, NativeWind, Yjs, TipTap,
-              OpenRouter, AI SDK, Remotion, MinIO, Docker, Nginx, Dokploy,
-              GitHub Actions, Turborepo, Bun.
-            </p>
-          </div>
-        </aside>
+        <CaseLayout
+          main={
+            <>
+              <CaseSection
+                code="01"
+                title="Retrieval that makes decisions"
+                lead="The RAG layer ranks every car on an auction runlist against what a dealer's lot actually needs, and buyers use that ranking on the auction floor. The score is IMX, the Inventory Match Index."
+              >
+                <Points
+                  items={[
+                    "Semantic and keyword search work together, so conceptual queries (\"work truck\") and exact ones (\"F-150\") both land.",
+                    "Embeddings come from a chain of providers with a local fallback, so ranking degrades instead of failing.",
+                    "Retrieval supplies relevance. Deterministic business rules align it with how a dealership actually operates.",
+                  ]}
+                />
+              </CaseSection>
+
+              <CaseSection
+                code="02"
+                title="An assistant that cannot leave its tenant"
+                lead="Operators ask questions in plain English and get answers from their own data. Letting a model write SQL against a multi-tenant database only works if the model physically cannot see anyone else's rows."
+              >
+                <Points
+                  items={[
+                    "Prompts become a tenant-scoped, SELECT-only query DSL executed through ai_execute_query, a hardened security-definer Postgres function tightened over several migrations.",
+                    "Writes are risk-classified. Destructive operations require an approval token from a human before they run.",
+                    "Every query and write lands in telemetry tables, so any agent action can be audited after the fact.",
+                    "Context documents for the user, dealership, and team go through a draft and publish step before they can change agent behavior.",
+                  ]}
+                />
+              </CaseSection>
+
+              <CaseSection
+                code="03"
+                title="VIN decoding without the network"
+                lead="A paid third-party API became a self-contained Go service over a ~2GB NHTSA database. It decodes make, model, trim, and specs, and corrects mistyped VINs, with zero external calls per decode."
+              />
+
+              <CaseSection
+                code="04"
+                title="Python to Go, with nothing broken"
+                lead="A core import that populated thousands of rows took up to two minutes. Fixing the FastAPI path got it to 5–25 seconds. Rewriting the services in Go with Gin, plus caching and data-model changes, cut database load by more than 80% and brought responses under a second, with zero breaking changes for the clients."
+              />
+
+              <CaseSection code="05" title="Other calls worth explaining">
+                <Rows items={decisions} />
+              </CaseSection>
+            </>
+          }
+          rail={
+            <>
+              <Panel code="C" title="Scale">
+                <dl className="grid gap-[0.4375rem] px-2.5 py-2.5 font-mono text-[11px]">
+                  {scale.map((item) => (
+                    <div key={item.label} className="flex items-baseline justify-between gap-4">
+                      <dt className="text-muted-foreground">{item.label}</dt>
+                      <dd className="text-[13px] text-primary">{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Panel>
+              <StackPanel code="D">
+                React 19, TanStack Start, tRPC 11, TanStack Query, Zustand,
+                Tailwind CSS 4, Go 1.25, Gin, Supabase, PostgreSQL, pgvector,
+                SQLite, Electron 41, Expo SDK 55, NativeWind, Yjs, TipTap,
+                OpenRouter, AI SDK, Remotion, MinIO, Docker, Nginx, Dokploy,
+                GitHub Actions, Turborepo, Bun.
+              </StackPanel>
+            </>
+          }
+        />
       </div>
     </article>
   );

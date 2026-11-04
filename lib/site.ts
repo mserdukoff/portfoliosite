@@ -4,12 +4,15 @@ export const site = {
   cyrillicName: "Матвей Сердюков",
   role: "AI & software engineer",
   location: "Boston, MA",
+  coordinates: "42.3601° N  71.0589° W",
   scope: "Boston metro or US-remote",
   status: "Open to roles",
   timezone: "America/New_York",
   email: "m.serdukoff@gmail.com",
   github: "https://github.com/mserdukoff",
   linkedin: "https://www.linkedin.com/in/matt-serdukoff-775030190/",
+  x: "https://x.com/msrdkff",
+  xHandle: "@msrdkff",
   metadata:
     "AI and software engineer shipping production LLM systems, retrieval pipelines, and full-stack products. AI Engineer / Full-Stack Developer at Hime building Wheelbase; creator of Grammario and Lociros. Pandas contributor. Based in Boston.",
   homepageLead:
@@ -20,21 +23,18 @@ export const site = {
   aboutClose:
     "My rule for AI work is structure first, model second. Grammario only lets the LLM explain grammar after a deterministic parser has already found it. Lociros never trusts a model's claim that a passage is A2; a morphological analyzer checks every word. Wheelbase's assistant can write SQL, but only inside a hardened Postgres function it cannot escape, and destructive writes wait for an approval token. Language models are powerful and unreliable, so I put them where their fluency helps and put hard checks where their mistakes would cost something.",
   aboutLanguages:
-    "The languages are not a side note. I speak Russian, study Italian, Turkish, German, Hebrew, and Japanese, and that is where the NLP work comes from. Knowing firsthand that Turkish stacks suffixes while Italian inflects is why Grammario runs a different analysis strategy per language family instead of one generic pipeline.",
+    "I speak Russian and study Italian, Turkish, German, Hebrew, and Japanese, and that is where the NLP work comes from. Knowing firsthand that Turkish stacks suffixes while Italian inflects is why Grammario runs a different analysis strategy per language family instead of one generic pipeline.",
 } as const;
 
 export const nav = [
-  { id: "hero", label: "Home" },
-  { id: "work", label: "Work" },
-  { id: "impact", label: "Impact" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "open-source", label: "Open source" },
-  { id: "about", label: "About" },
-  { id: "languages", label: "Languages" },
-  { id: "journal", label: "Journal" },
-  { id: "contact", label: "Contact" },
+  { id: "work", code: "01", label: "Work", href: "/work" },
+  { id: "projects", code: "02", label: "Projects", href: "/projects" },
+  { id: "writing", code: "03", label: "Writing", href: "/journal" },
+  { id: "about", code: "04", label: "About", href: "/about" },
+  { id: "contact", code: "05", label: "Contact", href: "/contact" },
 ] as const;
+
+export type NavId = (typeof nav)[number]["id"];
 
 export const impact = [
   {

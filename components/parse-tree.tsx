@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useStillMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type Token = {
@@ -52,7 +53,7 @@ function arcPath(from: number, to: number) {
 }
 
 export function ParseTree({ className }: { className?: string }) {
-  const reduced = useReducedMotion();
+  const still = useStillMotion();
   const [active, setActive] = useState(2);
   const token = tokens[active];
 
@@ -74,9 +75,9 @@ export function ParseTree({ className }: { className?: string }) {
                 stroke="currentColor"
                 strokeWidth={related ? 1.6 : 1}
                 className={related ? "text-primary" : "text-border"}
-                initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+                initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
+                transition={still ? { duration: 0 } : { duration: 0.7, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
               />
               <text
                 x={(center(arc.from) + center(arc.to)) / 2}

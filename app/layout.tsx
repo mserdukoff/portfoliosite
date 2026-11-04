@@ -1,29 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   IBM_Plex_Mono,
+  JetBrains_Mono,
   Newsreader,
+  Noto_Naskh_Arabic,
+  Noto_Serif_JP,
   Pochaevsk,
-  Schibsted_Grotesk,
 } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
-  subsets: ["latin"],
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin", "cyrillic"],
 });
 
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["400", "500"],
-});
-
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
 });
 
 const pochaevsk = Pochaevsk({
@@ -31,6 +27,31 @@ const pochaevsk = Pochaevsk({
   subsets: ["cyrillic"],
   weight: "400",
 });
+
+// Display-only script specimens, so none is worth a preload.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  preload: false,
+});
+
+const notoJp = Noto_Serif_JP({
+  variable: "--font-noto-jp",
+  subsets: ["latin"],
+  weight: "400",
+  preload: false,
+});
+
+const notoArabic = Noto_Naskh_Arabic({
+  variable: "--font-noto-arabic",
+  subsets: ["arabic"],
+  preload: false,
+});
+
+export const viewport: Viewport = {
+  themeColor: "#03060a",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -45,13 +66,17 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
   },
+  twitter: {
+    card: "summary_large_image",
+    creator: site.xHandle,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${schibsted.variable} ${plexMono.variable} ${newsreader.variable} ${pochaevsk.variable} h-full scroll-smooth antialiased`}
+      className={`${jetbrains.variable} ${plexMono.variable} ${pochaevsk.variable} ${newsreader.variable} ${notoJp.variable} ${notoArabic.variable} h-full scroll-smooth antialiased`}
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full font-sans">

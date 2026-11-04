@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -8,17 +9,11 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <article className="py-16 sm:py-20">
-      <h1 className="font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
-        Terms of use
-      </h1>
-      <p className="mt-4 font-mono text-[12px] text-muted-foreground">
-        Effective September 25, 2026
-      </p>
-
-      <div className="mt-10 max-w-2xl space-y-8 text-[16px] leading-7 text-foreground/85">
+    <article>
+      <PageHero eyebrow="Effective September 25, 2026" title="Terms of use" />
+      <div className="wrap max-w-none space-y-8 py-12 text-[14px] leading-7 text-[#c7d2d9] sm:py-16 [&>section]:max-w-[72ch]">
         <section>
-          <h2 className="font-heading text-xl tracking-tight">This site</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">This site</h2>
           <p className="mt-2">
             This is the personal site of {site.name}. By using it you agree to
             these terms. They cover this site only. Wheelbase and Grammario are
@@ -27,7 +22,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">Content</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">Content</h2>
           <p className="mt-2">
             Writing, images, and design on this site are © {site.name} unless
             noted otherwise. You are welcome to quote or link to anything here
@@ -37,7 +32,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">No warranty</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">No warranty</h2>
           <p className="mt-2">
             Journal entries describe my own projects and opinions at the time
             they were written. They are provided as-is, without any warranty,
@@ -47,7 +42,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">
+          <h2 className="font-heading text-[18px] font-normal text-foreground">
             External links
           </h2>
           <p className="mt-2">
@@ -57,7 +52,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">Changes</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">Changes</h2>
           <p className="mt-2">
             I may update these terms. The effective date above shows the
             current version. Questions go to{" "}

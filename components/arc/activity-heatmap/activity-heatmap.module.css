@@ -25,7 +25,7 @@
 .row { display: flex; gap: var(--gap); }
 
 /* One square per day. The wave delay rides a custom property so a reveal and a recolor sweep the same diagonal. */
-.cell { --delay: var(--wave); display: block; width: var(--cell); height: var(--cell); flex: none; border-radius: calc(var(--cell) * .28); background: var(--level-0); outline: 1.5px solid transparent; outline-offset: 1px; cursor: default; -webkit-tap-highlight-color: transparent; transition: background-color 320ms var(--ease-standard) var(--delay), transform var(--duration-spring) var(--ease-spring) var(--delay), opacity var(--duration-fast) var(--ease-standard); }
+.cell { --delay: var(--wave); display: block; width: var(--cell); height: var(--cell); flex: none; border-radius: 0; background: var(--level-0); outline: 1.5px solid transparent; outline-offset: 1px; cursor: default; -webkit-tap-highlight-color: transparent; transition: background-color 320ms var(--ease-standard) var(--delay), transform var(--duration-spring) var(--ease-spring) var(--delay), opacity var(--duration-fast) var(--ease-standard); }
 .grid[data-direction="back"] .cell { --delay: var(--wave-back); }
 .cell[data-level="1"] { background: var(--level-1); }
 .cell[data-level="2"] { background: var(--level-2); }
@@ -41,7 +41,7 @@
 @media (hover: hover) and (pointer: fine) { .cell:not([data-empty]):hover { outline-color: color-mix(in oklab, var(--foreground) 45%, transparent); } }
 
 /* The selection ring glides between days, and follows its day when the range changes. */
-.ring { position: absolute; top: -3px; left: -3px; width: calc(var(--cell) + 6px); height: calc(var(--cell) + 6px); border: 1.5px solid var(--foreground); border-radius: calc(var(--cell) * .28 + 3px); opacity: 0; pointer-events: none; transform: translate(calc(var(--col) * var(--step)), calc(var(--row) * var(--step))); transition: transform var(--duration-spring) var(--ease-spring), opacity var(--duration-fast) var(--ease-standard); }
+.ring { position: absolute; top: -3px; left: -3px; width: calc(var(--cell) + 6px); height: calc(var(--cell) + 6px); border: 1.5px solid var(--foreground); border-radius: 0; opacity: 0; pointer-events: none; transform: translate(calc(var(--col) * var(--step)), calc(var(--row) * var(--step))); transition: transform var(--duration-spring) var(--ease-spring), opacity var(--duration-fast) var(--ease-standard); }
 .ring[data-shown] { opacity: 1; }
 
 .legend { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: var(--space-3); color: var(--text-muted); font-size: var(--text-xs); }
@@ -54,8 +54,8 @@
 .legendText { line-height: 1; }
 .swatches { display: flex; }
 /* The visible square stays the size of a day while the button keeps a comfortable target around it. */
-.swatch { position: relative; display: grid; width: 15px; height: 20px; place-items: center; padding: 0; border: 0; border-radius: 4px; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.swatch::before { content: ""; width: 11px; height: 11px; border-radius: 3px; background: var(--level-0); }
+.swatch { position: relative; display: grid; width: 15px; height: 20px; place-items: center; padding: 0; border: 0; border-radius: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.swatch::before { content: ""; width: 11px; height: 11px; border-radius: 0; background: var(--level-0); }
 .swatch[data-level="1"]::before { background: var(--level-1); }
 .swatch[data-level="2"]::before { background: var(--level-2); }
 .swatch[data-level="3"]::before { background: var(--level-3); }
@@ -64,7 +64,7 @@
 
 /* One bubble for the whole grid. The outer layer glides between cells; the bubble fades and scales from its tail. */
 .tip { position: absolute; z-index: 5; top: 0; left: 0; width: 0; height: 0; pointer-events: none; }
-.bubble { position: absolute; bottom: 8px; left: 0; display: block; padding: 7px 12px 8px; border: 1px solid color-mix(in oklab, var(--background) 14%, var(--foreground)); border-radius: var(--radius-control); background: var(--foreground); color: var(--background); box-shadow: var(--shadow-raised); transform-origin: 50% 100%; will-change: transform, opacity; }
+.bubble { position: absolute; bottom: 8px; left: 0; display: block; padding: 7px 12px 8px; border: 1px solid color-mix(in oklab, var(--background) 14%, var(--foreground)); border-radius: 0; background: var(--foreground); color: var(--background); box-shadow: var(--shadow-raised); transform-origin: 50% 100%; will-change: transform, opacity; }
 .tipBody { position: relative; display: block; overflow: clip; overflow-clip-margin: 8px; }
 .tipMeasure { position: absolute; top: 0; left: 0; display: grid; width: max-content; visibility: hidden; }
 .tipLines { display: grid; width: max-content; }

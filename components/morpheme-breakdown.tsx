@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { TextMorph } from "@/components/arc/text-morph/text-morph";
-import { easeOut } from "@/lib/motion";
+import { easeOut, useStillMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type Morpheme = {
@@ -25,7 +25,7 @@ const morphemes: Morpheme[] = [
 ];
 
 export function MorphemeBreakdown({ className }: { className?: string }) {
-  const reduced = useReducedMotion();
+  const still = useStillMotion();
   const [active, setActive] = useState(morphemes.length - 1);
   const current = morphemes[active];
 
@@ -46,15 +46,15 @@ export function MorphemeBreakdown({ className }: { className?: string }) {
               onClick={() => setActive(index)}
               aria-pressed={on}
               aria-label={`${piece.text}, ${piece.label}`}
-              initial={reduced ? false : { opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: index * 0.08, ease: easeOut }}
+              transition={still ? { duration: 0 } : { duration: 0.6, delay: index * 0.08, ease: easeOut }}
               className="group relative cursor-pointer"
             >
               <span
                 className={cn(
-                  "block border border-primary/35 px-[0.04em] font-heading text-[clamp(2.6rem,9vw,6rem)] leading-[1.05] tracking-[-0.02em] transition-colors",
+                  "block border border-primary/35 px-[0.04em] font-heading text-[clamp(1.875rem,8.5vw,5rem)] leading-[1.05] tracking-[-0.02em] transition-colors",
                   index > 0 && "-ml-px",
                   on
                     ? "relative z-10 border-primary bg-primary/10 text-primary"

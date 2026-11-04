@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -8,17 +9,11 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <article className="py-16 sm:py-20">
-      <h1 className="font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] tracking-[-0.03em]">
-        Privacy
-      </h1>
-      <p className="mt-4 font-mono text-[12px] text-muted-foreground">
-        Effective October 22, 2026
-      </p>
-
-      <div className="mt-10 max-w-2xl space-y-8 text-[16px] leading-7 text-foreground/85">
+    <article>
+      <PageHero eyebrow="Effective October 22, 2026" title="Privacy" />
+      <div className="wrap max-w-none space-y-8 py-12 text-[14px] leading-7 text-[#c7d2d9] sm:py-16 [&>section]:max-w-[72ch]">
         <section>
-          <h2 className="font-heading text-xl tracking-tight">Short version</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">Short version</h2>
           <p className="mt-2">
             This is a personal portfolio. It has no accounts, no forms, no
             cookies, and no analytics or advertising scripts. I do not collect,
@@ -27,7 +22,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">
+          <h2 className="font-heading text-[18px] font-normal text-foreground">
             Hosting and server logs
           </h2>
           <p className="mt-2">
@@ -39,20 +34,20 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">
+          <h2 className="font-heading text-[18px] font-normal text-foreground">
             Third-party requests
           </h2>
           <p className="mt-2">
-            The GitHub activity graph on the home page is built on the server
+            The GitHub activity graph on the Projects page is built on the server
             from public contribution counts, so your browser never contacts a
             third party to draw it. Fonts are bundled with the site and do not call out to
-            Google. Links to GitHub, LinkedIn, Wheelbase, and Grammario take you
-            to sites with their own privacy policies.
+            Google. Links to GitHub, LinkedIn, X, Wheelbase, and Grammario take
+            you to sites with their own privacy policies.
           </p>
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">Email</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">Email</h2>
           <p className="mt-2">
             If you email me, I keep the message and your address only to reply
             and continue the conversation. I will not add you to a mailing
@@ -61,7 +56,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl tracking-tight">Contact</h2>
+          <h2 className="font-heading text-[18px] font-normal text-foreground">Contact</h2>
           <p className="mt-2">
             Questions or deletion requests go to{" "}
             <a

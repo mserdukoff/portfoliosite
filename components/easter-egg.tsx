@@ -30,6 +30,7 @@ const TARGETS = [
   "#content section > *",
   "#content article",
   "#content .cell-grid > *",
+  "#content .panel",
   "header nav li",
   "footer > *",
   "[data-breakable]",
@@ -243,8 +244,8 @@ export function EasterEgg() {
     announced = true;
     console.log(
       "%cМ%c  Something on this page only kind of works. Or try ↑ ↑ ↓ ↓ ← → ← → B A",
-      "font: 28px serif; color: #2a44b8;",
-      "font: 12px ui-monospace, monospace; color: #13205e;",
+      "font: 28px serif; color: #ff5a1f;",
+      "font: 12px ui-monospace, monospace; color: #2ec4c4;",
     );
   }, []);
 
@@ -327,7 +328,7 @@ export function EasterEgg() {
             animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="fixed bottom-5 right-5 z-50 w-[19rem] overflow-hidden rounded-sm bg-foreground text-background shadow-[0_18px_50px_-20px_rgb(19_32_94/0.6)] sm:bottom-8 sm:right-8"
+            className="fixed bottom-5 right-5 z-50 w-[19rem] overflow-hidden rounded-sm bg-foreground text-background shadow-[0_18px_50px_-20px_rgb(0_0_0/0.8)] sm:bottom-8 sm:right-8"
           >
             <div className="flex items-center justify-between border-b border-background/15 px-4 py-2 font-mono text-[11px] text-background/60">
               <span>build #4f2a</span>
@@ -395,7 +396,7 @@ export function EasterEgg() {
                       )}
                     >
                       <span aria-hidden className="w-3">
-                        {i < checksDone ? "✓" : "·"}
+                        {i < checksDone ? "x" : "·"}
                       </span>
                       {check}
                     </li>

@@ -18,23 +18,17 @@ async function loadFont(family: string, text: string, weight = 400) {
   return fontRes.arrayBuffer();
 }
 
+const eyebrow = `// ${site.role} · ${site.location} · ${site.status}`;
+
 export default async function OpengraphImage() {
-  const [markData, nameData, roleData, leadData] = await Promise.all([
-    loadFont("Pochaevsk", "М"),
-    loadFont("Newsreader", site.name, 600),
-    loadFont(
-      "Schibsted Grotesk",
-      `${site.role} · ${site.location} · ${site.status}`,
-      500
-    ),
-    loadFont("Schibsted Grotesk", site.homepageLead, 400),
+  const [nameData, bodyData] = await Promise.all([
+    loadFont("IBM Plex Mono", `${site.name}_`),
+    loadFont("JetBrains Mono", `${eyebrow}${site.homepageLead}`),
   ]);
 
   const fonts = [
-    markData && { name: "Pochaevsk", data: markData, style: "normal" as const, weight: 400 as const },
-    nameData && { name: "Newsreader", data: nameData, style: "normal" as const, weight: 600 as const },
-    roleData && { name: "Schibsted Grotesk", data: roleData, style: "normal" as const, weight: 500 as const },
-    leadData && { name: "Schibsted Grotesk", data: leadData, style: "normal" as const, weight: 400 as const },
+    nameData && { name: "Plex", data: nameData, style: "normal" as const, weight: 400 as const },
+    bodyData && { name: "JetBrains", data: bodyData, style: "normal" as const, weight: 400 as const },
   ].filter((f): f is NonNullable<typeof f> => Boolean(f));
 
   return new ImageResponse(
@@ -45,61 +39,29 @@ export default async function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          background: "#edeef6",
+          justifyContent: "center",
+          gap: 28,
           padding: "64px 72px",
+          color: "#e8eef2",
+          backgroundColor: "#03060a",
+          fontFamily: bodyData ? "JetBrains" : "monospace",
         }}
       >
+        <div style={{ display: "flex", fontSize: 24, color: "#93a3af", letterSpacing: 1 }}>
+          {eyebrow}
+        </div>
         <div
           style={{
             display: "flex",
-            fontSize: 56,
+            fontSize: 92,
             lineHeight: 1,
-            color: "#2a44b8",
-            fontFamily: markData ? "Pochaevsk" : "serif",
+            fontFamily: nameData ? "Plex" : "monospace",
           }}
         >
-          М
+          {site.name}_
         </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 76,
-              lineHeight: 1.05,
-              color: "#13205e",
-              fontFamily: nameData ? "Newsreader" : "serif",
-              fontWeight: 600,
-            }}
-          >
-            {site.name}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 26,
-              color: "#2a44b8",
-              fontFamily: roleData ? "Schibsted Grotesk" : "sans-serif",
-              fontWeight: 500,
-              letterSpacing: 0.5,
-            }}
-          >
-            {site.role} · {site.location} · {site.status}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              maxWidth: 880,
-              fontSize: 28,
-              lineHeight: 1.5,
-              color: "#4a5590",
-              fontFamily: leadData ? "Schibsted Grotesk" : "sans-serif",
-              fontWeight: 400,
-            }}
-          >
-            {site.homepageLead}
-          </div>
+        <div style={{ display: "flex", maxWidth: 960, fontSize: 25, lineHeight: 1.55, color: "#c7d2d9" }}>
+          {site.homepageLead}
         </div>
       </div>
     ),

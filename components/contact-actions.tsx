@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { TextMorph } from "@/components/arc/text-morph/text-morph";
-import { DiscoverButton } from "@/components/block/discover-button";
 import { buttonVariants } from "@/components/ui/button";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -29,11 +28,9 @@ export function ContactActions() {
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <DiscoverButton
-        href={`mailto:${site.email}`}
-        label={site.email}
-        className="cta-sweep"
-      />
+      <a href={`mailto:${site.email}`} className={cn(outline, "border-foreground")}>
+        {site.email}
+      </a>
       <button type="button" onClick={copyEmail} className={cn(outline, "arc")}>
         <TextMorph>{copied ? "Copied" : "Copy email"}</TextMorph>
       </button>
@@ -42,6 +39,9 @@ export function ContactActions() {
       </span>
       <a href={site.linkedin} className={outline}>
         LinkedIn ↗
+      </a>
+      <a href={site.x} className={outline}>
+        X {site.xHandle} ↗
       </a>
     </div>
   );
