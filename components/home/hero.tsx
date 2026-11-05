@@ -13,20 +13,11 @@ import { FlowField } from "@/components/flow-field";
 import { LocalClock } from "@/components/local-clock";
 import { NameDecode } from "@/components/name-decode";
 import { Ruler } from "@/components/page-hero";
-import { formatDate, journal, openSource, projects } from "@/lib/site";
+import { formatDate, journal, openSource, projects, taglines } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const inlineLink =
   "text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-primary";
-
-const panelTaglines: Record<string, string> = {
-  wheelbase: "Auction intelligence for dealers",
-  lociros: "Graded readers, checked by analyzers",
-  grammario: "Grammar analysis, six languages",
-  purser: "Changelog drafts from merged PRs",
-  "skin-cancer-cnn": "Skin-lesion CNN, exported to Core ML",
-  procmon: "htop-style process monitor in C++",
-};
 
 const sideProjects = ["purser", "skin-cancer-cnn", "procmon"];
 
@@ -218,7 +209,7 @@ export function Hero() {
               rows={featured.map((project) => ({
                 href: project.caseStudy ?? "/work",
                 label: project.title,
-                note: panelTaglines[project.slug] ?? "",
+                note: taglines[project.slug] ?? "",
               }))}
               className="col-span-2"
             />
@@ -239,7 +230,7 @@ export function Hero() {
               rows={side.map((project) => ({
                 href: `/projects#${project.slug}`,
                 label: project.title,
-                note: panelTaglines[project.slug] ?? "",
+                note: taglines[project.slug] ?? "",
               }))}
               className="col-span-2 md:col-span-3"
             />

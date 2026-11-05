@@ -281,6 +281,16 @@ df.plot.hist()
   ],
 } as const;
 
+/** One-line project descriptions for the homepage tiles and the share image. */
+export const taglines: Record<string, string> = {
+  wheelbase: "Auction intelligence for dealers",
+  lociros: "Graded readers, checked by analyzers",
+  grammario: "Grammar analysis, six languages",
+  purser: "Changelog drafts from merged PRs",
+  "skin-cancer-cnn": "Skin-lesion CNN, exported to Core ML",
+  procmon: "htop-style process monitor in C++",
+};
+
 export type Project = {
   slug: string;
   title: string;
