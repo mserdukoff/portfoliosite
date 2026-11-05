@@ -1,3 +1,6 @@
+import { FolderGit2 } from "lucide-react";
+import { PanelTitle } from "@/components/case-study";
+import { projectIcon } from "@/components/project-icons";
 import { Reveal } from "@/components/reveal";
 import { formatDate, openSource, projects, site } from "@/lib/site";
 
@@ -17,12 +20,10 @@ export function Projects() {
 
   return (
     <ul className="grid gap-3 sm:grid-cols-2">
-      {rest.map((project, i) => (
+      {rest.map((project) => (
         <li key={project.slug} id={project.slug} className="panel flex flex-col">
           <p className="panel-head">
-            <span>
-              [P-{String(i + 1).padStart(2, "0")}] {project.period}
-            </span>
+            <PanelTitle icon={projectIcon(project.slug)} title={project.period} />
             {project.repo ? <span aria-hidden className="text-muted-foreground">↗</span> : null}
           </p>
           <div className="flex flex-1 flex-col border-t border-border p-4">
@@ -55,7 +56,7 @@ export function Projects() {
       <li className="contents">
         <a href={site.github} className="panel flex flex-col">
           <p className="panel-head">
-            <span>[P-{String(rest.length + 1).padStart(2, "0")}] Everything else</span>
+            <PanelTitle icon={FolderGit2} title="Everything else" />
             <span aria-hidden className="text-muted-foreground">↗</span>
           </p>
           <div className="flex flex-1 items-center border-t border-border p-4 font-heading text-xl">

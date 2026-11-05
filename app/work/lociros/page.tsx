@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { BookOpen, FileCheck } from "lucide-react";
 import {
   CaseLayout,
   CaseSection,
@@ -67,7 +69,7 @@ export default function LocirosPage() {
   return (
     <article className="accent-teal">
       <PageHero
-        eyebrow="Case study · L-02"
+        eyebrow="Case study"
         title="Lociros"
         lead="Graded readers where A2 is actually A2. Ask a model for beginner text and it reaches for grammar a beginner has not met yet, so Lociros treats the CEFR level as a constraint it can check."
         links={
@@ -78,6 +80,9 @@ export default function LocirosPage() {
             <a href="https://github.com/mserdukoff/lociros" className="hud-btn border-border">
               Source <span aria-hidden>↗</span>
             </a>
+            <Link href="/linguistics" className="hud-btn border-border">
+              The linguistics
+            </Link>
           </>
         }
         aside={
@@ -96,7 +101,7 @@ export default function LocirosPage() {
       />
 
       <div className="wrap pb-20 pt-10">
-        <Panel code="B" title="Write A1 Japanese about a morning at the market">
+        <Panel icon={FileCheck} title="Write A1 Japanese about a morning at the market">
           <ol className="divide-y divide-border">
             <li className="grid gap-3 p-4 sm:grid-cols-[6rem_minmax(0,1fr)] sm:p-6">
               <span className="font-mono text-[12px] text-muted-foreground">Draft</span>
@@ -174,7 +179,7 @@ export default function LocirosPage() {
                 title="Every word arrives analyzed"
                 lead="The reader is built on the same analysis the validator used. Tap a word for its lemma, level, grammar, and gloss. Japanese words break into kanji, with each reading aligned to its character, and Arabic words show their root and verb form."
               >
-                <Panel code="C" title="Word gloss" className="mt-6">
+                <Panel icon={BookOpen} title="Word gloss" className="mt-6">
                   <div className="px-4 py-5 sm:px-6">
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                       <ruby lang="ja" className="text-4xl">
@@ -226,7 +231,7 @@ export default function LocirosPage() {
             </>
           }
           rail={
-            <StackPanel code="D">
+            <StackPanel>
               Next.js 16, React 19, FastAPI, SQLAlchemy, Alembic, Supabase
               (Postgres, Auth), Sudachi, CAMeL Tools, spaCy, razdel, pymorphy3,
               KANJIDIC2, KanjiVG, OpenRouter, Stripe, Redis, Docker, nginx,

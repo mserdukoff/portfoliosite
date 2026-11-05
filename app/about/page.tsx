@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import { CaseSection } from "@/components/case-study";
-import { About, Languages, Record } from "@/components/home/about";
+import { About, Record } from "@/components/home/about";
 import { SectionPage } from "@/components/section-page";
 
 export const metadata: Metadata = {
@@ -25,10 +25,7 @@ export default function AboutPage() {
       }
     >
       <About />
-      <CaseSection id="languages" code="01" title="Languages">
-        <Languages />
-      </CaseSection>
-      <CaseSection id="record" code="02" title="Record">
+      <CaseSection id="record" code="01" title="Record">
         <Record />
       </CaseSection>
     </SectionPage>

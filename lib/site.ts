@@ -29,9 +29,10 @@ export const site = {
 export const nav = [
   { id: "work", code: "01", label: "Work", href: "/work" },
   { id: "projects", code: "02", label: "Projects", href: "/projects" },
-  { id: "writing", code: "03", label: "Writing", href: "/journal" },
-  { id: "about", code: "04", label: "About", href: "/about" },
-  { id: "contact", code: "05", label: "Contact", href: "/contact" },
+  { id: "linguistics", code: "03", label: "Linguistics", href: "/linguistics" },
+  { id: "writing", code: "04", label: "Writing", href: "/journal" },
+  { id: "about", code: "05", label: "About", href: "/about" },
+  { id: "contact", code: "06", label: "Contact", href: "/contact" },
 ] as const;
 
 export type NavId = (typeof nav)[number]["id"];
@@ -492,6 +493,138 @@ export const grammarioLanguages = [
     note: "Verb and adjective conjugation, honorific register",
   },
 ] as const;
+
+export type LinguisticsTopic = {
+  id: string;
+  title: string;
+  summary: string;
+  examples: { text: string; lang: string; dir?: "rtl"; gloss: string }[];
+  applied: { project: "grammario" | "lociros"; body: string }[];
+};
+
+export const linguisticsLead =
+  "I came to NLP through learning languages. These are the parts of linguistics I have spent the most time with, and where each one shows up in Grammario and Lociros.";
+
+export const linguistics: LinguisticsTopic[] = [
+  {
+    id: "morphology",
+    title: "Morphology",
+    summary:
+      "How words are built from smaller pieces of meaning. Turkish stacks suffixes onto a stem, so one word can carry what English spreads across a whole phrase, and every suffix shifts its vowel to match the stem.",
+    examples: [
+      { text: "ev·ler·iniz·den", lang: "tr", gloss: "house · plural · your · from = “from your houses”" },
+      { text: "bil·me·di·y·se·n", lang: "tr", gloss: "know · not · past · buffer · if · you = “if you did not know”" },
+    ],
+    applied: [
+      {
+        project: "grammario",
+        body: "Turkish words are split into a root and labeled suffixes, so a learner sees how bilmediysen is assembled instead of memorizing it whole.",
+      },
+      {
+        project: "lociros",
+        body: "Sudachi and pymorphy3 reduce every word to its lemma and inflection. That analysis is what the level validator checks and what the reader shows when you tap a word.",
+      },
+    ],
+  },
+  {
+    id: "syntax",
+    title: "Syntax and dependencies",
+    summary:
+      "Sentence structure as relations between words: which word heads a clause and which words depend on it. I work in Universal Dependencies, an annotation scheme shared across languages, so a subject or an object means the same thing in Russian as in Italian.",
+    examples: [
+      { text: "Я читаю книгу", lang: "ru", gloss: "I (subject) ← read (root) → book (object, accusative)" },
+    ],
+    applied: [
+      {
+        project: "grammario",
+        body: "spaCy, with Stanza as a fallback, parses each sentence into a dependency tree before any model is involved. Click a word for its role, lemma, and features.",
+      },
+      {
+        project: "lociros",
+        body: "Constructions a level forbids, like Japanese relative clauses or Russian который-clauses, are found in the analysis rather than guessed from the text.",
+      },
+    ],
+  },
+  {
+    id: "agreement",
+    title: "Agreement and case",
+    summary:
+      "Some words must match each other, and some words decide another word’s form. Italian and Spanish agree in gender and number. In German and Russian, verbs and prepositions require a particular case.",
+    examples: [
+      { text: "mia sorella è andata", lang: "it", gloss: "sister is feminine, so the participle is andata, not andato" },
+      { text: "Ich helfe dem Mann", lang: "de", gloss: "helfen takes the dative: dem Mann, not den Mann" },
+    ],
+    applied: [
+      {
+        project: "grammario",
+        body: "Agreement clusters group the words that must match in Italian and Spanish, governance shows which word demands which case in German and Russian, and rule-based checks flag a mismatch.",
+      },
+      {
+        project: "lociros",
+        body: "Cases, participles, and moods are listed per level, so an A2 Russian passage only uses the cases an A2 reader has met.",
+      },
+    ],
+  },
+  {
+    id: "typology",
+    title: "Typology",
+    summary:
+      "Languages build meaning in different ways. Turkish is agglutinative, with one suffix per meaning. Italian is fusional, with one ending carrying several. Arabic builds words by placing a consonant root into patterns. A pipeline built for one type handles the others badly.",
+    examples: [
+      { text: "evlerinizden", lang: "tr", gloss: "agglutinative: four pieces, four meanings" },
+      { text: "andata", lang: "it", gloss: "fusional: -a marks feminine and singular at once" },
+      { text: "كِتَاب · مَكْتَبَة", lang: "ar", dir: "rtl", gloss: "root and pattern: k-t-b gives kitāb “book” and maktaba “library”" },
+    ],
+    applied: [
+      {
+        project: "grammario",
+        body: "Each language family gets its own analysis strategy instead of one engine for all six languages.",
+      },
+      {
+        project: "lociros",
+        body: "Each language gets its own analyzer: Sudachi for Japanese, CAMeL Tools for Arabic, spaCy for Italian, and razdel with pymorphy3 for Russian.",
+      },
+    ],
+  },
+  {
+    id: "writing-systems",
+    title: "Writing systems",
+    summary:
+      "Japanese mixes kanji with two syllabaries, and a kanji’s reading depends on the word it sits in. Arabic is written right to left and usually leaves out short vowels, so the root and pattern carry much of the reading.",
+    examples: [
+      { text: "市場", lang: "ja", gloss: "しじょう: 市 is read し and 場 is read じょう in this word" },
+    ],
+    applied: [
+      {
+        project: "lociros",
+        body: "Tapping a Japanese word aligns each reading to its kanji, with stroke order from KanjiVG. Tapping an Arabic word shows its root and verb form.",
+      },
+      {
+        project: "grammario",
+        body: "Japanese analysis covers verb and adjective conjugation and honorific register, which a word-by-word gloss would miss.",
+      },
+    ],
+  },
+  {
+    id: "graded-input",
+    title: "Graded input and CEFR",
+    summary:
+      "Reading helps most when the text sits just above what you already know. CEFR describes levels from A1 to C2, but text labeled for beginners often uses grammar a beginner has not learned yet.",
+    examples: [
+      { text: "毎朝、市場に行って", lang: "ja", gloss: "the て-form is not allowed at A1, so this draft fails and is rewritten" },
+    ],
+    applied: [
+      {
+        project: "lociros",
+        body: "Each level’s allowed grammar lives in JSON per language. A validator checks every generated passage and sends it back for a rewrite when it goes over level.",
+      },
+      {
+        project: "grammario",
+        body: "Sentences get a CEFR difficulty score from features of the parse, like tree depth, subordination, and morphological complexity.",
+      },
+    ],
+  },
+];
 
 export type JournalPost = {
   slug: string;

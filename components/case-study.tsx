@@ -1,14 +1,25 @@
+import { Info, Layers, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/** A HUD panel with a bracketed heading. */
+/** The icon and title at the top of a panel. */
+export function PanelTitle({ icon: Icon, title }: { icon: LucideIcon; title: string }) {
+  return (
+    <span className="flex min-w-0 items-center gap-2">
+      <Icon aria-hidden className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={1.75} />
+      <span className="truncate">{title}</span>
+    </span>
+  );
+}
+
+/** A HUD panel with an icon heading. */
 export function Panel({
-  code,
+  icon,
   title,
   meta,
   className,
   children,
 }: {
-  code: string;
+  icon: LucideIcon;
   title: string;
   meta?: string;
   className?: string;
@@ -17,10 +28,8 @@ export function Panel({
   return (
     <div className={cn("panel min-w-0", className)}>
       <p className="panel-head">
-        <span>
-          [{code}] {title}
-        </span>
-        {meta ? <span className="text-muted-foreground">{meta}</span> : null}
+        <PanelTitle icon={icon} title={title} />
+        {meta ? <span className="shrink-0 text-muted-foreground">{meta}</span> : null}
       </p>
       <div className="border-t border-border">{children}</div>
     </div>
@@ -50,7 +59,7 @@ export function FactsPanel({
   site: string;
 }) {
   return (
-    <Panel code="A" title="Quick facts" className="self-center">
+    <Panel icon={Info} title="Quick facts" className="self-center">
       <Facts items={items} />
       <a href={href} className="block border-t border-border px-2.5 py-2 font-mono text-[11px] transition-colors hover:bg-foreground hover:text-background">
         Open {site} <span aria-hidden>↗</span>
@@ -59,9 +68,9 @@ export function FactsPanel({
   );
 }
 
-export function StackPanel({ code = "B", children }: { code?: string; children: React.ReactNode }) {
+export function StackPanel({ children }: { children: React.ReactNode }) {
   return (
-    <Panel code={code} title="Stack">
+    <Panel icon={Layers} title="Stack">
       <p className="p-3 font-mono text-[11px] leading-5 text-muted-foreground">{children}</p>
     </Panel>
   );

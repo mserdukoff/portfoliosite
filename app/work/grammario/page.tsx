@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Network, Puzzle } from "lucide-react";
 import {
   CaseLayout,
   CaseSection,
@@ -69,7 +70,7 @@ export default function GrammarioPage() {
   return (
     <article className="accent-blue">
       <PageHero
-        eyebrow="Case study · G-03"
+        eyebrow="Case study"
         title="Grammario"
         lead="Learning languages, I kept finding textbooks and online resources that were lazy about explaining grammar, especially for agglutinative languages, where one word can carry a whole sentence."
         links={
@@ -79,6 +80,9 @@ export default function GrammarioPage() {
             </a>
             <Link href="/journal/new-grammario-method" className="hud-btn border-border">
               The method
+            </Link>
+            <Link href="/linguistics" className="hud-btn border-border">
+              The linguistics
             </Link>
           </>
         }
@@ -98,7 +102,7 @@ export default function GrammarioPage() {
       />
 
       <div className="wrap pb-20 pt-10">
-        <Panel code="B" title="Morphemes">
+        <Panel icon={Puzzle} title="Morphemes">
           <div className="px-4 py-6 sm:px-8 sm:py-8">
             <p className="max-w-[46ch] font-heading text-[clamp(1.0625rem,2vw,1.375rem)] leading-snug">
               In Turkish, <em>bilmediysen</em> means “if you did not know.” One
@@ -131,7 +135,7 @@ export default function GrammarioPage() {
                 title="Expanding to six languages"
                 lead="Not every language stacks suffixes. Italian inflects and agrees, so the same sentence-level idea shows up as a dependency tree: who governs whom, and which words must match."
               >
-                <Panel code="C" title="Dependency parse" className="mt-8">
+                <Panel icon={Network} title="Dependency parse" className="mt-8">
                   <div className="px-4 py-6 sm:px-6">
                     <p className="font-heading text-[18px] italic">L&apos;ho fatta parlare in italiano.</p>
                     <div className="mt-6">
@@ -189,7 +193,7 @@ export default function GrammarioPage() {
             </>
           }
           rail={
-            <StackPanel code="D">
+            <StackPanel>
               spaCy, Stanza, Universal Dependencies, sentence-transformers,
               Python 3.11, FastAPI, Pydantic v2, Next.js 16, React 19,
               TypeScript, Tailwind CSS v4, ReactFlow, Dagre, TanStack Query,

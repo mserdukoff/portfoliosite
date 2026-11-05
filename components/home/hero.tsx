@@ -1,10 +1,20 @@
 import Link from "next/link";
+import {
+  BriefcaseBusiness,
+  FolderGit2,
+  GitMerge,
+  Languages,
+  type LucideIcon,
+  Network,
+  PenLine,
+  Radio,
+} from "lucide-react";
+import { PanelTitle } from "@/components/case-study";
 import { FlowField } from "@/components/flow-field";
-import { Specimen } from "@/components/home/specimen";
 import { LocalClock } from "@/components/local-clock";
 import { NameDecode } from "@/components/name-decode";
 import { Ruler } from "@/components/page-hero";
-import { languages, nav, projects } from "@/lib/site";
+import { formatDate, journal, languages, openSource, projects } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const inlineLink =
@@ -14,7 +24,12 @@ const panelTaglines: Record<string, string> = {
   wheelbase: "Auction intelligence for dealers",
   lociros: "Graded readers, checked by analyzers",
   grammario: "Grammar analysis, six languages",
+  purser: "Changelog drafts from merged PRs",
+  "skin-cancer-cnn": "Skin-lesion CNN, exported to Core ML",
+  procmon: "htop-style process monitor in C++",
 };
+
+const sideProjects = ["purser", "skin-cancer-cnn", "procmon"];
 
 const languageCodes: Record<string, string> = {
   English: "EN",
@@ -26,47 +41,14 @@ const languageCodes: Record<string, string> = {
   Japanese: "JA",
 };
 
-function PanelHead({ code, title }: { code: string; title: string }) {
+function PanelHead({ icon, title }: { icon: LucideIcon; title: string }) {
   return (
     <h3 className="panel-head">
-      <span>
-        [{code}] {title}
-      </span>
+      <PanelTitle icon={icon} title={title} />
       <span aria-hidden className="text-muted-foreground">
         →
       </span>
     </h3>
-  );
-}
-
-function DependencySpecimen() {
-  return (
-    <svg
-      viewBox="0 0 200 110"
-      aria-hidden
-      className="block h-[6.875rem] w-full border-t border-border font-mono"
-    >
-      <g fill="none" stroke="var(--teal)" strokeWidth="0.8">
-        <path d="M100 74 C100 34, 44 34, 44 74" />
-        <path d="M100 74 C100 34, 158 34, 158 74" />
-      </g>
-      <path d="M100 20 V70" stroke="var(--orange)" strokeWidth="0.8" />
-      <g fontSize="7.5" textAnchor="middle" fill="var(--muted-foreground)">
-        <text x="100" y="15" fill="var(--orange)">root</text>
-        <text x="68" y="33">nsubj</text>
-        <text x="130" y="33">obj</text>
-      </g>
-      <g fontSize="12" textAnchor="middle" fill="var(--foreground)">
-        <text x="44" y="90">Я</text>
-        <text x="100" y="90">читаю</text>
-        <text x="158" y="90">книгу</text>
-      </g>
-      <g fontSize="6.5" textAnchor="middle" fill="var(--muted-foreground)">
-        <text x="44" y="102">PRON</text>
-        <text x="100" y="102">VERB</text>
-        <text x="158" y="102">NOUN.Acc</text>
-      </g>
-    </svg>
   );
 }
 
@@ -110,6 +92,49 @@ function StatusRow({ label, children }: { label: string; children: React.ReactNo
   );
 }
 
+/** A panel whose heading opens a page and whose rows open its entries. */
+function ListPanel({
+  icon,
+  title,
+  href,
+  rows,
+  compact,
+  className,
+}: {
+  icon: LucideIcon;
+  title: string;
+  href: string;
+  rows: { href: string; label: string; note: string }[];
+  /** A narrow label column and no row arrows, for a one-column tile. */
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={cn("panel flex flex-col", className)}>
+      <Link href={href} className="block">
+        <PanelHead icon={icon} title={title} />
+      </Link>
+      <ul className="flex flex-1 flex-col justify-center border-t border-border px-2.5 py-1 font-mono text-[12px]">
+        {rows.map((row) => (
+          <li key={row.href}>
+            <Link
+              href={row.href}
+              className={cn(
+                "grid gap-2.5 border-b border-dashed border-border/40 py-1.5 last:border-b-0 hover:text-primary",
+                compact ? "grid-cols-[3.75rem_minmax(0,1fr)]" : "grid-cols-[6.25rem_minmax(0,1fr)_auto]"
+              )}
+            >
+              <b className={cn("truncate font-medium", compact && "font-normal text-muted-foreground")}>{row.label}</b>
+              <span className="truncate text-[#b9c6ce]">{row.note}</span>
+              {compact ? null : <span aria-hidden className="hidden text-muted-foreground sm:block">[→]</span>}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 const crosshairs = [
   "left-[32%] top-[23%]",
   "left-[79%] top-[11%]",
@@ -119,6 +144,8 @@ const crosshairs = [
 
 export function Hero() {
   const featured = projects.filter((project) => project.featured);
+  const side = projects.filter((project) => sideProjects.includes(project.slug));
+  const latest = journal.slice(0, 3);
 
   return (
     <section id="top" className="relative flex flex-1 flex-col overflow-hidden bg-background">
@@ -162,50 +189,26 @@ export function Hero() {
               Contributor to{" "}
               <Link href="/projects#open-source" className={inlineLink}>pandas</Link>.
             </p>
-            <ul className="mt-8 hidden max-w-60 gap-1 font-mono text-[13px] lg:grid">
-              {nav.map((item, i) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex gap-[1.125rem] border px-2.5 py-[0.4375rem] transition-colors hover:border-foreground",
-                      i === 0 ? "border-foreground bg-background/55" : "border-transparent"
-                    )}
-                  >
-                    <span className="text-muted-foreground">
-                      {i === 0 ? <span className="text-foreground">▸ </span> : null}
-                      {item.code}
-                    </span>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-            <Link href="/work/lociros" className="panel">
-              <PanelHead code="A" title="Linguistics" />
+            <Link href="/linguistics" className="panel">
+              <PanelHead icon={Network} title="Linguistics" />
               <ScriptSpecimen />
             </Link>
-            <Link href="/work#skills" className="panel">
-              <PanelHead code="B" title="Model" />
-              <Specimen kind="terrain" />
-            </Link>
-            <Link href="/work/grammario" className="panel">
-              <PanelHead code="C" title="Parse" />
-              <DependencySpecimen />
-            </Link>
-            <Link href="/work/wheelbase" className="panel">
-              <PanelHead code="D" title="Retrieval" />
-              <Specimen kind="retrieval" />
-            </Link>
-            <Link href="/projects#global-terrorism-visualization" className="panel">
-              <PanelHead code="E" title="Data" />
-              <Specimen kind="world" />
-            </Link>
-            <Link href="/contact" className="panel">
-              <PanelHead code="F" title="Status" />
+            <ListPanel
+              icon={PenLine}
+              title="Writing"
+              href="/journal"
+              rows={latest.map((post) => ({
+                href: `/journal/${post.slug}`,
+                label: post.date.slice(0, 7),
+                note: post.title,
+              }))}
+              compact
+            />
+            <Link href="/contact" className="panel col-span-2 md:col-span-1">
+              <PanelHead icon={Radio} title="Status" />
               <dl className="grid gap-[0.4375rem] border-t border-border px-2.5 py-2 font-mono text-[11px]">
                 <StatusRow label="Roles">
                   Open
@@ -218,27 +221,20 @@ export function Hero() {
                 </StatusRow>
               </dl>
             </Link>
-            <div className="panel col-span-2 flex flex-col">
-              <Link href="/work" className="block">
-                <PanelHead code="G" title="Projects" />
-              </Link>
-              <ul className="flex flex-1 flex-col justify-center border-t border-border px-2.5 py-1 font-mono text-[12px]">
-                {featured.map((project) => (
-                  <li key={project.slug}>
-                    <Link
-                      href={project.caseStudy ?? "/work"}
-                      className="grid grid-cols-[6.25rem_minmax(0,1fr)_auto] gap-2.5 border-b border-dashed border-border/40 py-1.5 last:border-b-0 hover:text-primary"
-                    >
-                      <b className="font-medium">{project.title}</b>
-                      <span className="truncate text-[#b9c6ce]">{panelTaglines[project.slug]}</span>
-                      <span aria-hidden className="hidden text-muted-foreground sm:block">[→]</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <Link href="/about#languages" className="panel col-span-2 md:col-span-1">
-              <PanelHead code="H" title="Languages" />
+
+            <ListPanel
+              icon={BriefcaseBusiness}
+              title="Selected work"
+              href="/work"
+              rows={featured.map((project) => ({
+                href: project.caseStudy ?? "/work",
+                label: project.title,
+                note: panelTaglines[project.slug] ?? "",
+              }))}
+              className="col-span-2"
+            />
+            <Link href="/linguistics#languages" className="panel col-span-2 md:col-span-1">
+              <PanelHead icon={Languages} title="Languages" />
               <ul className="grid gap-[3px] border-t border-border px-2.5 py-2.5 font-mono text-[10px] text-muted-foreground">
                 {languages.map((language) => (
                   <li key={language.name} className="grid grid-cols-[1.375rem_minmax(0,1fr)] items-center gap-1.5">
@@ -254,6 +250,27 @@ export function Hero() {
                   </li>
                 ))}
               </ul>
+            </Link>
+
+            <ListPanel
+              icon={FolderGit2}
+              title="Side projects"
+              href="/projects"
+              rows={side.map((project) => ({
+                href: `/projects#${project.slug}`,
+                label: project.title,
+                note: panelTaglines[project.slug] ?? "",
+              }))}
+              className="col-span-2"
+            />
+            <Link href="/projects#open-source" className="panel col-span-2 md:col-span-1">
+              <PanelHead icon={GitMerge} title="Open source" />
+              <dl className="grid gap-[0.4375rem] border-t border-border px-2.5 py-2 font-mono text-[11px]">
+                <StatusRow label="Repo">{openSource.repo}</StatusRow>
+                <StatusRow label="PR">#{openSource.pr}</StatusRow>
+                <StatusRow label="Diff">{openSource.diff}</StatusRow>
+                <StatusRow label="Merged">{formatDate(openSource.merged)}</StatusRow>
+              </dl>
             </Link>
           </div>
         </div>

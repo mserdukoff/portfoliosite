@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { ProjectIcon } from "@/components/project-icons";
 import { Reveal } from "@/components/reveal";
 import {
   experience,
@@ -16,7 +17,6 @@ const actionLink =
 const features = [
   {
     slug: "wheelbase",
-    code: "W-01",
     accent: "var(--orange)",
     site: "wheelbase.io",
     image: "/wheelbase-preview.png",
@@ -31,7 +31,6 @@ const features = [
   },
   {
     slug: "lociros",
-    code: "L-02",
     accent: "var(--teal)",
     site: "lociros.com",
     image: "/lociros-preview.png",
@@ -45,7 +44,6 @@ const features = [
   },
   {
     slug: "grammario",
-    code: "G-03",
     accent: "var(--blue)",
     site: "grammario.ai",
     image: "/grammario-preview.png",
@@ -70,8 +68,9 @@ function Feature({ feature }: { feature: (typeof features)[number] }) {
         style={{ "--row-accent": feature.accent } as React.CSSProperties}
       >
         <div className="flex flex-col">
-          <p className="font-mono text-[12px] text-[var(--row-accent)]">
-            {feature.code} <span className="text-muted-foreground">· {project.period}</span>
+          <p className="flex items-center gap-2 font-mono text-[12px] text-muted-foreground">
+            <ProjectIcon slug={project.slug} className="size-4 text-[var(--row-accent)]" />
+            {project.period}
           </p>
           <h2 className="mt-3 font-heading text-[clamp(2.25rem,4vw,3.25rem)] font-normal leading-none tracking-[-0.01em]">
             {project.title}
@@ -112,7 +111,7 @@ function Feature({ feature }: { feature: (typeof features)[number] }) {
         </div>
         <figure className="brackets min-w-0 self-center p-2">
           <figcaption className="flex justify-between px-1 pb-2 font-mono text-[10px] text-muted-foreground">
-            <span>[{feature.code}] {feature.site}</span>
+            <span>{feature.site}</span>
             <span>Live product</span>
           </figcaption>
           <img

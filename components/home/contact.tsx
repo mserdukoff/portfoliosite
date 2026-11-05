@@ -4,8 +4,9 @@
 import { BREAK_EVENT } from "@/components/easter-egg";
 import { ContactActions } from "@/components/contact-actions";
 import { FlowField } from "@/components/flow-field";
-import { site } from "@/lib/site";
+import { nav, site } from "@/lib/site";
 
+const contactNav = nav.find((item) => item.id === "contact");
 const BREAK_PHRASE = "kind of works";
 const [quoteLead, quoteTail] = site.quote.split(BREAK_PHRASE);
 
@@ -23,7 +24,7 @@ export function Contact() {
       />
       <div className="wrap relative flex min-h-[min(88dvh,54rem)] flex-1 flex-col justify-center pb-16 pt-[calc(var(--bar-h)+3rem)]">
         <h1 className="font-mono text-[12px] font-normal text-muted-foreground">
-          {"// 05 · Contact"}
+          {`// ${contactNav?.code} · ${contactNav?.label}`}
         </h1>
         <blockquote
           data-breakable

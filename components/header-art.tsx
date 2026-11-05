@@ -121,6 +121,75 @@ export function ProjectsArt() {
   );
 }
 
+type Morph = { text: string; gloss: string; w: number };
+
+const sentence: { word: string; pos: string; x: number; morphs: Morph[] }[] = [
+  {
+    word: "Evlerinizden",
+    pos: "NOUN",
+    x: 170,
+    morphs: [
+      { text: "ev", gloss: "house", w: 36 },
+      { text: "ler", gloss: "PL", w: 47 },
+      { text: "iniz", gloss: "2PL.POSS", w: 58 },
+      { text: "den", gloss: "ABL", w: 47 },
+    ],
+  },
+  {
+    word: "geldim",
+    pos: "VERB",
+    x: 420,
+    morphs: [
+      { text: "gel", gloss: "come", w: 47 },
+      { text: "di", gloss: "PST", w: 36 },
+      { text: "m", gloss: "1SG", w: 25 },
+    ],
+  },
+];
+
+/** One Turkish sentence, analyzed twice: its dependency and its morphemes. */
+export function LinguisticsArt() {
+  return (
+    <svg viewBox="0 0 560 276" aria-hidden className="w-full">
+      <path d="M420 18V92" className="stroke-[var(--orange)]" />
+      <text x="428" y="30" className="fill-[var(--orange)] font-mono text-[13px]">root</text>
+      <path d="M420 96C420 34 170 34 170 96" className="fill-none stroke-[var(--teal)]" />
+      <path d="M165 88L170 98L175 88" className="fill-none stroke-[var(--teal)]" />
+      <text x="295" y="40" textAnchor="middle" className={label}>obl</text>
+
+      {sentence.map((item) => {
+        const total = item.morphs.reduce((sum, morph) => sum + morph.w, 0);
+        let left = item.x - total / 2;
+        return (
+          <g key={item.word}>
+            <text lang="tr" x={item.x} y="124" textAnchor="middle" fontSize="26" className="fill-[var(--foreground)]">
+              {item.word}
+            </text>
+            <text x={item.x} y="146" textAnchor="middle" className={label}>{item.pos}</text>
+            <path d={`M${item.x} 154V170`} className={line} />
+            {item.morphs.map((morph) => {
+              const x = left;
+              left += morph.w;
+              const mid = x + morph.w / 2;
+              return (
+                <g key={morph.text}>
+                  <rect x={x} y="170" width={morph.w} height="34" className="fill-[var(--field)] stroke-[#7fb6c9]" />
+                  <text lang="tr" x={mid} y="192" textAnchor="middle" className={strong}>{morph.text}</text>
+                  <text x={mid} y="226" textAnchor="middle" className="fill-[var(--muted-foreground)] font-mono text-[11px]">
+                    {morph.gloss}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+      <path d="M8 246H552" className={line} />
+      <text x="280" y="268" textAnchor="middle" className={label}>“I came from your houses.”</text>
+    </svg>
+  );
+}
+
 // "Language" in each language on the site, plus Arabic from Lociros.
 const words = [
   { text: "язык", lang: "ru", x: 8, y: 62, size: 44 },

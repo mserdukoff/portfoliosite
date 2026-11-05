@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { Pencil, User } from "lucide-react";
 import { Panel } from "@/components/case-study";
 import { DitherBust } from "@/components/dither-plate";
-import { LanguageRadar } from "@/components/language-radar";
 import { Reveal } from "@/components/reveal";
-import { certifications, education, languages, site } from "@/lib/site";
+import { certifications, education, site } from "@/lib/site";
 
 const inlineLink =
   "text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-primary";
@@ -35,12 +35,16 @@ export function About() {
             got the fix merged upstream
           </Link>
           . Outside of code I read history and science, and I am always partway
-          through learning another language.
+          through learning{" "}
+          <Link href="/linguistics" className={inlineLink}>
+            another language
+          </Link>
+          .
         </p>
       </Reveal>
 
       <div className="grid content-start gap-3 sm:grid-cols-2">
-        <Panel code="A" title="Portrait" meta="M.S." className="self-start">
+        <Panel icon={User} title="Portrait" className="self-start">
           <div className="grid-lines relative aspect-square overflow-hidden">
             <svg aria-hidden viewBox="0 0 300 300" className="absolute inset-0 size-full text-teal/45" fill="none" stroke="currentColor" strokeWidth=".8">
               <circle cx="150" cy="150" r="128" strokeDasharray="3 5" />
@@ -50,7 +54,7 @@ export function About() {
             <DitherBust className="absolute inset-0" />
           </div>
         </Panel>
-        <Panel code="B" title="Serpent" meta="Pencil" className="self-start">
+        <Panel icon={Pencil} title="Serpent" meta="Pencil" className="self-start">
           <div className="specimen-light flex aspect-square items-center p-3">
             <img
               src="/art/serpent.webp"
@@ -63,33 +67,6 @@ export function About() {
           </div>
         </Panel>
       </div>
-    </div>
-  );
-}
-
-export function Languages() {
-  return (
-    <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,22rem)] lg:items-center lg:gap-12">
-      <div>
-        <p className="max-w-[62ch] text-[14px] leading-7 text-[#c7d2d9]">{site.aboutLanguages}</p>
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {languages.map((language) => (
-            <li key={language.name} className="panel px-2.5 py-2">
-              <p className="flex items-baseline justify-between gap-2 font-mono text-[12px]">
-                {language.name}
-                <span className="text-[10px] text-muted-foreground">{language.level}</span>
-              </p>
-              <span aria-hidden className="relative mt-2 block h-1.5 bg-foreground/10">
-                <span
-                  className="absolute inset-y-0 left-0 bg-[#8a9aa6]"
-                  style={{ width: `${language.score}%` }}
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <LanguageRadar className="mx-auto w-full max-w-xs" fontSize={12} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Gauge, Server } from "lucide-react";
 import {
   CaseLayout,
   CaseSection,
@@ -65,7 +66,7 @@ export default function WheelbasePage() {
   return (
     <article>
       <PageHero
-        eyebrow="Case study · W-01"
+        eyebrow="Case study"
         title="Wheelbase"
         lead="Dealership software built at the pace of a live auction floor. One Turborepo monorepo ships a web app, an Electron desktop app, an Expo field app, a Go backend, and an AI agent runtime."
         links={
@@ -94,7 +95,7 @@ export default function WheelbasePage() {
       />
 
       <div className="wrap pb-20 pt-10">
-        <Panel code="B" title="Deployment topology" meta="Nginx edge · Docker · Dokploy">
+        <Panel icon={Server} title="Deployment topology" meta="Nginx edge · Docker · Dokploy">
           <ul className="divide-y divide-border px-3 font-mono text-[12px]">
             {topology.map((row) => (
               <li
@@ -165,7 +166,7 @@ export default function WheelbasePage() {
           }
           rail={
             <>
-              <Panel code="C" title="Scale">
+              <Panel icon={Gauge} title="Scale">
                 <dl className="grid gap-[0.4375rem] px-2.5 py-2.5 font-mono text-[11px]">
                   {scale.map((item) => (
                     <div key={item.label} className="flex items-baseline justify-between gap-4">
@@ -175,7 +176,7 @@ export default function WheelbasePage() {
                   ))}
                 </dl>
               </Panel>
-              <StackPanel code="D">
+              <StackPanel>
                 React 19, TanStack Start, tRPC 11, TanStack Query, Zustand,
                 Tailwind CSS 4, Go 1.25, Gin, Supabase, PostgreSQL, pgvector,
                 SQLite, Electron 41, Expo SDK 55, NativeWind, Yjs, TipTap,
