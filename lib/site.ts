@@ -513,7 +513,6 @@ export const linguistics: LinguisticsTopic[] = [
       "How words are built from smaller pieces of meaning. Turkish stacks suffixes onto a stem, so one word can carry what English spreads across a whole phrase, and every suffix shifts its vowel to match the stem.",
     examples: [
       { text: "ev·ler·iniz·den", lang: "tr", gloss: "house · plural · your · from = “from your houses”" },
-      { text: "bil·me·di·y·se·n", lang: "tr", gloss: "know · not · past · buffer · if · you = “if you did not know”" },
     ],
     applied: [
       {
@@ -531,9 +530,7 @@ export const linguistics: LinguisticsTopic[] = [
     title: "Syntax and dependencies",
     summary:
       "Sentence structure as relations between words: which word heads a clause and which words depend on it. I work in Universal Dependencies, an annotation scheme shared across languages, so a subject or an object means the same thing in Russian as in Italian.",
-    examples: [
-      { text: "Я читаю книгу", lang: "ru", gloss: "I (subject) ← read (root) → book (object, accusative)" },
-    ],
+    examples: [],
     applied: [
       {
         project: "grammario",
@@ -550,10 +547,7 @@ export const linguistics: LinguisticsTopic[] = [
     title: "Agreement and case",
     summary:
       "Some words must match each other, and some words decide another word’s form. Italian and Spanish agree in gender and number. In German and Russian, verbs and prepositions require a particular case.",
-    examples: [
-      { text: "mia sorella è andata", lang: "it", gloss: "sister is feminine, so the participle is andata, not andato" },
-      { text: "Ich helfe dem Mann", lang: "de", gloss: "helfen takes the dative: dem Mann, not den Mann" },
-    ],
+    examples: [],
     applied: [
       {
         project: "grammario",
@@ -610,9 +604,7 @@ export const linguistics: LinguisticsTopic[] = [
     title: "Graded input and CEFR",
     summary:
       "Reading helps most when the text sits just above what you already know. CEFR describes levels from A1 to C2, but text labeled for beginners often uses grammar a beginner has not learned yet.",
-    examples: [
-      { text: "毎朝、市場に行って", lang: "ja", gloss: "the て-form is not allowed at A1, so this draft fails and is rewritten" },
-    ],
+    examples: [],
     applied: [
       {
         project: "lociros",

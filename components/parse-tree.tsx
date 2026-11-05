@@ -5,17 +5,26 @@ import { motion } from "motion/react";
 import { useStillMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-type Token = {
+export type Token = {
   id: string;
   text: string;
   pos: string;
   note: string;
 };
 
-type Arc = {
+export type Arc = {
   from: number;
   to: number;
   label: string;
+};
+
+export type Parse = {
+  label: string;
+  lang: string;
+  tokens: Token[];
+  arcs: Arc[];
+  /** The token selected when the tree first renders. */
+  head: number;
 };
 
 const tokens: Token[] = [
@@ -35,6 +44,14 @@ const arcs: Arc[] = [
   { from: 5, to: 3, label: "obl" },
 ];
 
+const italian: Parse = {
+  label: "Dependency tree for the Italian sentence L'ho fatta parlare in italiano",
+  lang: "it",
+  tokens,
+  arcs,
+  head: 2,
+};
+
 const COL = 72;
 const ORIGIN_X = 36;
 const BASE_Y = 118;
@@ -43,27 +60,36 @@ function center(index: number) {
   return ORIGIN_X + index * COL;
 }
 
+function arcLift(from: number, to: number) {
+  return Math.min(86, 28 + Math.abs(center(to) - center(from)) * 0.28);
+}
+
 function arcPath(from: number, to: number) {
   const x1 = center(from);
   const x2 = center(to);
   const mid = (x1 + x2) / 2;
-  const span = Math.abs(x2 - x1);
-  const lift = Math.min(86, 28 + span * 0.28);
-  return `M ${x1} ${BASE_Y - 18} Q ${mid} ${BASE_Y - 18 - lift} ${x2} ${BASE_Y - 18}`;
+  return `M ${x1} ${BASE_Y - 18} Q ${mid} ${BASE_Y - 18 - arcLift(from, to)} ${x2} ${BASE_Y - 18}`;
 }
 
-export function ParseTree({ className }: { className?: string }) {
+function labelY(arc: Arc) {
+  return BASE_Y - 18 - arcLift(arc.from, arc.to) / 2 - 6;
+}
+
+export function ParseTree({ parse = italian, className }: { parse?: Parse; className?: string }) {
   const still = useStillMotion();
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(parse.head);
+  const { tokens, arcs } = parse;
   const token = tokens[active];
+  const top = Math.min(...arcs.map(labelY)) - 14;
 
   return (
     <div className={cn("select-none", className)}>
       <svg
-        viewBox="0 0 432 128"
-        className="h-auto w-full"
+        viewBox={`0 ${top} ${ORIGIN_X * 2 + (tokens.length - 1) * COL} ${128 - top}`}
+        className="mx-auto h-auto w-full"
+        style={{ maxWidth: `${tokens.length * 7.5}rem` }}
         role="img"
-        aria-label="Dependency tree for the Italian sentence L'ho fatta parlare in italiano"
+        aria-label={parse.label}
       >
         {arcs.map((arc, i) => {
           const related = arc.from === active || arc.to === active;
@@ -81,7 +107,7 @@ export function ParseTree({ className }: { className?: string }) {
               />
               <text
                 x={(center(arc.from) + center(arc.to)) / 2}
-                y={BASE_Y - 18 - Math.min(86, 28 + Math.abs(center(arc.to) - center(arc.from)) * 0.28) / 2 - 6}
+                y={labelY(arc)}
                 textAnchor="middle"
                 className={related ? "fill-primary" : "fill-muted-foreground"}
                 fontSize="9"
@@ -107,7 +133,11 @@ export function ParseTree({ className }: { className?: string }) {
           );
         })}
       </svg>
-      <div className="-mx-1 mt-1 flex justify-between px-1">
+      <div
+        lang={parse.lang}
+        className="-mx-1 mx-auto mt-1 flex justify-between px-1"
+        style={{ maxWidth: `${tokens.length * 7.5}rem` }}
+      >
         {tokens.map((item, index) => (
           <button
             key={item.id}

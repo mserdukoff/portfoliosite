@@ -3,7 +3,6 @@ import {
   BriefcaseBusiness,
   FolderGit2,
   GitMerge,
-  Languages,
   type LucideIcon,
   Network,
   PenLine,
@@ -14,7 +13,7 @@ import { FlowField } from "@/components/flow-field";
 import { LocalClock } from "@/components/local-clock";
 import { NameDecode } from "@/components/name-decode";
 import { Ruler } from "@/components/page-hero";
-import { formatDate, journal, languages, openSource, projects } from "@/lib/site";
+import { formatDate, journal, openSource, projects } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const inlineLink =
@@ -30,16 +29,6 @@ const panelTaglines: Record<string, string> = {
 };
 
 const sideProjects = ["purser", "skin-cancer-cnn", "procmon"];
-
-const languageCodes: Record<string, string> = {
-  English: "EN",
-  Russian: "RU",
-  Italian: "IT",
-  Turkish: "TR",
-  German: "DE",
-  Hebrew: "HE",
-  Japanese: "JA",
-};
 
 function PanelHead({ icon, title }: { icon: LucideIcon; title: string }) {
   return (
@@ -233,23 +222,14 @@ export function Hero() {
               }))}
               className="col-span-2"
             />
-            <Link href="/linguistics#languages" className="panel col-span-2 md:col-span-1">
-              <PanelHead icon={Languages} title="Languages" />
-              <ul className="grid gap-[3px] border-t border-border px-2.5 py-2.5 font-mono text-[10px] text-muted-foreground">
-                {languages.map((language) => (
-                  <li key={language.name} className="grid grid-cols-[1.375rem_minmax(0,1fr)] items-center gap-1.5">
-                    <abbr title={`${language.name}: ${language.level}`} className="no-underline">
-                      {languageCodes[language.name]}
-                    </abbr>
-                    <span className="relative block h-1.5 bg-foreground/10">
-                      <span
-                        className="absolute inset-y-0 left-0 bg-[#8a9aa6]"
-                        style={{ width: `${language.score}%` }}
-                      />
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <Link href="/projects#open-source" className="panel col-span-2 md:col-span-1">
+              <PanelHead icon={GitMerge} title="Open source" />
+              <dl className="grid gap-[0.4375rem] border-t border-border px-2.5 py-2 font-mono text-[11px]">
+                <StatusRow label="Repo">{openSource.repo}</StatusRow>
+                <StatusRow label="PR">#{openSource.pr}</StatusRow>
+                <StatusRow label="Diff">{openSource.diff}</StatusRow>
+                <StatusRow label="Merged">{formatDate(openSource.merged)}</StatusRow>
+              </dl>
             </Link>
 
             <ListPanel
@@ -261,17 +241,8 @@ export function Hero() {
                 label: project.title,
                 note: panelTaglines[project.slug] ?? "",
               }))}
-              className="col-span-2"
+              className="col-span-2 md:col-span-3"
             />
-            <Link href="/projects#open-source" className="panel col-span-2 md:col-span-1">
-              <PanelHead icon={GitMerge} title="Open source" />
-              <dl className="grid gap-[0.4375rem] border-t border-border px-2.5 py-2 font-mono text-[11px]">
-                <StatusRow label="Repo">{openSource.repo}</StatusRow>
-                <StatusRow label="PR">#{openSource.pr}</StatusRow>
-                <StatusRow label="Diff">{openSource.diff}</StatusRow>
-                <StatusRow label="Merged">{formatDate(openSource.merged)}</StatusRow>
-              </dl>
-            </Link>
           </div>
         </div>
 
